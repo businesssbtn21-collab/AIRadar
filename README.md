@@ -60,9 +60,9 @@ raw URL(`https://raw.githubusercontent.com/<user>/<repo>/main/feed.json`)を設�
 ```json
 [
   {
-    "id": "claude-fable-5",
-    "name": "Claude Fable 5",
-    "provider": "Anthropic",
+    "id": "sample-chat-flagship",
+    "name": "Nova Mind 5",
+    "provider": "サンプルAI Labs",
     "category": "chat",
     "summary": "説明文",
     "changeNote": "変更点の要約",
@@ -70,7 +70,7 @@ raw URL(`https://raw.githubusercontent.com/<user>/<repo>/main/feed.json`)を設�
     "expectationScore": 98,
     "attentionScore": 90,
     "date": "2026-07-28T09:00:00Z",
-    "url": "https://www.anthropic.com"
+    "url": "https://example.com/novamind"
   }
 ]
 ```

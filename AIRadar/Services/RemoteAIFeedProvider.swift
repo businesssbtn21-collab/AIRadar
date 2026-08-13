@@ -6,9 +6,9 @@ import Foundation
 /// ```json
 /// [
 ///   {
-///     "id": "claude-fable-5",
-///     "name": "Claude Fable 5",
-///     "provider": "Anthropic",
+///     "id": "sample-chat-flagship",
+///     "name": "Nova Mind 5",
+///     "provider": "サンプルAI Labs",
 ///     "category": "chat",
 ///     "summary": "説明文",
 ///     "changeNote": "変更点",

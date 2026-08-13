@@ -9,8 +9,8 @@ struct FeedEntry: TimelineEntry {
 struct FeedTimelineProvider: TimelineProvider {
     private static let placeholderItem = AIServiceItem(
         id: "placeholder",
-        name: "Claude Fable 5",
-        provider: "Anthropic",
+        name: "Nova Mind 5",
+        provider: "サンプルAI Labs",
         category: .chat,
         summary: "新モデル公開",
         changeNote: "新モデルとして公開",

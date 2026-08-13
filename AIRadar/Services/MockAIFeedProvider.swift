@@ -19,10 +19,10 @@ struct MockAIFeedProvider: AIFeedProvider {
     }
 
     private static let items: [Base] = [
-        Base(id: "claude-fable-5", name: "Claude Fable 5", provider: "Anthropic", category: .chat,
-             summary: "Claude 5ファミリー最上位のMythos級モデル。長時間の自律エージェント作業に対応。",
+        Base(id: "sample-chat-flagship", name: "Nova Mind 5", provider: "サンプルAI Labs", category: .chat,
+             summary: "長時間の自律エージェント作業に対応する最上位クラスの対話モデル。",
              changeNote: "新モデルとして公開", kind: .new, expectationScore: 98, attentionBase: 90,
-             daysAgo: 1, url: "https://www.anthropic.com"),
+             daysAgo: 1, url: "https://example.com/novamind"),
         Base(id: "sample-video-gen", name: "MotionForge", provider: "サンプル社", category: .videoGeneration,
              summary: "テキストから4K・60秒の一貫性ある動画を生成。物理挙動の再現度が大幅向上。",
              changeNote: "v2で生成時間が1/3に短縮", kind: .update, expectationScore: 92, attentionBase: 78,
