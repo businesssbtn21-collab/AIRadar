@@ -47,8 +47,9 @@ final class AppSettings: ObservableObject {
     private let defaults = UserDefaults.standard
 
     private init() {
-        dataSource = DataSource(rawValue: defaults.string(forKey: "dataSource") ?? "") ?? .mock
-        remoteURLString = defaults.string(forKey: "remoteURLString") ?? ""
+        dataSource = DataSource(rawValue: defaults.string(forKey: "dataSource") ?? "") ?? .remote
+        remoteURLString = defaults.string(forKey: "remoteURLString")
+            ?? "https://raw.githubusercontent.com/businesssbtn21-collab/AIRadar/main/feed.json"
         notifyThreshold = defaults.object(forKey: "notifyThreshold") as? Int ?? 80
         notificationsEnabled = defaults.object(forKey: "notificationsEnabled") as? Bool ?? true
         spikeThreshold = defaults.object(forKey: "spikeThreshold") as? Int ?? 20
