@@ -32,7 +32,6 @@ struct AIRadarApp: App {
                 .environmentObject(store)
                 .environmentObject(AppSettings.shared)
                 .task {
-                    await requestNotificationPermission()
                     await store.refresh()
                 }
         }
@@ -41,11 +40,6 @@ struct AIRadarApp: App {
                 Self.scheduleRefresh()
             }
         }
-    }
-
-    private func requestNotificationPermission() async {
-        let center = UNUserNotificationCenter.current()
-        _ = try? await center.requestAuthorization(options: [.alert, .badge, .sound])
     }
 
     private static func registerBackgroundTask() {

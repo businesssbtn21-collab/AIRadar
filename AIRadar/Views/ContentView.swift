@@ -1,4 +1,5 @@
 import SwiftUI
+import UserNotifications
 
 struct ContentView: View {
     @EnvironmentObject private var store: FeedStore
@@ -7,6 +8,8 @@ struct ContentView: View {
     @State private var showFilter = false
     @State private var searchText = ""
     @State private var filter = FilterOptions()
+    @AppStorage("hasRespondedToNotificationPrimer") private var hasRespondedToNotificationPrimer = false
+    @State private var showNotificationPrimer = false
 
     private var filteredItems: [AIServiceItem] {
         store.items.applying(filter, searchText: searchText, category: selectedCategory)
@@ -41,6 +44,31 @@ struct ContentView: View {
             }
             .sheet(isPresented: $showFilter) {
                 FilterSheet(filter: $filter)
+            }
+            .task {
+                // 一覧が表示されてから、理由を説明した上で通知許可を尋ねる(HIG推奨: 起動直後の唐突な許可要求を避ける)
+                if !hasRespondedToNotificationPrimer && !store.items.isEmpty {
+                    showNotificationPrimer = true
+                }
+            }
+            .onChange(of: store.items.isEmpty) { _, isEmpty in
+                if !isEmpty && !hasRespondedToNotificationPrimer {
+                    showNotificationPrimer = true
+                }
+            }
+            .alert("新着AIサービスを通知でお知らせ", isPresented: $showNotificationPrimer) {
+                Button("後で") {
+                    hasRespondedToNotificationPrimer = true
+                }
+                Button("許可する") {
+                    hasRespondedToNotificationPrimer = true
+                    Task {
+                        let center = UNUserNotificationCenter.current()
+                        _ = try? await center.requestAuthorization(options: [.alert, .badge, .sound])
+                    }
+                }
+            } message: {
+                Text("新しいAIサービスの登場や、注目度の急上昇があった時にお知らせします。設定はいつでも変更できます。")
             }
         }
     }
