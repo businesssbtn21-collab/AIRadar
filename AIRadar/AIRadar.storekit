@@ -1,0 +1,46 @@
+{
+  "identifier" : "5A1B2C3D-0000-4000-8000-000000000001",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "980",
+      "familyShareable" : false,
+      "internalID" : "AIRADAR_FULL_ACCESS",
+      "localizations" : [
+        {
+          "description" : "AIレーダーのすべての機能(新着・更新フィード、期待度・注目度スコア、ウィジェット、通知)を利用できるようになります。",
+          "displayName" : "フルアクセス",
+          "locale" : "ja"
+        },
+        {
+          "description" : "Unlocks all AIRadar features: the full feed, expectation & buzz scores, widgets, and notifications.",
+          "displayName" : "Full Access",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.ryuta.airadar.fullaccess",
+      "referenceName" : "Full Access",
+      "type" : "NonConsumable"
+    }
+  ],
+  "settings" : {
+    "_askToBuyEnabled" : false,
+    "_billingIssuesEnabled" : false,
+    "_disableDialogs" : false,
+    "_failTransactionsEnabled" : false,
+    "_locale" : "ja_JP",
+    "_storefront" : "JPN",
+    "_storeKitErrors" : [
+
+    ]
+  },
+  "subscriptionGroups" : [
+
+  ],
+  "version" : {
+    "major" : 3,
+    "minor" : 0
+  }
+}

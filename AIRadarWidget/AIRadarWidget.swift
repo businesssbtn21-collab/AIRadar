@@ -4,9 +4,13 @@ import SwiftUI
 struct FeedEntry: TimelineEntry {
     let date: Date
     let items: [AIServiceItem]
+    /// ヘッダーに出す絞り込みの要約(絞り込みなしなら nil)
+    let filterLabel: String?
+    /// フィード自体は空ではないが、絞り込み条件に合う項目がなかった状態
+    let filteredOutEverything: Bool
 }
 
-struct FeedTimelineProvider: TimelineProvider {
+struct FeedTimelineProvider: AppIntentTimelineProvider {
     private static let placeholderItem = AIServiceItem(
         id: "placeholder",
         name: "Nova Mind 5",
@@ -22,19 +26,33 @@ struct FeedTimelineProvider: TimelineProvider {
     )
 
     func placeholder(in context: Context) -> FeedEntry {
-        FeedEntry(date: Date(), items: [Self.placeholderItem])
+        FeedEntry(date: Date(), items: [Self.placeholderItem], filterLabel: nil, filteredOutEverything: false)
     }
 
-    func getSnapshot(in context: Context, completion: @escaping (FeedEntry) -> Void) {
-        let items = SharedStore.loadItems()
-        completion(FeedEntry(date: Date(), items: items.isEmpty ? [Self.placeholderItem] : items))
+    func snapshot(for configuration: WidgetFilterIntent, in context: Context) async -> FeedEntry {
+        let entry = makeEntry(for: configuration)
+        guard entry.items.isEmpty && !entry.filteredOutEverything else { return entry }
+        return FeedEntry(date: entry.date,
+                         items: [Self.placeholderItem],
+                         filterLabel: entry.filterLabel,
+                         filteredOutEverything: false)
     }
 
-    func getTimeline(in context: Context, completion: @escaping (Timeline<FeedEntry>) -> Void) {
-        let entry = FeedEntry(date: Date(), items: SharedStore.loadItems())
+    func timeline(for configuration: WidgetFilterIntent, in context: Context) async -> Timeline<FeedEntry> {
         // アプリ側の更新時は WidgetCenter 経由で即時リロードされる。これは保険の定期更新。
         let next = Calendar.current.date(byAdding: .minute, value: 30, to: Date()) ?? Date()
-        completion(Timeline(entries: [entry], policy: .after(next)))
+        return Timeline(entries: [makeEntry(for: configuration)], policy: .after(next))
+    }
+
+    private func makeEntry(for configuration: WidgetFilterIntent) -> FeedEntry {
+        let all = ChinaStorefrontPolicy.filter(SharedStore.loadItems())
+        let filtered = all.applying(configuration)
+        return FeedEntry(
+            date: Date(),
+            items: filtered,
+            filterLabel: configuration.summaryLabel,
+            filteredOutEverything: filtered.isEmpty && !all.isEmpty
+        )
     }
 }
 
@@ -77,7 +95,7 @@ struct AIRadarWidgetEntryView: View {
                 attentionRow(item)
             } else {
                 Spacer()
-                Text("アプリを開いて更新")
+                Text(emptyMessage)
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
@@ -86,12 +104,17 @@ struct AIRadarWidgetEntryView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
     }
 
+    /// 項目が無いときの案内。絞り込みで消えた場合は条件の見直しを促す。
+    private var emptyMessage: String {
+        entry.filteredOutEverything ? "条件に合う更新はありません" : "アプリを開いて更新"
+    }
+
     private var mediumView: some View {
         VStack(alignment: .leading, spacing: 6) {
             header
             if entry.items.isEmpty {
                 Spacer()
-                Text("アプリを開いて更新")
+                Text(emptyMessage)
                     .font(.caption)
                     .foregroundStyle(.secondary)
                 Spacer()
@@ -129,7 +152,7 @@ struct AIRadarWidgetEntryView: View {
                 Text("注目度 \(item.attentionLevel) \(item.attentionScore)")
                     .font(.caption2)
             } else {
-                Text("AIレーダー")
+                Text(entry.filteredOutEverything ? "条件に合う更新なし" : "AIレーダー")
                     .font(.headline)
             }
         }
@@ -141,6 +164,12 @@ struct AIRadarWidgetEntryView: View {
                 .font(.caption2)
             Text("AIレーダー")
                 .font(.caption2.bold())
+            if let label = entry.filterLabel {
+                Text(label)
+                    .font(.system(size: 9))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
+            }
             Spacer()
         }
         .foregroundStyle(.secondary)
@@ -167,12 +196,12 @@ struct AIRadarWidget: Widget {
     let kind = "AIRadarWidget"
 
     var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: FeedTimelineProvider()) { entry in
+        AppIntentConfiguration(kind: kind, intent: WidgetFilterIntent.self, provider: FeedTimelineProvider()) { entry in
             AIRadarWidgetEntryView(entry: entry)
                 .containerBackground(.fill.tertiary, for: .widget)
         }
         .configurationDisplayName("AIレーダー")
-        .description("期待値の高い新しいAIサービスの登場・更新を表示します。")
+        .description("期待値の高い新しいAIサービスの登場・更新を表示します。長押し →「ウィジェットを編集」でカテゴリや期待度を絞り込めます。")
         .supportedFamilies([.systemSmall, .systemMedium, .accessoryRectangular])
     }
 }

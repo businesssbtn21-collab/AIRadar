@@ -1,4 +1,5 @@
 import Foundation
+import StoreKit
 import UserNotifications
 import WidgetKit
 
@@ -13,7 +14,7 @@ final class FeedStore: ObservableObject {
     private let settings = AppSettings.shared
 
     init() {
-        items = SharedStore.loadItems()
+        items = ChinaStorefrontPolicy.filter(SharedStore.loadItems())
         lastRefresh = SharedStore.lastRefresh
     }
 
@@ -26,7 +27,8 @@ final class FeedStore: ObservableObject {
 
         do {
             let fetched = try await settings.makeProvider().fetchFeed()
-            let sorted = fetched.sorted { $0.date > $1.date }
+            ChinaStorefrontPolicy.saveCountryCode(await Storefront.current?.countryCode)
+            let sorted = ChinaStorefrontPolicy.filter(fetched).sorted { $0.date > $1.date }
 
             let previousItems = SharedStore.loadItems()
             let previousKeys = Set(previousItems.map(\.eventKey))

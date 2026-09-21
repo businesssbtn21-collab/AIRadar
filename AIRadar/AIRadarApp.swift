@@ -16,6 +16,7 @@ final class NotificationPresenter: NSObject, UNUserNotificationCenterDelegate {
 @main
 struct AIRadarApp: App {
     @StateObject private var store = FeedStore()
+    @StateObject private var storeManager = StoreManager.shared
     @Environment(\.scenePhase) private var scenePhase
     private let notificationPresenter = NotificationPresenter()
 
@@ -28,12 +29,21 @@ struct AIRadarApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environmentObject(store)
-                .environmentObject(AppSettings.shared)
-                .task {
-                    await store.refresh()
+            Group {
+                if !storeManager.hasCheckedEntitlements {
+                    ProgressView()
+                } else if storeManager.isUnlocked {
+                    ContentView()
+                        .task {
+                            await store.refresh()
+                        }
+                } else {
+                    PaywallView()
                 }
+            }
+            .environmentObject(store)
+            .environmentObject(AppSettings.shared)
+            .environmentObject(storeManager)
         }
         .onChange(of: scenePhase) { _, phase in
             if phase == .background {
@@ -50,6 +60,11 @@ struct AIRadarApp: App {
             }
             scheduleRefresh()
             let work = Task {
+                await StoreManager.shared.refreshEntitlements()
+                guard await StoreManager.shared.isUnlocked else {
+                    refreshTask.setTaskCompleted(success: true)
+                    return
+                }
                 let store = await FeedStore()
                 await store.refresh()
                 refreshTask.setTaskCompleted(success: true)
