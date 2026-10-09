@@ -13,9 +13,18 @@ enum ServiceCategory: String, Codable, CaseIterable, Identifiable {
     case dataAnalysis
     case agent
     case search
+    /// ChatGPTやClaudeなどに後から足して使う拡張(スキル・プラグイン・MCPコネクタ・GPTsなど)
+    case pluginSkill
     case other
 
     var id: String { rawValue }
+
+    /// 将来フィードに新しいカテゴリが増えても、このバージョンのアプリで読み込みが失敗しないようにする
+    /// (知らないカテゴリは「その他」として扱う)
+    init(from decoder: Decoder) throws {
+        let rawValue = try decoder.singleValueContainer().decode(String.self)
+        self = ServiceCategory(rawValue: rawValue) ?? .other
+    }
 
     var label: String {
         switch self {
@@ -30,6 +39,7 @@ enum ServiceCategory: String, Codable, CaseIterable, Identifiable {
         case .dataAnalysis: return "データ分析"
         case .agent: return "自動化・エージェント"
         case .search: return "検索・リサーチ"
+        case .pluginSkill: return "プラグイン・スキル"
         case .other: return "その他"
         }
     }
@@ -47,6 +57,7 @@ enum ServiceCategory: String, Codable, CaseIterable, Identifiable {
         case .dataAnalysis: return "chart.bar"
         case .agent: return "gearshape.2"
         case .search: return "magnifyingglass"
+        case .pluginSkill: return "puzzlepiece.extension"
         case .other: return "sparkles"
         }
     }

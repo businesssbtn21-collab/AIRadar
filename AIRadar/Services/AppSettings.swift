@@ -48,16 +48,26 @@ final class AppSettings: ObservableObject {
 
     private init() {
         dataSource = DataSource(rawValue: defaults.string(forKey: "dataSource") ?? "") ?? .remote
+        // feed-v2.json は新しいカテゴリを含む最新版。1.2以前のアプリ向けには、
+        // 未知のカテゴリを other に落とした feed.json を別途配信している
         remoteURLString = defaults.string(forKey: "remoteURLString")
-            ?? "https://raw.githubusercontent.com/businesssbtn21-collab/AIRadar/main/feed.json"
+            ?? "https://raw.githubusercontent.com/businesssbtn21-collab/AIRadar/main/feed-v2.json"
         notifyThreshold = defaults.object(forKey: "notifyThreshold") as? Int ?? 80
         notificationsEnabled = defaults.object(forKey: "notificationsEnabled") as? Bool ?? true
         spikeThreshold = defaults.object(forKey: "spikeThreshold") as? Int ?? 20
         if let savedCategories = defaults.array(forKey: "notifyCategories") as? [String] {
-            notifyCategories = Set(savedCategories.compactMap(ServiceCategory.init(rawValue:)))
+            // アップデートで増えたカテゴリだけONで追加する。保存した時点で存在していたカテゴリは、
+            // ユーザーが自分でOFFにしたものなのでそのまま尊重する
+            let knownCategories = Set(defaults.array(forKey: "knownNotifyCategories") as? [String] ?? savedCategories)
+            var categories = Set(savedCategories.compactMap(ServiceCategory.init(rawValue:)))
+            for category in ServiceCategory.allCases where !knownCategories.contains(category.rawValue) {
+                categories.insert(category)
+            }
+            notifyCategories = categories
         } else {
             notifyCategories = Set(ServiceCategory.allCases)
         }
+        defaults.set(ServiceCategory.allCases.map(\.rawValue), forKey: "knownNotifyCategories")
         notifyKind = (defaults.string(forKey: "notifyKind")).flatMap(UpdateKind.init(rawValue:))
     }
 

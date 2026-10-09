@@ -14,6 +14,7 @@ enum WidgetCategoryFilter: String, AppEnum {
     case dataAnalysis
     case agent
     case search
+    case pluginSkill
     case other
 
     /// 対応する ServiceCategory。`all` のときは nil(絞り込みなし)。
@@ -39,6 +40,7 @@ enum WidgetCategoryFilter: String, AppEnum {
         .dataAnalysis: "データ分析",
         .agent: "自動化・エージェント",
         .search: "検索・リサーチ",
+        .pluginSkill: "プラグイン・スキル",
         .other: "その他"
     ]
 }
