@@ -8,6 +8,8 @@ enum SharedStore {
     private static let snapshotKey = "feedSnapshot"
     private static let lastRefreshKey = "lastRefresh"
     private static let notifiedKeysKey = "notifiedEventKeys"
+    private static let baselineKeysKey = "notificationBaselineKeys"
+    private static let baselineAttentionKey = "notificationBaselineAttention"
 
     static var defaults: UserDefaults {
         UserDefaults(suiteName: appGroupID) ?? .standard
@@ -42,6 +44,20 @@ enum SharedStore {
 
     static var lastRefresh: Date? {
         defaults.object(forKey: lastRefreshKey) as? Date
+    }
+
+    /// 通知の差分を測る基準。ウィジェットもフィードを保存するようになったため、
+    /// 表示用のスナップショットとは別に「アプリが前回通知判定したときの状態」を持つ。
+    static func notificationBaseline() -> (keys: Set<String>, attentionByID: [String: Int])? {
+        guard let keys = defaults.array(forKey: baselineKeysKey) as? [String] else { return nil }
+        let attention = defaults.dictionary(forKey: baselineAttentionKey) as? [String: Int] ?? [:]
+        return (Set(keys), attention)
+    }
+
+    static func saveNotificationBaseline(_ items: [AIServiceItem]) {
+        defaults.set(items.map(\.eventKey), forKey: baselineKeysKey)
+        let attention = Dictionary(items.map { ($0.id, $0.attentionScore) }, uniquingKeysWith: { first, _ in first })
+        defaults.set(attention, forKey: baselineAttentionKey)
     }
 
     /// 通知済みイベントキー(重複通知の防止用)

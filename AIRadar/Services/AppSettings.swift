@@ -22,7 +22,11 @@ final class AppSettings: ObservableObject {
         didSet { defaults.set(dataSource.rawValue, forKey: "dataSource") }
     }
     @Published var remoteURLString: String {
-        didSet { defaults.set(remoteURLString, forKey: "remoteURLString") }
+        didSet {
+            defaults.set(remoteURLString, forKey: "remoteURLString")
+            // ウィジェット側も同じURLから取得できるように共有する
+            FeedSync.saveFeedURL(remoteURLString)
+        }
     }
     /// この期待度スコア以上のNEW/UPDATEだけ通知する
     @Published var notifyThreshold: Int {
@@ -50,8 +54,7 @@ final class AppSettings: ObservableObject {
         dataSource = DataSource(rawValue: defaults.string(forKey: "dataSource") ?? "") ?? .remote
         // feed-v2.json は新しいカテゴリを含む最新版。1.2以前のアプリ向けには、
         // 未知のカテゴリを other に落とした feed.json を別途配信している
-        remoteURLString = defaults.string(forKey: "remoteURLString")
-            ?? "https://raw.githubusercontent.com/businesssbtn21-collab/AIRadar/main/feed-v2.json"
+        remoteURLString = defaults.string(forKey: "remoteURLString") ?? FeedSync.defaultFeedURL
         notifyThreshold = defaults.object(forKey: "notifyThreshold") as? Int ?? 80
         notificationsEnabled = defaults.object(forKey: "notificationsEnabled") as? Bool ?? true
         spikeThreshold = defaults.object(forKey: "spikeThreshold") as? Int ?? 20
@@ -68,6 +71,7 @@ final class AppSettings: ObservableObject {
             notifyCategories = Set(ServiceCategory.allCases)
         }
         defaults.set(ServiceCategory.allCases.map(\.rawValue), forKey: "knownNotifyCategories")
+        FeedSync.saveFeedURL(remoteURLString)
         notifyKind = (defaults.string(forKey: "notifyKind")).flatMap(UpdateKind.init(rawValue:))
     }
 

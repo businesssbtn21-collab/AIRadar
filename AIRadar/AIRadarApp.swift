@@ -24,6 +24,8 @@ struct AIRadarApp: App {
 
     init() {
         Self.registerBackgroundTask()
+        // バックグラウンドに回る前にアプリを終了されても予約が残るよう、起動時にも入れておく
+        Self.scheduleRefresh()
         UNUserNotificationCenter.current().delegate = notificationPresenter
     }
 
@@ -76,10 +78,10 @@ struct AIRadarApp: App {
         }
     }
 
-    /// 次回のバックグラウンド更新を予約(実行タイミングはOS任せ。目安4時間後以降)
+    /// 次回のバックグラウンド更新を予約(実行タイミングはOS任せ。1時間後以降の実行を希望)
     static func scheduleRefresh() {
         let request = BGAppRefreshTaskRequest(identifier: refreshTaskID)
-        request.earliestBeginDate = Date(timeIntervalSinceNow: 4 * 60 * 60)
+        request.earliestBeginDate = Date(timeIntervalSinceNow: 60 * 60)
         try? BGTaskScheduler.shared.submit(request)
     }
 }

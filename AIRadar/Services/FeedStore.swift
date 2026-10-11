@@ -30,18 +30,20 @@ final class FeedStore: ObservableObject {
             ChinaStorefrontPolicy.saveCountryCode(await Storefront.current?.countryCode)
             let sorted = ChinaStorefrontPolicy.filter(fetched).sorted { $0.date > $1.date }
 
-            let previousItems = SharedStore.loadItems()
-            let previousKeys = Set(previousItems.map(\.eventKey))
-            let previousAttentionByID = Dictionary(uniqueKeysWithValues: previousItems.map { ($0.id, $0.attentionScore) })
-            let freshEvents = sorted.filter { !previousKeys.contains($0.eventKey) }
+            // ウィジェットも表示用スナップショットを更新するため、通知の差分は専用の基準と比べる
+            let baseline = SharedStore.notificationBaseline()
+            let freshEvents = baseline.map { base in
+                sorted.filter { !base.keys.contains($0.eventKey) }
+            } ?? []  // 基準がない初回は、既存の項目で通知を大量に出さない
             let spikes = sorted.filter { item in
-                guard let previous = previousAttentionByID[item.id] else { return false }
+                guard let previous = baseline?.attentionByID[item.id] else { return false }
                 return item.attentionScore - previous >= settings.spikeThreshold
             }
 
             items = sorted
             lastRefresh = Date()
             SharedStore.saveItems(sorted)
+            SharedStore.saveNotificationBaseline(sorted)
             WidgetCenter.shared.reloadAllTimelines()
 
             await notifyIfNeeded(for: freshEvents)

@@ -57,6 +57,8 @@ final class StoreManager: ObservableObject {
 
         isUnlocked = unlocked
         hasCheckedEntitlements = true
+        // 未購入の端末でウィジェットが勝手にフィードを取りに行かないよう共有しておく
+        FeedSync.saveUnlocked(unlocked)
     }
 
     /// 1.1以前は買い切り有料アプリ(980円)として配信していたため、そのバージョンで

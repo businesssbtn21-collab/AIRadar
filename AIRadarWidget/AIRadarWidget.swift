@@ -30,7 +30,8 @@ struct FeedTimelineProvider: AppIntentTimelineProvider {
     }
 
     func snapshot(for configuration: WidgetFilterIntent, in context: Context) async -> FeedEntry {
-        let entry = makeEntry(for: configuration)
+        // プレビューは待たせたくないので、保存済みの内容だけで組み立てる
+        let entry = makeEntry(for: configuration, from: ChinaStorefrontPolicy.filter(SharedStore.loadItems()))
         guard entry.items.isEmpty && !entry.filteredOutEverything else { return entry }
         return FeedEntry(date: entry.date,
                          items: [Self.placeholderItem],
@@ -39,13 +40,14 @@ struct FeedTimelineProvider: AppIntentTimelineProvider {
     }
 
     func timeline(for configuration: WidgetFilterIntent, in context: Context) async -> Timeline<FeedEntry> {
-        // アプリ側の更新時は WidgetCenter 経由で即時リロードされる。これは保険の定期更新。
+        // アプリを開かなくても最新になるよう、ウィジェット自身がフィードを取りに行く。
+        // 取得できなければ保存済みの内容で表示する。
+        let all = await FeedSync.itemsRefreshingIfNeeded()
         let next = Calendar.current.date(byAdding: .minute, value: 30, to: Date()) ?? Date()
-        return Timeline(entries: [makeEntry(for: configuration)], policy: .after(next))
+        return Timeline(entries: [makeEntry(for: configuration, from: all)], policy: .after(next))
     }
 
-    private func makeEntry(for configuration: WidgetFilterIntent) -> FeedEntry {
-        let all = ChinaStorefrontPolicy.filter(SharedStore.loadItems())
+    private func makeEntry(for configuration: WidgetFilterIntent, from all: [AIServiceItem]) -> FeedEntry {
         let filtered = all.applying(configuration)
         return FeedEntry(
             date: Date(),
