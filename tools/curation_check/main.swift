@@ -78,6 +78,11 @@ check(mixed.applying(mode: .curated, profession: nil).map(\.id) == ["high-design
 check(mixed.applying(mode: .curated, profession: .designer).map(\.id) == ["high-designer"],
       "CURATED は期待度85以上かつ職種向けだけ")
 
+// 通知は1件ずつ判定するので、一覧と同じ判定を単体でも使えること
+check(mixed[1].matches(mode: .discovered, profession: .designer), "DISCOVERED の通知は職種を問わない")
+check(!mixed[1].matches(mode: .curated, profession: .designer), "CURATED の通知は職種が合わなければ出さない")
+check(!mixed[2].matches(mode: .curated, profession: nil), "CURATED の通知は期待度85未満を出さない")
+
 // MARK: - モードの保存(ウィジェットと共有)
 
 SharedStore.defaults.removeObject(forKey: "feedMode")

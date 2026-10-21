@@ -1,5 +1,6 @@
 import Foundation
 import Combine
+import WidgetKit
 
 enum DataSource: String, CaseIterable, Identifiable {
     case mock
@@ -47,6 +48,20 @@ final class AppSettings: ObservableObject {
     @Published var notifyKind: UpdateKind? {
         didSet { defaults.set(notifyKind?.rawValue, forKey: "notifyKind") }
     }
+    /// 一覧・通知・ウィジェットの届け方。ウィジェットも読めるよう App Group に保存する
+    @Published var mode: FeedMode {
+        didSet {
+            ModePreferences.mode = mode
+            WidgetCenter.shared.reloadAllTimelines()
+        }
+    }
+    /// CURATED で選んだ職種(未選択なら「その他(全般)」扱い)
+    @Published var profession: Profession? {
+        didSet {
+            ModePreferences.profession = profession
+            WidgetCenter.shared.reloadAllTimelines()
+        }
+    }
 
     private let defaults = UserDefaults.standard
 
@@ -58,6 +73,8 @@ final class AppSettings: ObservableObject {
         notifyThreshold = defaults.object(forKey: "notifyThreshold") as? Int ?? 80
         notificationsEnabled = defaults.object(forKey: "notificationsEnabled") as? Bool ?? true
         spikeThreshold = defaults.object(forKey: "spikeThreshold") as? Int ?? 20
+        mode = ModePreferences.mode
+        profession = ModePreferences.profession
         if let savedCategories = defaults.array(forKey: "notifyCategories") as? [String] {
             // アップデートで増えたカテゴリだけONで追加する。保存した時点で存在していたカテゴリは、
             // ユーザーが自分でOFFにしたものなのでそのまま尊重する

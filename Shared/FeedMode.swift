@@ -41,15 +41,18 @@ enum ModePreferences {
     }
 }
 
-extension Array where Element == AIServiceItem {
-    /// モードに従って絞り込む。CURATED で職種が未選択なら「その他(全般)」扱い。
-    func applying(mode: FeedMode, profession: Profession?) -> [AIServiceItem] {
+extension AIServiceItem {
+    /// このモードで表示・通知する対象か。CURATED で職種が未選択なら「その他(全般)」扱い。
+    func matches(mode: FeedMode, profession: Profession?) -> Bool {
         switch mode {
-        case .discovered:
-            return self
-        case .curated:
-            let profession = profession ?? .general
-            return filter { $0.isCurated(for: profession) }
+        case .discovered: return true
+        case .curated: return isCurated(for: profession ?? .general)
         }
+    }
+}
+
+extension Array where Element == AIServiceItem {
+    func applying(mode: FeedMode, profession: Profession?) -> [AIServiceItem] {
+        filter { $0.matches(mode: mode, profession: profession) }
     }
 }
