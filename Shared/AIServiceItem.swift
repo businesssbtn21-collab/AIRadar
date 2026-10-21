@@ -96,6 +96,26 @@ struct AIServiceItem: Codable, Identifiable, Equatable, Hashable {
     let attentionScore: Int
     let date: Date
     let url: URL?
+    /// 向いている職種(Profession の raw 値、全職種向けは "all")。
+    /// 将来職種が増えても旧版が壊れないよう文字列のまま持ち、知らない値は無視する。
+    /// 省略時はカテゴリから推定する
+    var professions: [String]? = nil
+
+    /// CURATED に載せる期待度の下限
+    static let curatedMinimumScore = 85
+
+    func isRelevant(to profession: Profession) -> Bool {
+        if profession == .general { return true }
+        guard let professions, !professions.isEmpty else {
+            return Profession.inferred(from: category).contains(profession)
+        }
+        return professions.contains("all") || professions.contains(profession.rawValue)
+    }
+
+    /// CURATED モードで表示・通知する対象か(期待度が高く、かつ選んだ職種向け)
+    func isCurated(for profession: Profession) -> Bool {
+        expectationScore >= Self.curatedMinimumScore && isRelevant(to: profession)
+    }
 
     /// 期待度ランク: 90以上=S, 75以上=A, それ未満=B
     var rank: String {
