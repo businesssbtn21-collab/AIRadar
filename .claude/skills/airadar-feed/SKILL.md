@@ -40,9 +40,14 @@ description: AIレーダー(AIRadar)の配信フィードを更新する。「�
   "expectationScore": 88,
   "attentionScore": 85,
   "date": "2026-08-13T09:00:00Z",
-  "url": "https://example.com"
+  "url": "https://example.com",
+  "professions": ["engineer", "student"]
 }
 ```
+
+- `professions`: 向いている職種(1.4以降の CURATED モードで使う)。**必ず書く**(省略するとカテゴリから推定されるが粗い)
+  - 値: `engineer`(エンジニア) / `designer`(デザイナー) / `videoCreator`(動画クリエイター) / `marketer`(マーケター・SNS運用) / `writer`(ライター・編集) / `sales`(営業・接客) / `backOffice`(事務・経理・人事) / `founder`(経営者・個人事業主) / `student`(学生・研究者) / `all`(全職種。汎用の大型チャットモデルなど)
+  - 打ち間違いは `build_legacy_feed.py` がエラーで止める
 
 - `category`: chat / coding / imageGeneration / videoGeneration / videoEditing / audioMusic / writing / design / dataAnalysis / agent / search / pluginSkill / other
   - `pluginSkill` =「プラグイン・スキル」。Claudeのスキル・Mods、MCPコネクタ、ChatGPTのプラグインなど、既存のAIに後から足す拡張
@@ -50,6 +55,12 @@ description: AIレーダー(AIRadar)の配信フィードを更新する。「�
 - `expectationScore`: 90以上=S、75以上=A、それ未満=B。**80以上でユーザーに通知が飛ぶ**ので、過大評価しない
 - `attentionScore`: ネット上の話題度。前回より+20以上で「急上昇」通知が飛ぶ
 - `date`: 実際の発表日(ISO8601・UTC)
+
+## 2つのモード(1.4以降)
+
+- **DISCOVERED**: 全項目を新しい順に出す。大型モデルだけでなく、**Bランクでも便利な小さめのツールを積極的に載せる**(「知らなかった便利なツール」を届けるモード)
+- **CURATED**: **期待度85以上** かつ 選んだ職種向けの項目だけを出す。期待度は過大評価しない
+- 営業・接客、事務・経理・人事、経営者向けの項目が少ない。これらの職種に役立つツールを優先して探す
 
 ## 中国向けの制約
 
