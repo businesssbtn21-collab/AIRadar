@@ -65,6 +65,34 @@ check(decode("[{\(base)}]")?.first?.professions == nil, "professions なしのJS
 check(decode(#"[{\#(base),"professions":["futureJob"]}]"#)?.first?.professions == ["futureJob"], "未知の職種を含むJSONが読める")
 check(decode(#"[{\#(base),"foo":1}]"#)?.count == 1, "未知のキーを含むJSONが読める")
 
+// MARK: - モードによる絞り込み
+
+let mixed = [
+    item("high-designer", expectation: 92, professions: ["designer"]),
+    item("high-engineer", expectation: 88, professions: ["engineer"]),
+    item("low-designer", expectation: 70, professions: ["designer"]),
+]
+check(mixed.applying(mode: .discovered, profession: .designer).count == 3, "DISCOVERED はすべて表示")
+check(mixed.applying(mode: .curated, profession: nil).map(\.id) == ["high-designer", "high-engineer"],
+      "CURATED で職種未選択なら期待度85以上をすべて表示")
+check(mixed.applying(mode: .curated, profession: .designer).map(\.id) == ["high-designer"],
+      "CURATED は期待度85以上かつ職種向けだけ")
+
+// MARK: - モードの保存(ウィジェットと共有)
+
+SharedStore.defaults.removeObject(forKey: "feedMode")
+SharedStore.defaults.removeObject(forKey: "profession")
+check(ModePreferences.mode == .discovered, "未保存なら DISCOVERED")
+check(ModePreferences.profession == nil, "未保存なら職種なし")
+ModePreferences.mode = .curated
+ModePreferences.profession = .writer
+check(ModePreferences.mode == .curated, "モードを保存して読み戻せる")
+check(ModePreferences.profession == .writer, "職種を保存して読み戻せる")
+ModePreferences.profession = nil
+check(ModePreferences.profession == nil, "職種を未選択に戻せる")
+SharedStore.defaults.removeObject(forKey: "feedMode")
+SharedStore.defaults.removeObject(forKey: "profession")
+
 // MARK: -
 
 if failures == 0 {
