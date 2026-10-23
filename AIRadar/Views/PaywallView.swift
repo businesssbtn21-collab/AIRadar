@@ -26,7 +26,8 @@ struct PaywallView: View {
                 .padding(.horizontal, 32)
 
             VStack(alignment: .leading, spacing: 12) {
-                featureRow("新着・更新フィード(全12カテゴリ)")
+                featureRow("新着・更新フィード(全13カテゴリ)")
+                featureRow("DISCOVERED / CURATED の2モード(職種別の厳選)")
                 featureRow("期待度・注目度スコアとツール比較")
                 featureRow("ホーム画面・ロック画面ウィジェット")
                 featureRow("新着・急上昇の通知")

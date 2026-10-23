@@ -3,6 +3,8 @@ import UserNotifications
 
 struct ContentView: View {
     @EnvironmentObject private var store: FeedStore
+    @EnvironmentObject private var settings: AppSettings
+    @State private var showProfessionPicker = false
     @State private var selectedCategory: ServiceCategory?
     @State private var showSettings = false
     @State private var showFilter = false
@@ -12,12 +14,34 @@ struct ContentView: View {
     @State private var showNotificationPrimer = false
 
     private var filteredItems: [AIServiceItem] {
-        store.items.applying(filter, searchText: searchText, category: selectedCategory)
+        store.items
+            .applying(mode: settings.mode, profession: settings.profession)
+            .applying(filter, searchText: searchText, category: selectedCategory)
+    }
+
+    /// CURATED で、検索やフィルタではなく厳選の条件そのもので0件になっている状態
+    private var isCuratedEmpty: Bool {
+        settings.mode == .curated && filteredItems.isEmpty && !store.items.isEmpty
+            && selectedCategory == nil && !filter.isActive
+            && searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+
+    /// CURATED に切り替えたとき、職種が未選択なら選んでもらう
+    private var modeSelection: Binding<FeedMode> {
+        Binding {
+            settings.mode
+        } set: { newMode in
+            settings.mode = newMode
+            if newMode == .curated && settings.profession == nil {
+                showProfessionPicker = true
+            }
+        }
     }
 
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
+                modeSwitcher
                 categoryFilter
                 list
             }
@@ -45,6 +69,9 @@ struct ContentView: View {
             .sheet(isPresented: $showFilter) {
                 FilterSheet(filter: $filter)
             }
+            .sheet(isPresented: $showProfessionPicker) {
+                ProfessionPickerSheet(selection: $settings.profession)
+            }
             .task {
                 // 一覧が表示されてから、理由を説明した上で通知許可を尋ねる(HIG推奨: 起動直後の唐突な許可要求を避ける)
                 if !hasRespondedToNotificationPrimer && !store.items.isEmpty {
@@ -71,6 +98,39 @@ struct ContentView: View {
                 Text("新しいAIサービスの登場や、注目度の急上昇があった時にお知らせします。設定はいつでも変更できます。")
             }
         }
+    }
+
+    private var modeSwitcher: some View {
+        VStack(spacing: 6) {
+            Picker("モード", selection: modeSelection) {
+                ForEach(FeedMode.allCases) { mode in
+                    Text(mode.label).tag(mode)
+                }
+            }
+            .pickerStyle(.segmented)
+
+            if settings.mode == .curated {
+                Button {
+                    showProfessionPicker = true
+                } label: {
+                    HStack(spacing: 4) {
+                        Image(systemName: (settings.profession ?? .general).icon)
+                        Text("期待度85以上 × \((settings.profession ?? .general).label)")
+                        Text("変更")
+                            .foregroundStyle(Color.accentColor)
+                    }
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                }
+                .buttonStyle(.plain)
+            } else {
+                Text("新しいAIツールをいち早く、すべて表示")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+        }
+        .padding(.horizontal)
+        .padding(.top, 8)
     }
 
     private var categoryFilter: some View {
@@ -116,7 +176,18 @@ struct ContentView: View {
                     .foregroundStyle(.secondary)
                     .listRowSeparator(.hidden)
             }
-            if filteredItems.isEmpty && !store.items.isEmpty {
+            if isCuratedEmpty {
+                ContentUnavailableView {
+                    Label("あなたの職種向けの厳選情報はまだありません", systemImage: "sparkles")
+                } description: {
+                    Text("期待度85以上のものだけを表示しています")
+                } actions: {
+                    Button("DISCOVERED で見る") {
+                        settings.mode = .discovered
+                    }
+                }
+                .listRowSeparator(.hidden)
+            } else if filteredItems.isEmpty && !store.items.isEmpty {
                 ContentUnavailableView(
                     "該当するサービスがありません",
                     systemImage: "magnifyingglass",

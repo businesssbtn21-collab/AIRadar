@@ -8,6 +8,31 @@ struct SettingsScreen: View {
     var body: some View {
         NavigationStack {
             Form {
+                Section {
+                    Picker("モード", selection: $settings.mode) {
+                        ForEach(FeedMode.allCases) { mode in
+                            Text(mode.label).tag(mode)
+                        }
+                    }
+                    .pickerStyle(.segmented)
+                    if settings.mode == .curated {
+                        // 未選択は「その他(全般)」と同じ扱いなので、そのように見せる
+                        Picker("職種", selection: Binding {
+                            settings.profession ?? .general
+                        } set: {
+                            settings.profession = $0
+                        }) {
+                            ForEach(Profession.allCases) { profession in
+                                Text(profession.label).tag(profession)
+                            }
+                        }
+                    }
+                } header: {
+                    Text("モード")
+                } footer: {
+                    Text("DISCOVERED: 新しいAIツールをいち早く、すべて届けます。\nCURATED: 選んだ職種に役立つ、期待度85以上のものだけを届けます。\n一覧・通知・ウィジェットのすべてに反映されます。")
+                }
+
                 Section("データソース") {
                     Picker("取得元", selection: $settings.dataSource) {
                         ForEach(DataSource.allCases) { source in
