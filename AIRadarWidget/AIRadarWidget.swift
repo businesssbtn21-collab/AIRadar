@@ -48,11 +48,16 @@ struct FeedTimelineProvider: AppIntentTimelineProvider {
     }
 
     private func makeEntry(for configuration: WidgetFilterIntent, from all: [AIServiceItem]) -> FeedEntry {
-        let filtered = all.applying(configuration)
+        // アプリで選んだモード(CURATED なら厳選分だけ)を先にかけ、その上にウィジェット個別の絞り込みを重ねる
+        let mode = ModePreferences.mode
+        let filtered = all
+            .applying(mode: mode, profession: ModePreferences.profession)
+            .applying(configuration)
+        let labels = [mode == .curated ? "厳選" : nil, configuration.summaryLabel].compactMap { $0 }
         return FeedEntry(
             date: Date(),
             items: filtered,
-            filterLabel: configuration.summaryLabel,
+            filterLabel: labels.isEmpty ? nil : labels.joined(separator: "・"),
             filteredOutEverything: filtered.isEmpty && !all.isEmpty
         )
     }
