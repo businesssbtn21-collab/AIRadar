@@ -1,4 +1,5 @@
 import SwiftUI
+import StoreKit
 import UserNotifications
 
 struct ContentView: View {
@@ -12,6 +13,7 @@ struct ContentView: View {
     @State private var filter = FilterOptions()
     @AppStorage("hasRespondedToNotificationPrimer") private var hasRespondedToNotificationPrimer = false
     @State private var showNotificationPrimer = false
+    @Environment(\.requestReview) private var requestReview
 
     private var filteredItems: [AIServiceItem] {
         store.items
@@ -77,6 +79,7 @@ struct ContentView: View {
                 if !hasRespondedToNotificationPrimer && !store.items.isEmpty {
                     showNotificationPrimer = true
                 }
+                await requestReviewIfAppropriate()
             }
             .onChange(of: store.items.isEmpty) { _, isEmpty in
                 if !isEmpty && !hasRespondedToNotificationPrimer {
@@ -98,6 +101,19 @@ struct ContentView: View {
                 Text("新しいAIサービスの登場や、注目度の急上昇があった時にお知らせします。設定はいつでも変更できます。")
             }
         }
+    }
+
+    /// しばらく使ってもらった人にだけ、一覧を見てもらった後で App Store の評価をお願いする。
+    /// 通知許可の案内とは重ねない。
+    private func requestReviewIfAppropriate() async {
+        ReviewPromptTracker.recordLaunch()
+        let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
+        guard hasRespondedToNotificationPrimer, !store.items.isEmpty,
+              ReviewPromptTracker.shouldRequestNow(currentVersion: version) else { return }
+        try? await Task.sleep(nanoseconds: 3_000_000_000)
+        guard !Task.isCancelled else { return }
+        ReviewPromptTracker.markRequested(version: version)
+        requestReview()
     }
 
     private var modeSwitcher: some View {

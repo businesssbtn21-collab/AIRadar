@@ -98,6 +98,32 @@ check(ModePreferences.profession == nil, "職種を未選択に戻せる")
 SharedStore.defaults.removeObject(forKey: "feedMode")
 SharedStore.defaults.removeObject(forKey: "profession")
 
+// MARK: - 評価のお願いを出すタイミング
+
+let day: TimeInterval = 24 * 60 * 60
+let installed = Date(timeIntervalSince1970: 1_800_000_000)
+func shouldAsk(days: Double, launches: Int, asked: String?, current: String = "1.4") -> Bool {
+    ReviewPromptPolicy.shouldRequest(firstLaunch: installed, launchCount: launches,
+                                     lastRequestedVersion: asked, currentVersion: current,
+                                     now: installed.addingTimeInterval(days * day))
+}
+check(!shouldAsk(days: 2.9, launches: 10, asked: nil), "使い始めて3日未満は出さない")
+check(!shouldAsk(days: 5, launches: 4, asked: nil), "起動5回未満は出さない")
+check(shouldAsk(days: 3, launches: 5, asked: nil), "3日以上・5回以上で初めてなら出す")
+check(!shouldAsk(days: 30, launches: 50, asked: "1.4"), "同じバージョンでは2回出さない")
+check(shouldAsk(days: 30, launches: 50, asked: "1.3.1"), "新しいバージョンならまた出せる")
+
+let reviewDefaults = UserDefaults(suiteName: "airadar.curation_check.review")!
+reviewDefaults.removePersistentDomain(forName: "airadar.curation_check.review")
+ReviewPromptTracker.defaults = reviewDefaults
+for i in 0..<5 { ReviewPromptTracker.recordLaunch(now: installed.addingTimeInterval(Double(i) * day)) }
+check(ReviewPromptTracker.shouldRequestNow(currentVersion: "1.4", now: installed.addingTimeInterval(4 * day)),
+      "起動を記録すると条件を満たす(初回起動日は最初の記録)")
+ReviewPromptTracker.markRequested(version: "1.4")
+check(!ReviewPromptTracker.shouldRequestNow(currentVersion: "1.4", now: installed.addingTimeInterval(9 * day)),
+      "お願いしたバージョンを記録する")
+reviewDefaults.removePersistentDomain(forName: "airadar.curation_check.review")
+
 // MARK: -
 
 if failures == 0 {
