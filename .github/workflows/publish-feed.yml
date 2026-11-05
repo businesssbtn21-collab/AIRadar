@@ -1,11 +1,14 @@
-# クラウドのルーティンが claude/feed-auto に置いたフィードの候補を、点検してから main に反映する。
+# クラウドのルーティンが claude/feed-* に置いたフィードの候補を、点検してから main に反映する。
 #
 # ルーティンは main に直接書かない。ここで「変わったのがフィードの2ファイルだけか」
 # 「アプリが読める形か」「追加の件数が上限内か」を確かめ、通ったものだけを早送りで main に載せる。
-# 定期実行は常に main 側のこのファイルで動くので、候補ブランチから点検を書き換えることはできない。
+# 候補は毎回別の名前(claude/feed-日付)で置かれる。反映済みの候補と、main から外れてもう反映できない候補はここで消す。
+# 候補が置かれた時点で動く。定期実行は取りこぼしたときの予備(GitHub の定期実行は飛ばされることがある)。
 name: Publish feed
 
 on:
+  push:
+    branches: ["claude/feed-*"]
   schedule:
     - cron: "20 * * * *"
   workflow_dispatch:
@@ -29,20 +32,18 @@ jobs:
       - name: Find candidate
         id: candidate
         run: |
-          if ! git fetch --quiet origin claude/feed-auto; then
-            echo "候補ブランチなし"
+          git fetch --quiet origin '+refs/heads/claude/feed-*:refs/remotes/origin/claude/feed-*'
+          candidate=""
+          # 新しい順に見て、main から早送りできる最初のものを候補にする
+          for ref in $(git for-each-ref --sort=-committerdate --format='%(refname:short)' 'refs/remotes/origin/claude/feed-*'); do
+            sha=$(git rev-parse "$ref")
+            if git merge-base --is-ancestor "$sha" HEAD; then continue; fi
+            if git merge-base --is-ancestor HEAD "$sha"; then candidate="$sha"; echo "候補: $ref ($sha)"; break; fi
+          done
+          if [ -z "$candidate" ]; then
+            echo "反映する候補なし"
             echo "skip=true" >> "$GITHUB_OUTPUT"
             exit 0
-          fi
-          candidate=$(git rev-parse FETCH_HEAD)
-          if git merge-base --is-ancestor "$candidate" HEAD; then
-            echo "反映済み"
-            echo "skip=true" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-          if ! git merge-base --is-ancestor HEAD "$candidate"; then
-            echo "::error::claude/feed-auto が最新の main から作られていない(早送りできない)"
-            exit 1
           fi
           for f in $(git diff --name-only HEAD "$candidate"); do
             case "$f" in
@@ -65,3 +66,17 @@ jobs:
       - name: Publish to main
         if: steps.candidate.outputs.skip != 'true'
         run: git push origin "${{ steps.candidate.outputs.sha }}:refs/heads/main"
+
+      - name: Clean up candidates
+        if: always()
+        run: |
+          git fetch --quiet origin main
+          main=$(git rev-parse origin/main)
+          for ref in $(git for-each-ref --format='%(refname:short)' 'refs/remotes/origin/claude/feed-*'); do
+            sha=$(git rev-parse "$ref")
+            # 反映済み、または main から外れて二度と早送りできないものだけ消す(反映待ちは残す)
+            if git merge-base --is-ancestor "$sha" "$main" || ! git merge-base --is-ancestor "$main" "$sha"; then
+              git push --quiet origin --delete "${ref#origin/}" || true
+              echo "片付け: ${ref#origin/}"
+            fi
+          done

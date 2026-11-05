@@ -21,9 +21,9 @@ description: AIレーダー(AIRadar)の配信フィードを更新する。「�
 
 毎朝、クラウドのルーティン(Claude Code の scheduled task)がこのスキルに沿って候補を作る。**ルーティンは main に直接書かない。**
 
-1. ルーティンが `origin/main` から `claude/feed-auto` を作り直し、追加分をコミットして `git push --force origin claude/feed-auto`
-2. GitHub Actions の `Publish feed`(`.github/workflows/publish-feed.yml`、毎時20分)が、変わったのがフィードの2ファイルだけか・`tools/validate_feed.py --base` に通るかを確かめ、通ったら main に早送りで反映する
-3. 点検に落ちたら main は変わらない(購入者には何も届かない)。GitHub から失敗のメールが届く。次のルーティンが main から作り直すので、落ちた候補は自然に捨てられる
+1. ルーティンが `origin/main` から毎回新しい名前のブランチ `claude/feed-YYYYMMDD-HHMM`(UTC)を作り、追加分をコミットして普通に push する(上書きの push はクラウドの安全装置に止められるので使わない)
+2. GitHub Actions の `Publish feed`(`.github/workflows/publish-feed.yml`)が push された時点で動き、main から早送りできる一番新しい候補について、変わったのがフィードの2ファイルだけか・`tools/validate_feed.py --base` に通るかを確かめ、通ったら main に反映する。毎時20分の定期実行は予備(GitHub の定期実行はよく飛ばされる)
+3. 点検に落ちたら main は変わらない(購入者には何も届かない)。GitHub から失敗のメールが届く。反映済みの候補と、main から外れて反映できなくなった候補は Actions が消す
 
 ルーティンの決まり(点検スクリプトでも機械的に止める):
 
