@@ -1,5 +1,207 @@
 [
   {
+    "id": "gemini-api-computer-use-ga",
+    "name": "Gemini API Computer Use",
+    "provider": "Google",
+    "category": "agent",
+    "summary": "Gemini APIの「PC操作」機能が正式版に。AIが画面を見ながらクリックや入力をして、ブラウザやアプリの作業を代わりに進める仕組みを、自社のサービスに組み込める。追加料金はなく通常の利用料のみ。",
+    "changeNote": "AIにPC操作をさせる機能が正式版に",
+    "kind": "update",
+    "expectationScore": 78,
+    "attentionScore": 64,
+    "date": "2026-10-30T09:00:00Z",
+    "url": "https://aistudio.google.com/docs/changelog",
+    "professions": [
+      "engineer"
+    ]
+  },
+  {
+    "id": "elevenlabs-sfx-v3",
+    "name": "ElevenLabs SFX v3",
+    "provider": "ElevenLabs",
+    "category": "audioMusic",
+    "summary": "文章で指示するだけで効果音を作れるモデルの最新版。1つの指示に複数の音を盛り込んでも再現されやすくなり、音楽や声を含む効果音もより自然に。スマホアプリとAPIで使える。",
+    "changeNote": "複数の音を1回で作れる効果音AIの新版",
+    "kind": "update",
+    "expectationScore": 76,
+    "attentionScore": 62,
+    "date": "2026-10-29T15:00:00Z",
+    "url": "https://elevenlabs.io/blog/sound-effects-v3",
+    "professions": [
+      "videoCreator",
+      "marketer"
+    ]
+  },
+  {
+    "id": "mistral-large-4-open-weights",
+    "name": "Mistral Large 4",
+    "provider": "Mistral AI",
+    "category": "chat",
+    "summary": "Mistral AIの約1兆パラメータの大型モデル。中身(重み)が公開され、自社のサーバーで動かせるようになった。コーディングとセキュリティ分野に強い。商用利用もできる(AIをサービスとして提供する企業は別契約)。",
+    "changeNote": "1兆パラメータの大型モデルの中身を公開",
+    "kind": "update",
+    "expectationScore": 82,
+    "attentionScore": 76,
+    "date": "2026-10-29T12:00:00Z",
+    "url": "https://mistral.ai/news/mistral-large-4-oss/",
+    "professions": [
+      "engineer",
+      "founder"
+    ]
+  },
+  {
+    "id": "office-in-copilot",
+    "name": "Office in Copilot",
+    "provider": "Microsoft",
+    "category": "other",
+    "summary": "Microsoft CopilotアプリでWord・Excel・PowerPointのファイルを作成・編集・共同作業できるようになる。アプリを行き来せず、AIに頼みながら資料作りを進められる。仕事用のMicrosoft 365 Copilot Chat向けに、11月中旬から世界で順次提供。",
+    "changeNote": "CopilotアプリでOfficeファイルを編集可能に",
+    "kind": "update",
+    "expectationScore": 78,
+    "attentionScore": 72,
+    "date": "2026-10-29T09:00:00Z",
+    "url": "https://mc.merill.net/message/MC1530611",
+    "professions": [
+      "backOffice",
+      "sales",
+      "founder"
+    ]
+  },
+  {
+    "id": "provoice",
+    "name": "ProVoice",
+    "provider": "ワンダフルフライ",
+    "category": "audioMusic",
+    "summary": "登録不要・月額なしで、30分50円から使える文字起こし・要約サービス。ブラウザで録音するか音声ファイルを上げるだけで、商談や会議の内容をAIが文字にして要約する。データは72時間で自動削除。",
+    "changeNote": "登録不要・30分50円からの文字起こし・要約",
+    "kind": "new",
+    "expectationScore": 70,
+    "attentionScore": 38,
+    "date": "2026-10-29T06:00:00Z",
+    "url": "https://provoice.saasforce.jp/",
+    "professions": [
+      "sales",
+      "backOffice",
+      "writer"
+    ]
+  },
+  {
+    "id": "gemini-4-carbon",
+    "name": "Gemini 4 Carbon",
+    "provider": "Google",
+    "category": "chat",
+    "summary": "Googleの次期最上位モデル。AIの総合性能の指標で首位を取り、特にセキュリティと長時間かかる作業に強い。まずはサイバー防御の担当者に先行提供し、開発者・企業・一般向けは近日提供予定。",
+    "changeNote": "最上位の新モデルを発表(一般提供は近日)",
+    "kind": "new",
+    "expectationScore": 88,
+    "attentionScore": 92,
+    "date": "2026-10-28T16:00:00Z",
+    "url": "https://www.gizmodo.jp/article/2610-gemini-4-carbon/",
+    "professions": [
+      "engineer",
+      "student"
+    ]
+  },
+  {
+    "id": "saihai",
+    "name": "采配(SAIHAI)",
+    "provider": "J.NOVA",
+    "category": "agent",
+    "summary": "社員100人までの会社向けの「社長のAI右腕」。入金の遅れや承認待ち、資金不足の見込みなど、今日判断すべきことを毎朝LINEで届ける。社員はLINEから打刻・経費・日報を送れ、請求・勤怠・給与・資金繰りもまとめて管理できる。無料プランあり。",
+    "changeNote": "今日の判断事項を毎朝LINEで社長に届けるAI",
+    "kind": "new",
+    "expectationScore": 72,
+    "attentionScore": 40,
+    "date": "2026-10-27T14:50:00Z",
+    "url": "https://prtimes.jp/main/html/rd/p/000000001.000193400.html",
+    "professions": [
+      "founder",
+      "backOffice"
+    ]
+  },
+  {
+    "id": "upsider-mcp",
+    "name": "UPSIDER MCPサーバー",
+    "provider": "UPSIDER",
+    "category": "pluginSkill",
+    "summary": "法人カード「UPSIDER」の利用明細を、AIエージェントから集計・分析したり、領収書を決済にひも付けたりできる接続口。月次締め前の支出確認や、領収書の付け忘れの洗い出しに使える。β版で一部の企業から提供。",
+    "changeNote": "法人カードの明細をAIから集計・照合(β版)",
+    "kind": "new",
+    "expectationScore": 70,
+    "attentionScore": 42,
+    "date": "2026-10-27T02:00:00Z",
+    "url": "https://prtimes.jp/main/html/rd/p/000000282.000076272.html",
+    "professions": [
+      "backOffice",
+      "founder"
+    ]
+  },
+  {
+    "id": "gpt-6-1-terra",
+    "name": "GPT-6.1 Terra",
+    "provider": "OpenAI",
+    "category": "chat",
+    "summary": "OpenAIの中位モデル。画面を見てアプリを操作する「PC操作」が得意で、企画書の下書き、図面の読み取り、フォーム入力など日々の事務作業に向く。ChatGPT Work と Codex(Plus・Pro・Enterprise・Edu)とAPIで使え、API料金は従来の半額。",
+    "changeNote": "PC操作が得意な中位モデル、料金は半額に",
+    "kind": "update",
+    "expectationScore": 88,
+    "attentionScore": 86,
+    "date": "2026-10-26T17:00:00Z",
+    "url": "https://9to5mac.com/2026/10/26/openai-upgrades-chatgpt-and-codex-with-new-gpt-6-1-terra-model/",
+    "professions": [
+      "all"
+    ]
+  },
+  {
+    "id": "agent-skills-aaif",
+    "name": "Agent Skills(業界団体へ移管)",
+    "provider": "Anthropic",
+    "category": "pluginSkill",
+    "summary": "AIに専門知識や作業手順を覚えさせる「スキル」の共通規格を、AnthropicがLinux Foundation傘下の業界団体に寄贈。ChatGPT・Cursor・GitHub Copilot・VS Codeなど70以上のツールが対応済みで、1つ作れば複数のAIで使い回しやすくなる。",
+    "changeNote": "AIの「スキル」の規格が業界共通に",
+    "kind": "update",
+    "expectationScore": 74,
+    "attentionScore": 70,
+    "date": "2026-10-22T16:00:00Z",
+    "url": "https://www.anthropic.com/news/donating-agent-skills-to-the-agentic-ai-foundation",
+    "professions": [
+      "engineer"
+    ]
+  },
+  {
+    "id": "magic-moment-playbook-mcp",
+    "name": "Magic Moment Playbook MCP",
+    "provider": "Magic Moment",
+    "category": "pluginSkill",
+    "summary": "商談・電話・メールなどの営業記録をためる「Magic Moment Playbook」に、Claude・ChatGPT・Microsoft Copilotから接続できる機能。AIに案件の状況を聞いたり、提案書やフォローメールの下書きを頼んだりできる(今は読み取りのみ)。",
+    "changeNote": "営業記録をClaude・ChatGPTから呼び出せるように",
+    "kind": "new",
+    "expectationScore": 72,
+    "attentionScore": 40,
+    "date": "2026-10-21T01:00:00Z",
+    "url": "https://magicmoment.jp/playbook/mcp",
+    "professions": [
+      "sales"
+    ]
+  },
+  {
+    "id": "voxtral-3",
+    "name": "Voxtral 3",
+    "provider": "Mistral AI",
+    "category": "audioMusic",
+    "summary": "Mistral AIの音声AIの新版。話者を聞き分ける文字起こし(日本語対応)、声の複製や感情の調整ができる読み上げ、電話や会議で使える音声エージェントの開発キットをまとめて公開。",
+    "changeNote": "日本語対応の文字起こし・読み上げを一新",
+    "kind": "update",
+    "expectationScore": 76,
+    "attentionScore": 60,
+    "date": "2026-10-20T12:00:00Z",
+    "url": "https://mistral.ai/news/voxtral-3/",
+    "professions": [
+      "engineer",
+      "videoCreator"
+    ]
+  },
+  {
     "id": "videogen-model-1",
     "name": "VideoGen Model 1",
     "provider": "VideoGen",
