@@ -1,5 +1,62 @@
 [
   {
+    "id": "gemini-omni-1-2-flash",
+    "name": "Gemini Omni 1.2 Flash",
+    "provider": "Google",
+    "category": "videoGeneration",
+    "summary": "Googleの動画生成モデルの新版。作れる動画が最長15秒に延び、会話しながら手直しできる。参考画像への忠実さも向上し、料金は前版より30%安い。開発者向けAPIで正式提供。",
+    "changeNote": "動画が15秒に延び、料金も3割安く",
+    "kind": "update",
+    "expectationScore": 74,
+    "attentionScore": 62,
+    "date": "2026-11-05T17:00:00Z",
+    "url": "https://blog.google/innovation-and-ai/technology/developers-tools/introducing-gemini-omni-1-2-flash/",
+    "professions": [
+      "videoCreator",
+      "marketer",
+      "designer",
+      "engineer"
+    ]
+  },
+  {
+    "id": "google-vids-omni-1-2-flash",
+    "name": "Google Vids の15秒AI動画",
+    "provider": "Google",
+    "category": "videoGeneration",
+    "summary": "Google Vidsで、AIが作る動画クリップを最長15秒まで追加料金なしで作れるようになった。場面のつながりも保ちやすい。Googleアカウントか Workspace があれば使える。",
+    "changeNote": "Vidsで15秒のAI動画が追加料金なしに",
+    "kind": "update",
+    "expectationScore": 66,
+    "attentionScore": 50,
+    "date": "2026-11-05T20:00:00Z",
+    "url": "https://blog.google/products-and-platforms/products/workspace/omni-1-2-flash-google-vids/",
+    "professions": [
+      "marketer",
+      "sales",
+      "founder",
+      "videoCreator"
+    ]
+  },
+  {
+    "id": "gemini-sketch-to-app-canvas",
+    "name": "Gemini 手描きスケッチからアプリ作成",
+    "provider": "Google",
+    "category": "coding",
+    "summary": "手描きのスケッチを撮影して Gemini に渡し、Canvas で「このアプリを作って」と頼むと、動くアプリを作ってくれる。プレビューを見ながら色や機能を言葉で直せる。",
+    "changeNote": "手描きの絵から動くアプリを作れる",
+    "kind": "update",
+    "expectationScore": 62,
+    "attentionScore": 55,
+    "date": "2026-11-05T17:00:00Z",
+    "url": "https://blog.google/innovation-and-ai/products/gemini-app/turn-drawings-into-apps-gemini/",
+    "professions": [
+      "founder",
+      "designer",
+      "student",
+      "engineer"
+    ]
+  },
+  {
     "id": "shiftel-inbound-callcenter",
     "name": "shiftel(シフテル)",
     "provider": "DmMiX",
