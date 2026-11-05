@@ -1,5 +1,73 @@
 [
   {
+    "id": "shiftel-inbound-callcenter",
+    "name": "shiftel(シフテル)",
+    "provider": "DmMiX",
+    "category": "agent",
+    "summary": "コールセンターの電話対応をAIが担当するサービス。かかってきた電話に24時間応じ、簡単な質問に答え、難しい案件や人を希望する相手はオペレーターへ転送。通話後は履歴と要約も自動で残す。",
+    "changeNote": "電話の一次対応をAIが24時間引き受ける",
+    "kind": "new",
+    "expectationScore": 66,
+    "attentionScore": 50,
+    "date": "2026-11-05T06:30:00Z",
+    "url": "https://prtimes.jp/main/html/rd/p/000000087.000037421.html",
+    "professions": [
+      "sales",
+      "backOffice",
+      "founder"
+    ]
+  },
+  {
+    "id": "gemini-3-8-tts-voice-remix",
+    "name": "Gemini 3.8 TTS 声のリミックス",
+    "provider": "Google",
+    "category": "audioMusic",
+    "summary": "AIの読み上げ音声を、文章で指示して作り替えられる機能。用意された声や自作した声に「もっと落ち着いた調子で」などと頼むだけで変えられる。Gemini APIの開発者向け。",
+    "changeNote": "読み上げの声を文章の指示で調整できる",
+    "kind": "update",
+    "expectationScore": 62,
+    "attentionScore": 48,
+    "date": "2026-11-04T09:00:00Z",
+    "url": "https://aistudio.google.com/docs/changelog",
+    "professions": [
+      "engineer",
+      "videoCreator"
+    ]
+  },
+  {
+    "id": "gemini-api-cli-beta",
+    "name": "Gemini API CLI",
+    "provider": "Google",
+    "category": "coding",
+    "summary": "Gemini APIをコマンド入力だけで呼び出せる開発者向けの道具(ベータ版)。会話の記憶を持たない単純な作りで、AIエージェントや自動処理のスクリプト、CIでの利用を想定している。",
+    "changeNote": "Gemini APIをコマンドで使える道具のベータ版",
+    "kind": "new",
+    "expectationScore": 60,
+    "attentionScore": 45,
+    "date": "2026-10-27T09:00:00Z",
+    "url": "https://aistudio.google.com/docs/changelog",
+    "professions": [
+      "engineer"
+    ]
+  },
+  {
+    "id": "kimi-k3-1-pro",
+    "name": "Kimi K3.1 Pro",
+    "provider": "Moonshot AI",
+    "category": "chat",
+    "summary": "中国のMoonshot AIが公開した大型モデルの新版。長い資料を一度に読めて、プログラム開発や長時間の自動作業、財務の分析を得意とする。高速版も同時に登場。公式アプリとAPIで使える。",
+    "changeNote": "コーディングに強い大型モデルの新版",
+    "kind": "update",
+    "expectationScore": 74,
+    "attentionScore": 70,
+    "date": "2026-10-23T09:00:00Z",
+    "url": "https://www.vals.ai/models/kimi_kimi-k3.1-pro",
+    "professions": [
+      "engineer",
+      "founder"
+    ]
+  },
+  {
     "id": "gemini-api-computer-use-ga",
     "name": "Gemini API Computer Use",
     "provider": "Google",
