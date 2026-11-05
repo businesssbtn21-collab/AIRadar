@@ -18,6 +18,7 @@
 
 - **カテゴリなどの列挙型を増やすとき**: 旧バージョンのアプリが解析に失敗しないか必ず確認する。1.3以降は未知のカテゴリを `other` として読む
 - **配信フィードは2本立て**: `feed-v2.json`(1.3以降が読む本体) と `feed.json`(1.2以前向け。`tools/build_legacy_feed.py` で生成)。feed.json は手で編集しない → `/airadar-feed`
+- **フィードは毎朝自動で更新される**: クラウドのルーティンが `claude/feed-auto` に候補を置き、GitHub Actions(`.github/workflows/publish-feed.yml`)が `tools/validate_feed.py` で点検して main に反映する。点検の決まりを変えるときは、スクリプトとスキルの両方を直す
 - **App Intents の `AppEnum`**: `caseDisplayRepresentations` は静的な辞書リテラルで全ケース書く(他の列挙型から生成するとビルドが通らない)
 - **中国本土ストア対応**: `Shared/ChinaStorefrontPolicy.swift` が未許認可の生成AIサービス(ChatGPT/OpenAI/Gemini/Claude/Anthropic/Midjourney)に触れる項目を非表示にする。アプリの説明文・キーワード・スクショにもこれらの名前を書かない(Guideline 5)
 - **隠し機能を足さない**(Guideline 2.3.1)。開発者本人の無料利用はオファーコードで行う
