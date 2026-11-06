@@ -135,6 +135,26 @@ FeedSync.saveUnlocked(false, checkedInForeground: true)
 check(!FeedSync.isUnlocked, "画面に出ているときの確認なら未購入を書き込む(返金など)")
 SharedStore.defaults.removeObject(forKey: "isUnlocked")
 
+// MARK: - 1.1以前の有料版の購入者(originalAppVersion はビルド番号)
+
+check(LegacyPurchasePolicy.isLegacyPaidPurchase(originalAppVersion: "1"), "ビルド1(1.0)は旧購入者")
+check(LegacyPurchasePolicy.isLegacyPaidPurchase(originalAppVersion: "2"), "ビルド2(1.1)は旧購入者")
+check(!LegacyPurchasePolicy.isLegacyPaidPurchase(originalAppVersion: "3"), "ビルド3(1.2、無料化後)は旧購入者ではない")
+check(!LegacyPurchasePolicy.isLegacyPaidPurchase(originalAppVersion: "14"), "ビルド14は旧購入者ではない")
+check(!LegacyPurchasePolicy.isLegacyPaidPurchase(originalAppVersion: ""), "読めない値は旧購入者として扱わない")
+
+// MARK: - 詳細画面で開くリンク(http/https だけ)
+
+func linked(_ url: String) -> AIServiceItem {
+    AIServiceItem(id: "u", name: "u", provider: "p", category: .other, summary: "", changeNote: "",
+                  kind: .new, expectationScore: 50, attentionScore: 50, date: Date(), url: URL(string: url))
+}
+check(linked("https://example.com/a").webURL != nil, "https のリンクは開ける")
+check(linked("http://example.com").webURL != nil, "http のリンクは開ける")
+check(linked("javascript:alert(1)").webURL == nil, "javascript: は開かない")
+check(linked("tel:0120000000").webURL == nil, "電話などほかのアプリを起動するリンクは開かない")
+check(linked("file:///etc/hosts").webURL == nil, "file: は開かない")
+
 // MARK: -
 
 if failures == 0 {

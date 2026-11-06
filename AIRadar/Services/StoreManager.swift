@@ -63,10 +63,6 @@ final class StoreManager: ObservableObject {
                               checkedInForeground: UIApplication.shared.applicationState != .background)
     }
 
-    /// 1.1以前は買い切り有料アプリ(980円)として配信していたため、そのバージョンで
-    /// ダウンロード済みのユーザーには新しいApp内課金を求めず、引き続き全機能を使えるようにする。
-    private static let lastPaidAppVersion = "1.1"
-
     /// AppTransactionの取得は通信状況によっては応答が返らないことがある。
     /// Paywallが出ないまま待たされるのを避けるため、数秒で打ち切って「旧購入者ではない」扱いにする。
     private func purchasedUnderLegacyPaidAppModel() async -> Bool {
@@ -90,18 +86,7 @@ final class StoreManager: ObservableObject {
         // Sandbox(App Reviewの審査環境を含む)では originalAppVersion が常に "1.0" になり、
         // 誰でも旧有料版の購入者と誤判定されてPaywallが出なくなる。本番のみで判定する。
         guard appTransaction.environment == .production else { return false }
-        return isVersion(appTransaction.originalAppVersion, olderThanOrEqualTo: lastPaidAppVersion)
-    }
-
-    private static func isVersion(_ version: String, olderThanOrEqualTo threshold: String) -> Bool {
-        let v = version.split(separator: ".").compactMap { Int($0) }
-        let t = threshold.split(separator: ".").compactMap { Int($0) }
-        for i in 0..<max(v.count, t.count) {
-            let vi = i < v.count ? v[i] : 0
-            let ti = i < t.count ? t[i] : 0
-            if vi != ti { return vi < ti }
-        }
-        return true
+        return LegacyPurchasePolicy.isLegacyPaidPurchase(originalAppVersion: appTransaction.originalAppVersion)
     }
 
     func purchase() async {

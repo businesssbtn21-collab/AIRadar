@@ -96,7 +96,7 @@ struct ServiceDetailScreen: View {
                 Text(item.summary)
             }
 
-            if let url = item.url {
+            if let url = item.webURL {
                 Section {
                     Link(destination: url) {
                         Label("公式サイトを開く", systemImage: "safari")

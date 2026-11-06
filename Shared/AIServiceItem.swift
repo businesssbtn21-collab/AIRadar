@@ -117,6 +117,13 @@ struct AIServiceItem: Codable, Identifiable, Equatable, Hashable {
         expectationScore >= Self.curatedMinimumScore && isRelevant(to: profession)
     }
 
+    /// 詳細画面の「公式サイトを開く」に使うリンク。フィードが書き換えられても
+    /// ほかのアプリを起動するリンク(tel: など)を開かないよう、http/https だけを通す
+    var webURL: URL? {
+        guard let url, let scheme = url.scheme?.lowercased(), scheme == "https" || scheme == "http" else { return nil }
+        return url
+    }
+
     /// 期待度ランク: 90以上=S, 75以上=A, それ未満=B
     var rank: String {
         switch expectationScore {
