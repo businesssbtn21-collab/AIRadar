@@ -1,5 +1,60 @@
 [
   {
+    "id": "room-ai-fitting",
+    "name": "Room AI Fitting",
+    "provider": "堀田木工所",
+    "category": "design",
+    "summary": "お客さんの部屋の写真に、家具を置いた完成イメージをAIが作るサービス。家具の種類・大きさ・素材・色を選ぶだけで、色違いの比較もできる。アプリ不要でブラウザから使え、無料プランは10回まで。",
+    "changeNote": "部屋の写真に家具を置いた姿をAIが作る",
+    "kind": "new",
+    "expectationScore": 58,
+    "attentionScore": 40,
+    "date": "2026-11-06T01:00:00Z",
+    "url": "https://prtimes.jp/main/html/rd/p/000000003.000127834.html",
+    "professions": [
+      "sales",
+      "founder",
+      "designer"
+    ]
+  },
+  {
+    "id": "mistral-studio",
+    "name": "Mistral Studio",
+    "provider": "Mistral AI",
+    "category": "agent",
+    "summary": "Mistralが企業向けに出したAI活用の基盤。複数の手順をこなすAIエージェントや、人の承認をはさむ業務の流れ、社内アプリを作って動かせる。自社のクラウドや社内環境にも置ける。",
+    "changeNote": "企業向けにAIエージェントや業務の流れを作る基盤",
+    "kind": "new",
+    "expectationScore": 68,
+    "attentionScore": 55,
+    "date": "2026-11-05T12:00:00Z",
+    "url": "https://mistral.ai/news/build-with-studio/",
+    "professions": [
+      "engineer",
+      "founder",
+      "backOffice"
+    ]
+  },
+  {
+    "id": "chatgpt-images-2-6",
+    "name": "ChatGPT Images 2.6",
+    "provider": "OpenAI",
+    "category": "imageGeneration",
+    "summary": "ChatGPTの画像生成の新版。絵や写真から短い動くGIFを作れ、自分やペットの参考画像を保存して使い回せる。生成は約5割速くなり、開発者向けには速さ重視のFlareと品質重視のSunburstが加わった。",
+    "changeNote": "GIFを作れて生成も5割速く",
+    "kind": "update",
+    "expectationScore": 78,
+    "attentionScore": 75,
+    "date": "2026-11-04T17:00:00Z",
+    "url": "https://www.testingcatalog.com/openai-launches-images-2-6-with-gifs-and-image-reference/",
+    "professions": [
+      "designer",
+      "marketer",
+      "videoCreator",
+      "writer"
+    ]
+  },
+  {
     "id": "gemini-omni-1-2-flash",
     "name": "Gemini Omni 1.2 Flash",
     "provider": "Google",
