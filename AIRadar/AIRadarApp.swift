@@ -63,7 +63,9 @@ struct AIRadarApp: App {
             scheduleRefresh()
             let work = Task {
                 await StoreManager.shared.refreshEntitlements()
-                guard await StoreManager.shared.isUnlocked else {
+                // 裏で起こされたときは購入情報を読めず未購入に見えることがあるので、
+                // 画面に出ていたときに確かめた結果(共有のフラグ)で判断する
+                guard FeedSync.isUnlocked else {
                     refreshTask.setTaskCompleted(success: true)
                     return
                 }

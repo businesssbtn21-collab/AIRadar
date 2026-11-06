@@ -21,8 +21,12 @@ enum FeedSync {
         SharedStore.defaults.set(urlString, forKey: feedURLKey)
     }
 
-    /// 課金済みかどうか。未購入の端末ではウィジェットが勝手に取得しないようにする
-    static func saveUnlocked(_ unlocked: Bool) {
+    /// 課金済みかどうか。未購入の端末ではウィジェットが勝手に取得しないようにする。
+    /// 裏で起こされたとき(ロック中など)は購入情報を読めず未購入に見えることがある。
+    /// そこで購入済みを消すと、次にアプリを開くまでウィジェットが自分で更新しなくなるので、
+    /// 「未購入」への書き換えは画面に出ているときの確認だけで行う
+    static func saveUnlocked(_ unlocked: Bool, checkedInForeground: Bool) {
+        guard unlocked || checkedInForeground else { return }
         SharedStore.defaults.set(unlocked, forKey: unlockedKey)
     }
 

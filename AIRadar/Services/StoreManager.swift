@@ -1,5 +1,6 @@
 import Foundation
 import StoreKit
+import UIKit
 
 /// アプリ本体は無料配布し、全機能のアンロックを非消耗型のApp内課金で販売するためのStoreKit 2ラッパー。
 @MainActor
@@ -58,7 +59,8 @@ final class StoreManager: ObservableObject {
         isUnlocked = unlocked
         hasCheckedEntitlements = true
         // 未購入の端末でウィジェットが勝手にフィードを取りに行かないよう共有しておく
-        FeedSync.saveUnlocked(unlocked)
+        FeedSync.saveUnlocked(unlocked,
+                              checkedInForeground: UIApplication.shared.applicationState != .background)
     }
 
     /// 1.1以前は買い切り有料アプリ(980円)として配信していたため、そのバージョンで

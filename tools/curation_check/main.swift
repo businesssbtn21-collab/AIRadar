@@ -124,6 +124,17 @@ check(!ReviewPromptTracker.shouldRequestNow(currentVersion: "1.4", now: installe
       "お願いしたバージョンを記録する")
 reviewDefaults.removePersistentDomain(forName: "airadar.curation_check.review")
 
+// MARK: - 購入済みフラグ(ウィジェットが自分でフィードを取りに行ってよいか)
+
+SharedStore.defaults.removeObject(forKey: "isUnlocked")
+FeedSync.saveUnlocked(true, checkedInForeground: false)
+check(FeedSync.isUnlocked, "裏で起こされたときの確認でも、購入済みは書き込む")
+FeedSync.saveUnlocked(false, checkedInForeground: false)
+check(FeedSync.isUnlocked, "裏で起こされたときの「未購入」では購入済みを消さない(ロック中などに購入情報を読めないことがある)")
+FeedSync.saveUnlocked(false, checkedInForeground: true)
+check(!FeedSync.isUnlocked, "画面に出ているときの確認なら未購入を書き込む(返金など)")
+SharedStore.defaults.removeObject(forKey: "isUnlocked")
+
 // MARK: -
 
 if failures == 0 {
