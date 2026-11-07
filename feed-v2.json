@@ -1,5 +1,57 @@
 [
   {
+    "id": "maistory-v1",
+    "name": "MaiStory",
+    "provider": "FlowersKnives",
+    "category": "videoGeneration",
+    "summary": "ひとりでAI映画を作れるサービス。AIの助監督と相談しながら、脚本・絵柄・絵コンテ・各場面の画像と動画まで順に進められる。無料で相談だけ試せ、有料は月1,100円から。",
+    "changeNote": "AI助監督と相談しながらひとりでAI映画を作る",
+    "kind": "new",
+    "expectationScore": 55,
+    "attentionScore": 35,
+    "date": "2026-11-07T01:00:00Z",
+    "url": "https://prtimes.jp/main/html/rd/p/000000005.000193963.html",
+    "professions": [
+      "videoCreator",
+      "designer",
+      "writer"
+    ]
+  },
+  {
+    "id": "tencent-hy4",
+    "name": "Tencent Hy4",
+    "provider": "Tencent",
+    "category": "chat",
+    "summary": "テンセントのAIの新版。画像や図表を読み取れるようになり、パソコンの画面を操作して作業する力も加わった。開発者向けの接続口から使え、料金は一部期間で半額。公開予定の重みはまだ出ていない。",
+    "changeNote": "画像を読めて、パソコン操作もできる",
+    "kind": "update",
+    "expectationScore": 62,
+    "attentionScore": 55,
+    "date": "2026-11-04T08:00:00Z",
+    "url": "https://technode.com/2026/11/04/tencent-launches-hy4-with-vision-and-computer-use-capabilities/",
+    "professions": [
+      "engineer",
+      "student"
+    ]
+  },
+  {
+    "id": "copilot-finance-accounting-skills",
+    "name": "Copilot の経理スキル",
+    "provider": "Microsoft",
+    "category": "agent",
+    "summary": "Microsoft Copilotに、帳簿の突き合わせ、仕訳の下書き、予算との比較などを手伝う経理向けの機能が加わった。Excelからも使え、会計ソフトとも連携できる。現在は先行版で、対象は一部の利用者。",
+    "changeNote": "Copilotが仕訳の下書きや帳簿の突き合わせを手伝う",
+    "kind": "update",
+    "expectationScore": 66,
+    "attentionScore": 50,
+    "date": "2026-10-29T16:00:00Z",
+    "url": "https://www.cfodive.com/news/microsoft-expands-copilot-reach-in-finance-workflows/873239/",
+    "professions": [
+      "backOffice",
+      "founder"
+    ]
+  },
+  {
     "id": "room-ai-fitting",
     "name": "Room AI Fitting",
     "provider": "堀田木工所",
