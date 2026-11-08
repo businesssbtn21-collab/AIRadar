@@ -1,5 +1,23 @@
 [
   {
+    "id": "puente-ai-anime-factory-manga",
+    "name": "Puente AI Anime Factory(漫画制作)",
+    "provider": "プエンテ",
+    "category": "imageGeneration",
+    "summary": "AIでアニメを作るサービスに、漫画づくりが加わった。設定の整理、コマ割り、キャラの絵柄をそろえた白黒の絵の生成、吹き出しの配置までを進め、最後は人が確認して直す。料金は内容に応じた個別見積もり。",
+    "changeNote": "アニメ制作サービスに漫画づくりが追加",
+    "kind": "update",
+    "expectationScore": 40,
+    "attentionScore": 30,
+    "date": "2026-11-08T02:48:00Z",
+    "url": "https://prtimes.jp/main/html/rd/p/000000076.000161935.html",
+    "professions": [
+      "marketer",
+      "founder",
+      "designer"
+    ]
+  },
+  {
     "id": "maistory-v1",
     "name": "MaiStory",
     "provider": "FlowersKnives",
