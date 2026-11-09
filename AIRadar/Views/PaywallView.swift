@@ -3,10 +3,6 @@ import StoreKit
 
 /// アプリは無料ダウンロードだが、全機能を使うにはここで非消耗型IAPを購入してもらう。
 struct PaywallView: View {
-    @ObservedObject private var store = StoreManager.shared
-    @State private var isPurchasing = false
-    @State private var isRestoring = false
-
     var body: some View {
         VStack(spacing: 24) {
             Spacer()
@@ -25,82 +21,110 @@ struct PaywallView: View {
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 32)
 
-            VStack(alignment: .leading, spacing: 12) {
-                featureRow("新着・更新フィード(全13カテゴリ)")
-                featureRow("DISCOVERED / CURATED の2モード(職種別の厳選)")
-                featureRow("期待度・注目度スコアとツール比較")
-                featureRow("ホーム画面・ロック画面ウィジェット")
-                featureRow("新着・急上昇の通知")
-            }
-            .padding(.horizontal, 32)
-            .frame(maxWidth: .infinity, alignment: .leading)
+            FeatureList()
+                .padding(.horizontal, 32)
 
             Spacer()
 
-            VStack(spacing: 12) {
-                Button {
-                    Task {
-                        isPurchasing = true
-                        // 商品情報の取得に失敗していても、このボタンから再取得できるようにしておく
-                        if store.product == nil {
-                            await store.loadProduct()
-                        }
-                        if store.product != nil {
-                            await store.purchase()
-                        }
-                        isPurchasing = false
-                    }
-                } label: {
-                    HStack {
-                        if isPurchasing {
-                            ProgressView()
-                                .tint(.white)
-                        } else {
-                            Text(purchaseButtonTitle)
-                                .font(.headline)
-                        }
-                    }
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                }
-                .background(Color.accentColor)
-                .foregroundStyle(.white)
-                .clipShape(RoundedRectangle(cornerRadius: 14))
-                .disabled(isPurchasing || isRestoring)
+            PurchaseSection()
+        }
+    }
+}
 
-                Button {
-                    Task {
-                        isRestoring = true
-                        await store.restore()
-                        isRestoring = false
+/// 購入できる機能の一覧(課金画面とオンボーディングの購入ページで共通)
+struct FeatureList: View {
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            featureRow("新着・更新フィード(全13カテゴリ)")
+            featureRow("DISCOVERED / CURATED の2モード(職種別の厳選)")
+            featureRow("AIに聞いて探せる「AIに聞く」")
+            featureRow("期待度・注目度スコアとツール比較")
+            featureRow("ホーム画面・ロック画面ウィジェット")
+            featureRow("新着・急上昇の通知")
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    private func featureRow(_ text: String) -> some View {
+        HStack(alignment: .top, spacing: 8) {
+            Image(systemName: "checkmark.circle.fill")
+                .foregroundStyle(.green)
+            Text(text)
+                .font(.subheadline)
+        }
+    }
+}
+
+/// 購入・復元のボタンと注意書き(課金画面とオンボーディングの購入ページで共通)
+struct PurchaseSection: View {
+    @ObservedObject private var store = StoreManager.shared
+    @State private var isPurchasing = false
+    @State private var isRestoring = false
+
+    var body: some View {
+        VStack(spacing: 12) {
+            Button {
+                Task {
+                    isPurchasing = true
+                    // 商品情報の取得に失敗していても、このボタンから再取得できるようにしておく
+                    if store.product == nil {
+                        await store.loadProduct()
                     }
-                } label: {
-                    if isRestoring {
+                    if store.product != nil {
+                        await store.purchase()
+                    }
+                    isPurchasing = false
+                }
+            } label: {
+                HStack {
+                    if isPurchasing {
                         ProgressView()
+                            .tint(.white)
                     } else {
-                        Text("購入を復元")
+                        Text(purchaseButtonTitle)
+                            .font(.headline)
                     }
                 }
-                .font(.footnote)
-                .disabled(isPurchasing || isRestoring)
+                .frame(maxWidth: .infinity)
+                .padding()
             }
-            .padding(.horizontal, 24)
+            .background(Color.accentColor)
+            .foregroundStyle(.white)
+            .clipShape(RoundedRectangle(cornerRadius: 14))
+            .disabled(isPurchasing || isRestoring)
+
+            Button {
+                Task {
+                    isRestoring = true
+                    await store.restore()
+                    isRestoring = false
+                }
+            } label: {
+                if isRestoring {
+                    ProgressView()
+                } else {
+                    Text("購入を復元")
+                }
+            }
+            .font(.footnote)
+            .disabled(isPurchasing || isRestoring)
 
             if let message = store.purchaseErrorMessage {
                 Text(message)
                     .font(.caption)
                     .foregroundStyle(.red)
                     .multilineTextAlignment(.center)
-                    .padding(.horizontal, 32)
+                    .padding(.horizontal, 8)
             }
 
             Text("一度購入すると、以後は無料で全機能を使い続けられます。機種変更時は「購入を復元」をご利用ください。")
                 .font(.caption2)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
-                .padding(.horizontal, 32)
-                .padding(.bottom, 16)
+                .padding(.horizontal, 8)
         }
+        .padding(.horizontal, 24)
+        .padding(.bottom, 16)
         .task {
             if store.product == nil {
                 await store.loadProduct()
@@ -113,15 +137,6 @@ struct PaywallView: View {
             return "\(product.displayPrice) でフル機能を解放"
         }
         return "フル機能を解放する"
-    }
-
-    private func featureRow(_ text: String) -> some View {
-        HStack(alignment: .top, spacing: 8) {
-            Image(systemName: "checkmark.circle.fill")
-                .foregroundStyle(.green)
-            Text(text)
-                .font(.subheadline)
-        }
     }
 }
 

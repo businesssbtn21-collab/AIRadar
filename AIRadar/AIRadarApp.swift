@@ -18,6 +18,11 @@ struct AIRadarApp: App {
     @StateObject private var store = FeedStore()
     @StateObject private var storeManager = StoreManager.shared
     @Environment(\.scenePhase) private var scenePhase
+    /// 起動したときに決めて、この起動の間は変えない(購入ページで「見た」と記録しても画面が切り替わらないように)
+    @State private var showOnboarding = OnboardingPolicy.shouldShow(
+        hasSeen: UserDefaults.standard.bool(forKey: OnboardingPolicy.seenKey),
+        isUnlocked: false
+    )
     private let notificationPresenter = NotificationPresenter()
 
     static let refreshTaskID = "com.ryuta.airadar.refresh"
@@ -39,6 +44,8 @@ struct AIRadarApp: App {
                         .task {
                             await store.refresh()
                         }
+                } else if showOnboarding {
+                    OnboardingView()
                 } else {
                     PaywallView()
                 }

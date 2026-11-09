@@ -155,6 +155,61 @@ check(linked("javascript:alert(1)").webURL == nil, "javascript: は開かない"
 check(linked("tel:0120000000").webURL == nil, "電話などほかのアプリを起動するリンクは開かない")
 check(linked("file:///etc/hosts").webURL == nil, "file: は開かない")
 
+// MARK: - 初回のオンボーディングを出す条件
+
+check(OnboardingPolicy.shouldShow(hasSeen: false, isUnlocked: false), "未購入で初めてなら出す")
+check(!OnboardingPolicy.shouldShow(hasSeen: true, isUnlocked: false), "一度見たら次からは出さない(課金画面だけ)")
+check(!OnboardingPolicy.shouldShow(hasSeen: false, isUnlocked: true), "購入済みには出さない")
+
+// MARK: - AI検索: 質問の分解(AIが使えないときの言い換え辞書)
+
+check(SmartSearch.parse("営業で使える新しいツールは？").professions.contains(.sales), "「営業」は営業・接客の職種")
+check(SmartSearch.parse("無料で動画を作れるAI").categories.contains(.videoGeneration), "「動画を作る」は動画生成")
+check(SmartSearch.parse("議事録を文字起こししたい").categories.contains(.audioMusic), "「文字起こし」は音声")
+check(SmartSearch.parse("経理の作業を自動化したい").professions.contains(.backOffice), "「経理」は事務・経理・人事")
+check(SmartSearch.parse("経理の作業を自動化したい").categories.contains(.agent), "「自動化」は自動化・エージェント")
+check(SmartSearch.parse("Mistralの新しいモデル").keywords.contains("mistral"), "英字の名前はキーワードにする")
+check(!SmartSearch.parse("おすすめのAIは？").keywords.contains("ai"), "「AI」だけはキーワードにしない")
+check(SmartSearch.parse("新登場のサービス").onlyNew, "「新登場」は新しく出たものだけ")
+check(!SmartSearch.parse("新しいツール").onlyNew, "「新しい」だけでは更新を外さない(新しい順に並べるだけ)")
+
+// MARK: - AI検索: 並べ替え
+
+let now = Date()
+func found(_ id: String, _ category: ServiceCategory, professions: [String]? = nil, provider: String = "p",
+           kind: UpdateKind = .new, expectation: Int = 70, daysAgo: Double = 1) -> AIServiceItem {
+    var item = AIServiceItem(id: id, name: id, provider: provider, category: category, summary: "", changeNote: "",
+                             kind: kind, expectationScore: expectation, attentionScore: 50,
+                             date: now.addingTimeInterval(-daysAgo * day), url: nil)
+    item.professions = professions
+    return item
+}
+let pool = [
+    found("video", .videoGeneration, professions: ["videoCreator"]),
+    found("chat-all", .chat, professions: ["all"], expectation: 95),
+    found("callcenter", .agent, professions: ["sales", "backOffice"]),
+    found("mistral-model", .chat, professions: ["engineer"], provider: "Mistral AI", kind: .update),
+]
+check(SmartSearch.rank(pool, for: SearchIntent(categories: [.videoGeneration])).map(\.id) == ["video"],
+      "カテゴリが合うものだけを出す")
+check(SmartSearch.rank(pool, for: SearchIntent(professions: [.sales])).first?.id == "callcenter",
+      "職種がはっきり書かれたものを、全職種向けより上に出す")
+check(SmartSearch.rank(pool, for: SearchIntent(keywords: ["mistral"])).first?.id == "mistral-model",
+      "提供元の名前でも見つかる")
+check(!SmartSearch.rank(pool, for: SearchIntent(professions: [.engineer], onlyNew: true)).map(\.id).contains("mistral-model"),
+      "新しく出たものだけのときは更新を外す")
+check(SmartSearch.rank(pool, for: SearchIntent()).isEmpty, "何も読み取れない質問では何も出さない")
+check(SmartSearch.rank([found("old", .chat, daysAgo: 30), found("fresh", .chat, daysAgo: 1)],
+                       for: SearchIntent(categories: [.chat])).first?.id == "fresh",
+      "同じくらい合うなら新しいものを上に")
+
+// MARK: - AI検索: AIの答えから記号を取り除く
+
+check(SmartSearch.plainAnswer("*   **shiftel(DmMiX)**\n\n    電話に24時間対応します。") == "・shiftel(DmMiX)\n電話に24時間対応します。",
+      "箇条書きの記号は「・」に、太字の記号と余分な空行・字下げは消す")
+check(SmartSearch.plainAnswer("## 答え\n- A が合います") == "答え\n・A が合います", "見出しの記号も消す")
+check(SmartSearch.plainAnswer("普通の文章です。") == "普通の文章です。", "記号のない文章はそのまま")
+
 // MARK: -
 
 if failures == 0 {

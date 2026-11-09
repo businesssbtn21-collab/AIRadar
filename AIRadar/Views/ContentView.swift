@@ -9,6 +9,7 @@ struct ContentView: View {
     @State private var selectedCategory: ServiceCategory?
     @State private var showSettings = false
     @State private var showFilter = false
+    @State private var showAISearch = false
     @State private var searchText = ""
     @State private var filter = FilterOptions()
     @AppStorage("hasRespondedToNotificationPrimer") private var hasRespondedToNotificationPrimer = false
@@ -50,6 +51,14 @@ struct ContentView: View {
             .navigationTitle("AIレーダー")
             .searchable(text: $searchText, prompt: "サービス名・提供元で検索")
             .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        showAISearch = true
+                    } label: {
+                        Label("AIに聞く", systemImage: "sparkles")
+                            .labelStyle(.titleAndIcon)
+                    }
+                }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         showSettings = true
@@ -70,6 +79,9 @@ struct ContentView: View {
             }
             .sheet(isPresented: $showFilter) {
                 FilterSheet(filter: $filter)
+            }
+            .sheet(isPresented: $showAISearch) {
+                AISearchSheet()
             }
             .sheet(isPresented: $showProfessionPicker) {
                 ProfessionPickerSheet(selection: $settings.profession)
