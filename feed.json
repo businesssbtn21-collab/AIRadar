@@ -1,5 +1,57 @@
 [
   {
+    "id": "claude-fable-5-2",
+    "name": "Claude Fable 5.2",
+    "provider": "Anthropic",
+    "category": "chat",
+    "summary": "Anthropic の最上位モデルが新しくなった。難しい開発や調べものに強く、前の版より出力が最大3割速い。安全のための制限による中断も約55%減った。API料金は入力100万トークンあたり8ドル。",
+    "changeNote": "最上位モデルが新版に。速度向上、中断も減少",
+    "kind": "update",
+    "expectationScore": 82,
+    "attentionScore": 80,
+    "date": "2026-11-09T16:00:00Z",
+    "url": "https://www.anthropic.com/claude-fable-and-mythos-5-2",
+    "professions": [
+      "engineer",
+      "student",
+      "all"
+    ]
+  },
+  {
+    "id": "google-maps-platform-ai-studio",
+    "name": "AI Studio の Google マップ連携",
+    "provider": "Google",
+    "category": "coding",
+    "summary": "Google AI Studio で、アプリの案を伝えるだけで Google マップを組み込んだアプリを作れるようになった。鍵の設定は自動で、すぐ動くプレビューが出る。毎日の上限までは無料で、本番利用は課金設定が必要。",
+    "changeNote": "AI StudioでGoogleマップ入りのアプリが作れる",
+    "kind": "update",
+    "expectationScore": 55,
+    "attentionScore": 40,
+    "date": "2026-11-09T17:00:00Z",
+    "url": "https://blog.google/innovation-and-ai/technology/developers-tools/build-google-maps-platform-ai-studio/",
+    "professions": [
+      "engineer",
+      "founder"
+    ]
+  },
+  {
+    "id": "invox-ai-shinsei-check",
+    "name": "invox AI申請チェック",
+    "provider": "invox",
+    "category": "agent",
+    "summary": "経費精算などの申請を、会社が決めた社内ルールに沿ってAIが提出前に点検する機能。ルールに当てはまると申請者に注意が出て、直すか進めるか選べる。まず経費精算で提供し、対象プランなら追加料金なし。",
+    "changeNote": "申請内容を社内ルールでAIが自動チェック",
+    "kind": "new",
+    "expectationScore": 50,
+    "attentionScore": 30,
+    "date": "2026-11-09T22:10:00Z",
+    "url": "https://prtimes.jp/main/html/rd/p/000000203.000054319.html",
+    "professions": [
+      "backOffice",
+      "founder"
+    ]
+  },
+  {
     "id": "puente-ai-anime-factory-manga",
     "name": "Puente AI Anime Factory(漫画制作)",
     "provider": "プエンテ",
