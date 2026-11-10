@@ -80,35 +80,24 @@ struct AIRadarWidgetEntryView: View {
 
     private var topItem: AIServiceItem? { entry.items.first }
 
+    /// 小サイズ。名前と説明を途中で切らずに全部見せるため、見出しの行を省いて
+    /// 種別・ランク・注目度を1行にまとめ、長いときは文字を少し小さくして収める。
     private var smallView: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            header
+        Group {
             if let item = topItem {
-                Spacer(minLength: 0)
-                HStack(spacing: 4) {
-                    badge(item.kind)
-                    Text(item.rank)
-                        .font(.caption2.bold())
-                        .foregroundStyle(.purple)
-                }
-                Text(item.name)
-                    .font(.headline)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.8)
-                Text(item.changeNote)
-                    .font(.caption2)
-                    .foregroundStyle(.secondary)
-                    .lineLimit(2)
-                attentionRow(item)
+                SmallItemView(item: item, filterLabel: entry.filterLabel)
             } else {
-                Spacer()
-                Text(emptyMessage)
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
+                VStack(alignment: .leading, spacing: 6) {
+                    header
+                    Spacer()
+                    Text(emptyMessage)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    Spacer(minLength: 0)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
-            Spacer(minLength: 0)
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
     }
 
     /// 項目が無いときの案内。絞り込みで消えた場合は条件の見直しを促す。
@@ -148,16 +137,9 @@ struct AIRadarWidgetEntryView: View {
     }
 
     private var lockScreenView: some View {
-        VStack(alignment: .leading, spacing: 2) {
+        Group {
             if let item = topItem {
-                Text("\(item.kind.label) \(item.name)")
-                    .font(.headline)
-                    .lineLimit(1)
-                Text(item.changeNote)
-                    .font(.caption2)
-                    .lineLimit(2)
-                Text("注目度 \(item.attentionLevel) \(item.attentionScore)")
-                    .font(.caption2)
+                LockItemView(item: item)
             } else {
                 Text(entry.filteredOutEverything ? "条件に合う更新なし" : "AIレーダー")
                     .font(.headline)
@@ -182,13 +164,15 @@ struct AIRadarWidgetEntryView: View {
         .foregroundStyle(.secondary)
     }
 
-    private func attentionRow(_ item: AIServiceItem) -> some View {
-        Text("注目度 \(item.attentionLevel) \(item.attentionScore)")
-            .font(.caption2)
-            .foregroundStyle(.orange)
-    }
-
     private func badge(_ kind: UpdateKind) -> some View {
+        KindBadge(kind: kind)
+    }
+}
+
+struct KindBadge: View {
+    let kind: UpdateKind
+
+    var body: some View {
         Text(kind.label)
             .font(.system(size: 9, weight: .bold))
             .padding(.horizontal, 4)
@@ -196,6 +180,73 @@ struct AIRadarWidgetEntryView: View {
             .background(kind == .new ? Color.red : Color.orange)
             .foregroundStyle(.white)
             .clipShape(Capsule())
+    }
+}
+
+/// ホーム画面の小サイズの中身。名前は最大3行・説明は最大5行まで使い、
+/// それでも入らないときだけ文字を縮めて、末尾が「…」で切れないようにする。
+struct SmallItemView: View {
+    let item: AIServiceItem
+    let filterLabel: String?
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            HStack(spacing: 4) {
+                KindBadge(kind: item.kind)
+                Text(item.rank)
+                    .font(.caption2.bold())
+                    .foregroundStyle(.purple)
+                if let filterLabel {
+                    Text(filterLabel)
+                        .font(.system(size: 9))
+                        .foregroundStyle(.secondary)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.7)
+                }
+                Spacer(minLength: 2)
+                Text("\(item.attentionLevel)\(item.attentionScore)")
+                    .font(.system(size: 10, weight: .semibold))
+                    .foregroundStyle(.orange)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.7)
+                    .layoutPriority(1)
+            }
+            Text(item.name)
+                .font(.system(size: 15, weight: .bold))
+                .lineLimit(3)
+                .minimumScaleFactor(0.65)
+                .layoutPriority(2)
+            Text(item.changeNote)
+                .font(.system(size: 12))
+                .foregroundStyle(.secondary)
+                .lineLimit(5)
+                .minimumScaleFactor(0.65)
+                .layoutPriority(1)
+            Spacer(minLength: 0)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+    }
+}
+
+/// ロック画面(横長)の中身。名前(長ければ2行)と説明だけにし、注目度は省いて全部見せる。
+/// 入りきらないときは文字を縮める。
+struct LockItemView: View {
+    let item: AIServiceItem
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 1) {
+            Text("\(item.kind.label) \(item.name)")
+                .font(.system(size: 13, weight: .semibold))
+                .lineLimit(2)
+                .minimumScaleFactor(0.6)
+                .layoutPriority(1)
+            Text(item.changeNote)
+                .font(.system(size: 11))
+                .lineLimit(3)
+                .minimumScaleFactor(0.6)
+            Spacer(minLength: 0)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
     }
 }
 
