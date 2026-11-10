@@ -1,5 +1,73 @@
 [
   {
+    "id": "gemini-4-carbon-available",
+    "name": "Gemini 4 Carbon(一般提供)",
+    "provider": "Google",
+    "category": "chat",
+    "summary": "Google の最上位モデル Gemini 4 Carbon が使えるようになった。複雑な開発や調べもの、資料づくりに強い。Gemini アプリは AI Ultra 加入者から順次、開発者向け API は有料利用者が対象。API は11月末まで入力100万トークン2ドルの導入価格。",
+    "changeNote": "最上位モデルCarbonが利用開始",
+    "kind": "update",
+    "expectationScore": 80,
+    "attentionScore": 75,
+    "date": "2026-11-10T16:00:00Z",
+    "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-carbon-now-available/",
+    "professions": [
+      "engineer",
+      "student",
+      "all"
+    ]
+  },
+  {
+    "id": "pixel-drop-2026-11",
+    "name": "Pixel 11月アップデート(Gemini新機能)",
+    "provider": "Google",
+    "category": "other",
+    "summary": "Pixel に Gemini の新機能が加わる。話した内容を整った文章にする音声入力、作りたいウィジェットを言葉で伝えて作る機能、知らない相手からの電話にAIが用件を聞く機能など。対応機種や地域は機能ごとに異なり、数週間かけて順次提供。",
+    "changeNote": "Pixelに音声入力やAI作成ウィジェットが登場",
+    "kind": "update",
+    "expectationScore": 55,
+    "attentionScore": 45,
+    "date": "2026-11-10T16:00:00Z",
+    "url": "https://blog.google/products-and-platforms/devices/pixel/november-2026-pixel-drop/",
+    "professions": [
+      "all"
+    ]
+  },
+  {
+    "id": "meta-muse-ember",
+    "name": "Muse Ember",
+    "provider": "Meta",
+    "category": "chat",
+    "summary": "Meta の小型で低コストなAIモデル。道具の呼び出しや資料の読み取りなど、エージェントの繰り返し作業向け。文章・画像・音声・動画を理解でき、一度に長い資料も扱える。API は入力100万トークン0.1ドルから。",
+    "changeNote": "Metaの小型・低価格なエージェント向けモデル",
+    "kind": "new",
+    "expectationScore": 60,
+    "attentionScore": 50,
+    "date": "2026-11-09T18:00:00Z",
+    "url": "https://research.meta.ai/blog/muse-ember",
+    "professions": [
+      "engineer"
+    ]
+  },
+  {
+    "id": "seedream-5-5",
+    "name": "Seedream 5.5",
+    "provider": "ByteDance",
+    "category": "imageGeneration",
+    "summary": "ByteDance の画像生成AIの新版。何度修正を重ねても、直していない部分が崩れにくい。背景が透明な画像をそのまま作れ、文字の描写も向上した。BytePlus などで試せる。上位版も予定されている。",
+    "changeNote": "修正を重ねても崩れにくく、透過画像も作れる",
+    "kind": "update",
+    "expectationScore": 55,
+    "attentionScore": 45,
+    "date": "2026-11-09T12:00:00Z",
+    "url": "https://seed.bytedance.com/en/blog/more-realistic-images-more-stable-editing-across-100-rounds-introducing-seedream-5-5",
+    "professions": [
+      "designer",
+      "marketer",
+      "videoCreator"
+    ]
+  },
+  {
     "id": "claude-fable-5-2",
     "name": "Claude Fable 5.2",
     "provider": "Anthropic",
