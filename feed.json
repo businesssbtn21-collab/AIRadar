@@ -1,5 +1,54 @@
 [
   {
+    "id": "gemini-carplay",
+    "name": "Gemini が CarPlay に対応",
+    "provider": "Google",
+    "category": "chat",
+    "summary": "iPhone の Gemini アプリが Apple CarPlay で使えるようになった。運転中に声だけで予定の確認、メールの要約、近くのお店探しなどができる。会話は iPhone の履歴にも残る。iPhone 版 Gemini の利用者向けに世界で順次提供。",
+    "changeNote": "運転中にCarPlayで声だけでGeminiを使える",
+    "kind": "update",
+    "expectationScore": 58,
+    "attentionScore": 55,
+    "date": "2026-11-11T09:00:00Z",
+    "url": "https://blog.google/innovation-and-ai/products/gemini-app/gemini-on-apple-carplay/",
+    "professions": [
+      "sales",
+      "all"
+    ]
+  },
+  {
+    "id": "gemini-decisions-api",
+    "name": "Gemini Decisions API",
+    "provider": "Google",
+    "category": "dataAnalysis",
+    "summary": "はい・いいえの判定、選択肢から選ぶ、採点基準での評価といった「決まった答えから選ぶ」作業を、一度に最大1,000問まとめて処理できる開発者向けの仕組み。答えごとに確信度も付く。入力100万トークン0.1ドルで、AI Studio には無料枠もある。",
+    "changeNote": "大量の判定や採点を一括処理する開発者向けAPI",
+    "kind": "new",
+    "expectationScore": 55,
+    "attentionScore": 40,
+    "date": "2026-11-11T09:00:00Z",
+    "url": "https://blog.google/innovation-and-ai/technology/developers-tools/gemini-decisions-api/",
+    "professions": [
+      "engineer"
+    ]
+  },
+  {
+    "id": "cognition-swe-2-flash",
+    "name": "SWE-2 Flash",
+    "provider": "Cognition",
+    "category": "coding",
+    "summary": "Devin を作る Cognition の高速なコーディング専用モデル。上位版 SWE-2 の約3倍の速さで、価格は約5分の1。Devin Desktop と Devin CLI で使え、11月末まで無料。重みは非公開で、単体の API はない。",
+    "changeNote": "Devinの高速・低価格なコーディングモデル",
+    "kind": "new",
+    "expectationScore": 55,
+    "attentionScore": 45,
+    "date": "2026-11-04T09:00:00Z",
+    "url": "https://cognition.com/blog/swe-2-flash",
+    "professions": [
+      "engineer"
+    ]
+  },
+  {
     "id": "gemini-4-carbon-available",
     "name": "Gemini 4 Carbon(一般提供)",
     "provider": "Google",
