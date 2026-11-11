@@ -28,4 +28,4 @@
 
 - ビルド確認: `xcodebuild -project AIRadar.xcodeproj -scheme AIRadar -destination 'generic/platform=iOS Simulator' -configuration Debug build CODE_SIGNING_ALLOWED=NO`
 - 提出一式: `/app-submit` スキル参照(アーカイブ→`xcodebuild -exportArchive`の`destination=upload`で直接アップロード→ASC)
-- `git push` はCLIからできない(認証なし)。GitHub Desktop の「Push origin」を押す
+- `git push` はCLIからできる(2026-11-11 に gh でログイン済み、businesssbtn21-collab)。フィード反映の確認は `gh run list`
