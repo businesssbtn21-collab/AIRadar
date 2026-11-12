@@ -55,10 +55,11 @@ final class AppSettings: ObservableObject {
             WidgetCenter.shared.reloadAllTimelines()
         }
     }
-    /// CURATED で選んだ職種(未選択なら「その他(全般)」扱い)
-    @Published var profession: Profession? {
+    /// CURATED の条件(職種は複数可・使っているツール・期待度の下限)。すべてユーザーが決める
+    @Published var curation: CurationPreferences {
         didSet {
-            ModePreferences.profession = profession
+            guard curation != oldValue else { return }
+            ModePreferences.curation = curation
             WidgetCenter.shared.reloadAllTimelines()
         }
     }
@@ -74,7 +75,7 @@ final class AppSettings: ObservableObject {
         notificationsEnabled = defaults.object(forKey: "notificationsEnabled") as? Bool ?? true
         spikeThreshold = defaults.object(forKey: "spikeThreshold") as? Int ?? 20
         mode = ModePreferences.mode
-        profession = ModePreferences.profession
+        curation = ModePreferences.curation
         if let savedCategories = defaults.array(forKey: "notifyCategories") as? [String] {
             // アップデートで増えたカテゴリだけONで追加する。保存した時点で存在していたカテゴリは、
             // ユーザーが自分でOFFにしたものなのでそのまま尊重する

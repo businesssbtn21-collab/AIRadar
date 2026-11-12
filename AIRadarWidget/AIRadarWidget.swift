@@ -51,7 +51,7 @@ struct FeedTimelineProvider: AppIntentTimelineProvider {
         // アプリで選んだモード(CURATED なら厳選分だけ)を先にかけ、その上にウィジェット個別の絞り込みを重ねる
         let mode = ModePreferences.mode
         let filtered = all
-            .applying(mode: mode, profession: ModePreferences.profession)
+            .applying(mode: mode, curation: ModePreferences.curation)
             .applying(configuration)
         let labels = [mode == .curated ? "厳選" : nil, configuration.summaryLabel].compactMap { $0 }
         return FeedEntry(

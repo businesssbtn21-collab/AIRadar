@@ -65,38 +65,83 @@ check(decode("[{\(base)}]")?.first?.professions == nil, "professions なしのJS
 check(decode(#"[{\#(base),"professions":["futureJob"]}]"#)?.first?.professions == ["futureJob"], "未知の職種を含むJSONが読める")
 check(decode(#"[{\#(base),"foo":1}]"#)?.count == 1, "未知のキーを含むJSONが読める")
 
-// MARK: - モードによる絞り込み
+// MARK: - モードによる絞り込み(条件はユーザーが決める)
 
 let mixed = [
     item("high-designer", expectation: 92, professions: ["designer"]),
     item("high-engineer", expectation: 88, professions: ["engineer"]),
     item("low-designer", expectation: 70, professions: ["designer"]),
 ]
-check(mixed.applying(mode: .discovered, profession: .designer).count == 3, "DISCOVERED はすべて表示")
-check(mixed.applying(mode: .curated, profession: nil).map(\.id) == ["high-designer", "high-engineer"],
-      "CURATED で職種未選択なら期待度85以上をすべて表示")
-check(mixed.applying(mode: .curated, profession: .designer).map(\.id) == ["high-designer"],
+func cur(_ jobs: Set<Profession> = [], tools: Set<String> = [], min: Int = 85, always: Bool = true) -> CurationPreferences {
+    CurationPreferences(professions: jobs, myTools: tools, minimumScore: min, alwaysShowMyTools: always)
+}
+check(mixed.applying(mode: .discovered, curation: cur([.designer])).count == 3, "DISCOVERED はすべて表示")
+check(mixed.applying(mode: .curated, curation: cur()).map(\.id) == ["high-designer", "high-engineer"],
+      "CURATED で何も選ばなければ期待度85以上をすべて表示")
+check(mixed.applying(mode: .curated, curation: cur([.designer])).map(\.id) == ["high-designer"],
       "CURATED は期待度85以上かつ職種向けだけ")
+check(mixed.applying(mode: .curated, curation: cur([.designer, .engineer])).map(\.id) == ["high-designer", "high-engineer"],
+      "職種を複数選ぶと、どれかに合うものを表示")
+check(mixed.applying(mode: .curated, curation: cur([.designer, .general])).count == 2,
+      "「その他(全般)」を含むと職種で絞らない")
+check(mixed.applying(mode: .curated, curation: cur([.designer], min: 70)).map(\.id) == ["high-designer", "low-designer"],
+      "期待度の下限を下げると増える")
+
+// 使っているツール
+func tool(_ id: String, provider: String, name: String? = nil, expectation: Int = 60) -> AIServiceItem {
+    var i = item(id, expectation: expectation, professions: ["engineer"])
+    i = AIServiceItem(id: i.id, name: name ?? id, provider: provider, category: .other, summary: "", changeNote: "",
+                      kind: .update, expectationScore: expectation, attentionScore: 50, date: Date(), url: nil,
+                      professions: ["engineer"])
+    return i
+}
+let openAILow = tool("gpt", provider: "OpenAI", expectation: 40)
+let cursorLow = tool("cursor", provider: "Anysphere", name: "Cursor(Glassアップデート)", expectation: 40)
+let otherHigh = tool("other", provider: "Other", expectation: 95)
+check(openAILow.isCurated(for: cur([.designer], tools: ["OpenAI"])), "使っているツールは期待度・職種に関係なく表示")
+check(!openAILow.isCurated(for: cur([.designer], tools: ["OpenAI"], always: false)), "「関係なく表示」をオフにすると期待度の下限がかかる")
+check(tool("gpt2", provider: "OpenAI", expectation: 90).isCurated(for: cur([.designer], tools: ["OpenAI"], always: false)),
+      "オフでも期待度を満たせば職種が違っても表示")
+check(cursorLow.isCurated(for: cur(tools: ["cursor"])), "入力したツール名がサービス名に含まれれば該当(大文字小文字は問わない)")
+check(openAILow.isCurated(for: cur(tools: ["openai"])), "提供元名は大文字小文字を問わない")
+check(!otherHigh.isCurated(for: cur(tools: ["OpenAI"])), "職種を選ばずツールだけ選ぶと、そのツールの情報だけ")
+check(otherHigh.isCurated(for: cur([.engineer], tools: ["OpenAI"])), "職種も選べば職種向けも表示")
+check(!openAILow.isCurated(for: cur(tools: ["  "])), "空白だけのツール名は何にも該当しない")
 
 // 通知は1件ずつ判定するので、一覧と同じ判定を単体でも使えること
-check(mixed[1].matches(mode: .discovered, profession: .designer), "DISCOVERED の通知は職種を問わない")
-check(!mixed[1].matches(mode: .curated, profession: .designer), "CURATED の通知は職種が合わなければ出さない")
-check(!mixed[2].matches(mode: .curated, profession: nil), "CURATED の通知は期待度85未満を出さない")
+check(mixed[1].matches(mode: .discovered, curation: cur([.designer])), "DISCOVERED の通知は職種を問わない")
+check(!mixed[1].matches(mode: .curated, curation: cur([.designer])), "CURATED の通知は職種が合わなければ出さない")
+check(!mixed[2].matches(mode: .curated, curation: cur()), "CURATED の通知は期待度85未満を出さない")
 
-// MARK: - モードの保存(ウィジェットと共有)
+// 一覧上部の説明
+check(cur().summary == "期待度85以上 × その他(全般)", "何も選ばないときの説明")
+check(cur([.engineer, .designer]).summary == "期待度85以上 × エンジニア・デザイナー", "職種2つの説明")
+check(cur([.engineer, .designer, .writer]).summary == "期待度85以上 × エンジニアほか2職種", "職種3つ以上は省略")
+check(cur(tools: ["OpenAI", "Google"]).summary == "使っているツール2件", "ツールだけの説明")
+check(cur([.sales], tools: ["OpenAI"], min: 70).summary == "期待度70以上 × 営業・接客 + ツール1件", "職種+ツールの説明")
+
+// MARK: - 条件の保存(ウィジェットと共有)と旧版からの引き継ぎ
 
 SharedStore.defaults.removeObject(forKey: "feedMode")
 SharedStore.defaults.removeObject(forKey: "profession")
+SharedStore.defaults.removeObject(forKey: "curationPreferences")
 check(ModePreferences.mode == .discovered, "未保存なら DISCOVERED")
-check(ModePreferences.profession == nil, "未保存なら職種なし")
+check(ModePreferences.curation == CurationPreferences(), "未保存なら条件なし")
+check(!ModePreferences.hasChosenCuration, "未保存なら条件は未選択")
+SharedStore.defaults.set("writer", forKey: "profession")
+check(ModePreferences.curation.professions == [.writer], "1.5以前に選んだ職種を引き継ぐ")
+check(ModePreferences.hasChosenCuration, "旧版で職種を選んでいれば選択済み")
 ModePreferences.mode = .curated
-ModePreferences.profession = .writer
+ModePreferences.curation = cur([.engineer, .student], tools: ["OpenAI", "Notion"], min: 75, always: false)
 check(ModePreferences.mode == .curated, "モードを保存して読み戻せる")
-check(ModePreferences.profession == .writer, "職種を保存して読み戻せる")
-ModePreferences.profession = nil
-check(ModePreferences.profession == nil, "職種を未選択に戻せる")
+check(ModePreferences.curation == cur([.engineer, .student], tools: ["OpenAI", "Notion"], min: 75, always: false),
+      "条件を保存して読み戻せる(新しい保存が旧版の職種より優先)")
+let futureJSON = #"{"professions":["engineer","futureJob"],"myTools":["X"],"newKey":1}"#
+let future = try? JSONDecoder().decode(CurationPreferences.self, from: Data(futureJSON.utf8))
+check(future == cur([.engineer], tools: ["X"]), "将来の版の保存(知らない職種・項目)も読める")
 SharedStore.defaults.removeObject(forKey: "feedMode")
 SharedStore.defaults.removeObject(forKey: "profession")
+SharedStore.defaults.removeObject(forKey: "curationPreferences")
 
 // MARK: - 評価のお願いを出すタイミング
 

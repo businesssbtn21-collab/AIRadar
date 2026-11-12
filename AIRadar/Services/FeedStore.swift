@@ -117,7 +117,7 @@ final class FeedStore: ObservableObject {
 
     /// 選んだモード(CURATED なら厳選分だけ)と、設定画面のカテゴリ・種別の絞り込みを通知対象にも適用する。
     private func matchesNotifyFilter(_ item: AIServiceItem) -> Bool {
-        guard item.matches(mode: settings.mode, profession: settings.profession) else { return false }
+        guard item.matches(mode: settings.mode, curation: settings.curation) else { return false }
         guard settings.notifyCategories.contains(item.category) else { return false }
         if let kind = settings.notifyKind, item.kind != kind { return false }
         return true

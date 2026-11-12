@@ -19,7 +19,7 @@ struct OnboardingView: View {
         Page(image: "Onboarding2", title: "ウィジェットで\n開かずにチェック",
              message: "ホーム画面に置くだけで、新しい情報に自動で切り替わります。"),
         Page(image: "Onboarding3", title: "あなたの職種に\n合うものだけ",
-             message: "職種を選ぶと、仕事に役立つ期待度の高いツールだけに絞って届けます。"),
+             message: "職種(いくつでも)や使っているツールを選ぶと、自分に関係のある情報だけに絞って届けます。"),
         Page(image: "Onboarding4", title: "AIに聞いて\n探せる",
              message: "「営業で使える新しいツールは？」のように聞くと、iPhone の中の AI が探して答えます。"),
     ]

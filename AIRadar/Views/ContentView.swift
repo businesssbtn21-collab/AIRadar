@@ -5,7 +5,7 @@ import UserNotifications
 struct ContentView: View {
     @EnvironmentObject private var store: FeedStore
     @EnvironmentObject private var settings: AppSettings
-    @State private var showProfessionPicker = false
+    @State private var showCurationSettings = false
     @State private var selectedCategory: ServiceCategory?
     @State private var showSettings = false
     @State private var showFilter = false
@@ -18,7 +18,7 @@ struct ContentView: View {
 
     private var filteredItems: [AIServiceItem] {
         store.items
-            .applying(mode: settings.mode, profession: settings.profession)
+            .applying(mode: settings.mode, curation: settings.curation)
             .applying(filter, searchText: searchText, category: selectedCategory)
     }
 
@@ -29,14 +29,16 @@ struct ContentView: View {
             && searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 
-    /// CURATED に切り替えたとき、職種が未選択なら選んでもらう
+    /// CURATED に初めて切り替えたとき、条件(職種・使っているツール)を選んでもらう
     private var modeSelection: Binding<FeedMode> {
         Binding {
             settings.mode
         } set: { newMode in
             settings.mode = newMode
-            if newMode == .curated && settings.profession == nil {
-                showProfessionPicker = true
+            if newMode == .curated && !ModePreferences.hasChosenCuration {
+                // 何も変えずに閉じても、次からは出さない
+                ModePreferences.curation = settings.curation
+                showCurationSettings = true
             }
         }
     }
@@ -83,8 +85,8 @@ struct ContentView: View {
             .sheet(isPresented: $showAISearch) {
                 AISearchSheet()
             }
-            .sheet(isPresented: $showProfessionPicker) {
-                ProfessionPickerSheet(selection: $settings.profession)
+            .sheet(isPresented: $showCurationSettings) {
+                CurationSettingsSheet()
             }
             .task {
                 // 一覧が表示されてから、理由を説明した上で通知許可を尋ねる(HIG推奨: 起動直後の唐突な許可要求を避ける)
@@ -139,11 +141,13 @@ struct ContentView: View {
 
             if settings.mode == .curated {
                 Button {
-                    showProfessionPicker = true
+                    showCurationSettings = true
                 } label: {
                     HStack(spacing: 4) {
-                        Image(systemName: (settings.profession ?? .general).icon)
-                        Text("期待度85以上 × \((settings.profession ?? .general).label)")
+                        Image(systemName: "slider.horizontal.3")
+                        Text(settings.curation.summary)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.8)
                         Text("変更")
                             .foregroundStyle(Color.accentColor)
                     }
@@ -206,10 +210,13 @@ struct ContentView: View {
             }
             if isCuratedEmpty {
                 ContentUnavailableView {
-                    Label("あなたの職種向けの厳選情報はまだありません", systemImage: "sparkles")
+                    Label("条件に合う厳選情報はまだありません", systemImage: "sparkles")
                 } description: {
-                    Text("期待度85以上のものだけを表示しています")
+                    Text(settings.curation.summary)
                 } actions: {
+                    Button("条件を変える") {
+                        showCurationSettings = true
+                    }
                     Button("DISCOVERED で見る") {
                         settings.mode = .discovered
                     }
