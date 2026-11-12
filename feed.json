@@ -1,5 +1,58 @@
 [
   {
+    "id": "gemini-4-hydrogen",
+    "name": "Gemini 4 Hydrogen",
+    "provider": "Google",
+    "category": "chat",
+    "summary": "Google の新しい高速モデル。日常の作業や、コーディング・自動化の用途向けに作られている。Gemini アプリと Google 検索で全員が使え、開発者向けは AI Studio から。料金は入力100万トークン1.5ドル、出力7.5ドル。考える深さを選べる設定に最上位の xhigh が加わった。",
+    "changeNote": "高速で低価格な日常使いのGeminiモデル",
+    "kind": "new",
+    "expectationScore": 70,
+    "attentionScore": 65,
+    "date": "2026-11-12T18:00:00Z",
+    "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-hydrogen/",
+    "professions": [
+      "engineer",
+      "all"
+    ]
+  },
+  {
+    "id": "elevenlabs-scribe-v3",
+    "name": "ElevenLabs Scribe v3",
+    "provider": "ElevenLabs",
+    "category": "audioMusic",
+    "summary": "音声の文字起こしモデルの新版。誰が話したかの判別が前の版より約12%正確になり、102言語で評価された。話し中にリアルタイムで文字にする Live 版も同時に登場し、会議や電話対応に使いやすい。ElevenLabs のアプリでは標準になり、開発者向けにも提供。",
+    "changeNote": "話者の判別が正確な文字起こしの新版",
+    "kind": "update",
+    "expectationScore": 60,
+    "attentionScore": 45,
+    "date": "2026-11-10T09:00:00Z",
+    "url": "https://elevenlabs.io/blog/scribe-v3",
+    "professions": [
+      "backOffice",
+      "writer",
+      "sales"
+    ]
+  },
+  {
+    "id": "garoon-ai-scheduling",
+    "name": "Garoon の AI 日程提案",
+    "provider": "サイボウズ",
+    "category": "other",
+    "summary": "グループウェア Garoon の「予定の調整」画面で、参加者の空き状況と入力した条件から、AI が会議の候補日時を提案する。出張中は無視するなど、条件は普通の文章で書ける。全員が合う時間がなくても調整しやすい時間を示す。ベータ版で、設定で有効にして使う。",
+    "changeNote": "会議の日程調整をAIが提案(ベータ)",
+    "kind": "new",
+    "expectationScore": 50,
+    "attentionScore": 30,
+    "date": "2026-11-04T09:00:00Z",
+    "url": "https://jp.cybozu.help/g/ja/update/highlights/2026-11.html",
+    "professions": [
+      "backOffice",
+      "sales",
+      "founder"
+    ]
+  },
+  {
     "id": "gemini-carplay",
     "name": "Gemini が CarPlay に対応",
     "provider": "Google",
