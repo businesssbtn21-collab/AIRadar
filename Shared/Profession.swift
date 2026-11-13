@@ -58,6 +58,8 @@ enum Profession: String, Codable, CaseIterable, Identifiable {
             return [.engineer, .sales, .backOffice, .founder]
         case .pluginSkill:
             return [.engineer, .founder]
+        case .repository:
+            return [.engineer, .student]
         case .dataAnalysis:
             return [.engineer, .backOffice, .founder, .student]
         case .search:

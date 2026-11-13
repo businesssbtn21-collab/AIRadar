@@ -109,7 +109,7 @@ enum AISearchEngine {
 @Generable
 enum CategoryChoice: String {
     case chat, coding, imageGeneration, videoGeneration, videoEditing, audioMusic
-    case writing, design, dataAnalysis, agent, search, pluginSkill
+    case writing, design, dataAnalysis, agent, search, pluginSkill, repository
 }
 
 @available(iOS 26.0, *)
@@ -121,7 +121,7 @@ enum ProfessionChoice: String {
 @available(iOS 26.0, *)
 @Generable
 struct GeneratedIntent {
-    @Guide(description: "質問に合うツールの種類。chat=会話、coding=プログラミング、imageGeneration=画像生成、videoGeneration=動画生成、videoEditing=動画編集、audioMusic=音声・音楽・文字起こし、writing=文章、design=デザイン、dataAnalysis=データ分析、agent=作業の自動化、search=検索・リサーチ、pluginSkill=AIに足す拡張")
+    @Guide(description: "質問に合うツールの種類。chat=会話、coding=プログラミング、imageGeneration=画像生成、videoGeneration=動画生成、videoEditing=動画編集、audioMusic=音声・音楽・文字起こし、writing=文章、design=デザイン、dataAnalysis=データ分析、agent=作業の自動化、search=検索・リサーチ、pluginSkill=AIに足す拡張、repository=GitHubなどで公開されている自分で入れるツール")
     var categories: [CategoryChoice]
     @Guide(description: "質問者の職種や使う場面。engineer=エンジニア、designer=デザイナー、videoCreator=動画制作、marketer=マーケティング・SNS、writer=ライター、sales=営業・接客、backOffice=事務・経理・人事、founder=経営者・個人事業主、student=学生・研究")
     var professions: [ProfessionChoice]

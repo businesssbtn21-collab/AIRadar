@@ -34,6 +34,8 @@ struct CurationPreferences: Codable, Equatable {
     var minimumScore: Int = AIServiceItem.curatedMinimumScore
     /// 使っているツールの新着・更新は、期待度や職種に関係なく届ける
     var alwaysShowMyTools: Bool = true
+    /// 届ける情報の種類(プラグイン・スキル、リポジトリなど)。空ならすべての種類
+    var categories: Set<ServiceCategory> = []
 
     static let minimumScoreRange = 50...100
 
@@ -44,6 +46,16 @@ struct CurationPreferences: Codable, Equatable {
 
     /// 一覧の上に出す短い説明(例: 「期待度85以上 × エンジニア・デザイナー + ツール2件」)
     var summary: String {
+        baseSummary + categorySummary
+    }
+
+    private var categorySummary: String {
+        guard !categories.isEmpty else { return "" }
+        let sorted = ServiceCategory.allCases.filter(categories.contains)
+        return sorted.count == 1 ? "(\(sorted[0].label)のみ)" : "(種類\(sorted.count)つ)"
+    }
+
+    private var baseSummary: String {
         if professions.isEmpty && !myTools.isEmpty {
             return "使っているツール\(myTools.count)件"
         }
@@ -60,11 +72,13 @@ struct CurationPreferences: Codable, Equatable {
     }
 
     init(professions: Set<Profession> = [], myTools: Set<String> = [],
-         minimumScore: Int = AIServiceItem.curatedMinimumScore, alwaysShowMyTools: Bool = true) {
+         minimumScore: Int = AIServiceItem.curatedMinimumScore, alwaysShowMyTools: Bool = true,
+         categories: Set<ServiceCategory> = []) {
         self.professions = professions
         self.myTools = myTools
         self.minimumScore = minimumScore
         self.alwaysShowMyTools = alwaysShowMyTools
+        self.categories = categories
     }
 
     /// 将来の版で項目や職種が増えても読めるよう、足りない値は既定値、知らない職種は無視する
@@ -75,6 +89,9 @@ struct CurationPreferences: Codable, Equatable {
         myTools = try c.decodeIfPresent(Set<String>.self, forKey: .myTools) ?? []
         minimumScore = try c.decodeIfPresent(Int.self, forKey: .minimumScore) ?? AIServiceItem.curatedMinimumScore
         alwaysShowMyTools = try c.decodeIfPresent(Bool.self, forKey: .alwaysShowMyTools) ?? true
+        // 知らない種類を「その他」と読み違えないよう、文字列で読んで知っているものだけ残す
+        let rawCategories = try c.decodeIfPresent([String].self, forKey: .categories) ?? []
+        categories = Set(rawCategories.compactMap(ServiceCategory.init(rawValue:)))
     }
 }
 
@@ -116,19 +133,23 @@ enum ModePreferences {
 }
 
 extension AIServiceItem {
-    /// 使っているツールの項目か。提供元の名前が一致するか、サービス名に含まれていれば該当とする
-    /// (一覧から選んだ提供元のほか、自分で入力したツール名「Cursor」なども拾えるように)
+    /// 使っているツールの項目か。提供元の名前が一致するか、関係するツール名・サービス名に含まれていれば該当とする
+    /// (一覧から選んだ提供元のほか、自分で入力したツール名「Claude Code」「Cursor」なども拾えるように)
     func isFromMyTools(_ curation: CurationPreferences) -> Bool {
         curation.myTools.contains { tool in
             let tool = tool.trimmingCharacters(in: .whitespaces)
             guard !tool.isEmpty else { return false }
-            return provider.caseInsensitiveCompare(tool) == .orderedSame || name.localizedCaseInsensitiveContains(tool)
+            return provider.caseInsensitiveCompare(tool) == .orderedSame
+                || name.localizedCaseInsensitiveContains(tool)
+                || (tools ?? []).contains { $0.localizedCaseInsensitiveContains(tool) }
         }
     }
 
     /// 自分で決めた条件に合うか。
     /// 「期待度が下限以上で、選んだ職種のどれかに役立つ」か、「使っているツールの項目」なら届ける
     func isCurated(for curation: CurationPreferences) -> Bool {
+        // 種類を選んでいれば、使っているツールの情報も含めてその種類だけにする
+        if !curation.categories.isEmpty && !curation.categories.contains(category) { return false }
         let fromMyTools = isFromMyTools(curation)
         if curation.alwaysShowMyTools && fromMyTools { return true }
         guard expectationScore >= curation.minimumScore else { return false }

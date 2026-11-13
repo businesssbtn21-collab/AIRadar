@@ -31,6 +31,7 @@ enum SmartSearch {
         (.agent, ["自動化", "エージェント", "代わりに", "pc操作", "操作", "agent"]),
         (.search, ["検索", "リサーチ", "調べ", "search"]),
         (.pluginSkill, ["プラグイン", "スキル", "mcp", "拡張", "連携"]),
+        (.repository, ["リポジトリ", "github", "オープンソース", "公開されている"]),
     ]
 
     private static let professionWords: [(Profession, [String])] = [
@@ -117,7 +118,7 @@ enum SmartSearch {
         for keyword in intent.keywords {
             if item.name.lowercased().contains(keyword) {
                 score += 3
-            } else if [item.provider, item.summary, item.changeNote].contains(where: { $0.lowercased().contains(keyword) }) {
+            } else if ([item.provider, item.summary, item.changeNote] + (item.tools ?? [])).contains(where: { $0.lowercased().contains(keyword) }) {
                 score += 2
             }
         }

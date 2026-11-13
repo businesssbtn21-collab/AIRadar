@@ -23,10 +23,10 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 CATEGORIES = {
     "chat", "coding", "imageGeneration", "videoGeneration", "videoEditing",
     "audioMusic", "writing", "design", "dataAnalysis", "agent", "search",
-    "pluginSkill", "other",
+    "pluginSkill", "repository", "other",
 }
 # 1.2以前のアプリが知っているカテゴリ(tools/build_legacy_feed.py と同じ)
-LEGACY_CATEGORIES = CATEGORIES - {"pluginSkill"}
+LEGACY_CATEGORIES = CATEGORIES - {"pluginSkill", "repository"}
 # Shared/Profession.swift と同じ。"all" は全職種向け
 PROFESSIONS = {
     "engineer", "designer", "videoCreator", "marketer", "writer",
@@ -43,9 +43,14 @@ MAX_NEW_ITEMS = 8
 # 期待度80以上は購入者に通知が飛ぶので、一度に鳴らしすぎない
 NOTIFY_SCORE = 80
 MAX_NEW_NOTIFYING = 2
+# リポジトリは1回あたりこれまで(会社の発表が埋もれないように)
+MAX_NEW_REPOSITORIES = 2
 MAX_CHANGE_NOTE = 30
 MAX_SUMMARY = 160
 MAX_AGE_DAYS = 21
+# 関係するツール名(tools)の上限
+MAX_TOOLS = 5
+MAX_TOOL_NAME = 40
 
 
 def parse_date(value):
@@ -91,6 +96,13 @@ def check_item(item, errors):
             unknown = [p for p in professions if p not in PROFESSIONS]
             if unknown:
                 errors.append(f"{label}: 未知の職種 {unknown}")
+    tools = item.get("tools")
+    if tools is not None:
+        if (not isinstance(tools, list) or not tools or len(tools) > MAX_TOOLS
+                or not all(isinstance(t, str) and t.strip() and len(t) <= MAX_TOOL_NAME for t in tools)):
+            errors.append(f"{label}: tools は{MAX_TOOLS}個までの、空でない{MAX_TOOL_NAME}字以内のツール名の配列で書く")
+        elif len({t.strip().lower() for t in tools}) != len(tools):
+            errors.append(f"{label}: tools に同じ名前が重複している")
 
 
 def load(path):
@@ -145,6 +157,10 @@ def check_additions(items, base, errors):
     if len(notifying) > MAX_NEW_NOTIFYING:
         errors.append(f"期待度{NOTIFY_SCORE}以上(通知が飛ぶ)の追加が {len(notifying)} 件。上限は {MAX_NEW_NOTIFYING} 件: {notifying}")
 
+    repositories = [i["id"] for i in added if i.get("category") == "repository"]
+    if len(repositories) > MAX_NEW_REPOSITORIES:
+        errors.append(f"リポジトリの追加が {len(repositories)} 件。上限は {MAX_NEW_REPOSITORIES} 件: {repositories}")
+
     oldest = datetime.now(timezone.utc) - timedelta(days=MAX_AGE_DAYS)
     for item in added:
         label = item["id"]
@@ -156,6 +172,8 @@ def check_additions(items, base, errors):
             errors.append(f"{label}: 追加する項目には https の出典URLを必ず付ける")
         if not item.get("professions"):
             errors.append(f"{label}: 追加する項目には professions を必ず付ける")
+        if not item.get("tools"):
+            errors.append(f"{label}: 追加する項目には tools(関係するツール名)を必ず付ける")
         date = item.get("date")
         if isinstance(date, str) and DATE_PATTERN.match(date):
             try:

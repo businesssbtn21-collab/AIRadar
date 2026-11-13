@@ -15,6 +15,8 @@ enum ServiceCategory: String, Codable, CaseIterable, Identifiable {
     case search
     /// ChatGPTやClaudeなどに後から足して使う拡張(スキル・プラグイン・MCPコネクタ・GPTsなど)
     case pluginSkill
+    /// GitHub などで公開されている、自分で入れて使うAIのツール(リポジトリ)
+    case repository
     case other
 
     var id: String { rawValue }
@@ -40,6 +42,7 @@ enum ServiceCategory: String, Codable, CaseIterable, Identifiable {
         case .agent: return "自動化・エージェント"
         case .search: return "検索・リサーチ"
         case .pluginSkill: return "プラグイン・スキル"
+        case .repository: return "リポジトリ"
         case .other: return "その他"
         }
     }
@@ -58,6 +61,7 @@ enum ServiceCategory: String, Codable, CaseIterable, Identifiable {
         case .agent: return "gearshape.2"
         case .search: return "magnifyingglass"
         case .pluginSkill: return "puzzlepiece.extension"
+        case .repository: return "shippingbox"
         case .other: return "sparkles"
         }
     }
@@ -100,6 +104,9 @@ struct AIServiceItem: Codable, Identifiable, Equatable, Hashable {
     /// 将来職種が増えても旧版が壊れないよう文字列のまま持ち、知らない値は無視する。
     /// 省略時はカテゴリから推定する
     var professions: [String]? = nil
+    /// 関係するツール名(例: ["Claude Code"]、["Cursor"])。「使っているツール」で名前を選んだ人に届けるのに使う。
+    /// 1.6より前のフィードや旧版のアプリでは省略される(旧版は知らないキーを無視する)
+    var tools: [String]? = nil
 
     /// CURATED に載せる期待度の下限
     static let curatedMinimumScore = 85

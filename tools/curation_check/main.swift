@@ -108,6 +108,31 @@ check(!otherHigh.isCurated(for: cur(tools: ["OpenAI"])), "職種を選ばずツ�
 check(otherHigh.isCurated(for: cur([.engineer], tools: ["OpenAI"])), "職種も選べば職種向けも表示")
 check(!openAILow.isCurated(for: cur(tools: ["  "])), "空白だけのツール名は何にも該当しない")
 
+// 関係するツール名(フィードの tools)
+var claudeCodePlugin = AIServiceItem(id: "cc-plugin", name: "claude plugin install --marketplace", provider: "Anthropic",
+                                     category: .pluginSkill, summary: "", changeNote: "", kind: .update,
+                                     expectationScore: 60, attentionScore: 50, date: Date(), url: nil)
+claudeCodePlugin.tools = ["Claude Code"]
+check(claudeCodePlugin.isCurated(for: cur(tools: ["claude code"])), "入力したツール名が関係するツール名にあれば該当")
+check(claudeCodePlugin.isCurated(for: cur(tools: ["Claude"])), "関係するツール名の一部でも該当")
+check(!claudeCodePlugin.isCurated(for: cur(tools: ["Cursor"])), "関係しないツール名では出ない")
+check(decode(#"[{\#(base),"tools":["Claude Code","Cursor"]}]"#)?.first?.tools == ["Claude Code", "Cursor"], "tools を読める")
+check(decode("[{\(base)}]")?.first?.tools == nil, "tools なしでも読める")
+
+// 情報の種類
+func curC(_ jobs: Set<Profession> = [], tools: Set<String> = [], categories: Set<ServiceCategory>) -> CurationPreferences {
+    CurationPreferences(professions: jobs, myTools: tools, categories: categories)
+}
+check(claudeCodePlugin.isCurated(for: curC(tools: ["Claude Code"], categories: [.pluginSkill])), "選んだ種類なら表示")
+check(!claudeCodePlugin.isCurated(for: curC(tools: ["Claude Code"], categories: [.coding])), "種類が違えば使っているツールでも出さない")
+check(!item("c", category: .coding, expectation: 95).isCurated(for: curC(categories: [.pluginSkill])), "種類だけ選ぶと他の種類は出ない")
+check(item("r", category: .repository, expectation: 90).isCurated(for: curC(categories: [.repository])), "リポジトリを選べる")
+check(item("p", category: .pluginSkill, expectation: 90, professions: ["engineer"]).isCurated(for: curC([.engineer], categories: [.pluginSkill, .coding])),
+      "種類を複数選べる(職種とも組み合わせ)")
+check(curC(categories: [.pluginSkill]).summary == "期待度85以上 × その他(全般)(プラグイン・スキルのみ)", "種類1つの説明")
+check(curC([.engineer], categories: [.pluginSkill, .repository]).summary == "期待度85以上 × エンジニア(種類2つ)", "種類2つ以上の説明")
+check(decode(#"[{\#(base.replacingOccurrences(of: "\"chat\"", with: "\"repository\""))}]"#)?.first?.category == .repository, "repository を読める")
+
 // 通知は1件ずつ判定するので、一覧と同じ判定を単体でも使えること
 check(mixed[1].matches(mode: .discovered, curation: cur([.designer])), "DISCOVERED の通知は職種を問わない")
 check(!mixed[1].matches(mode: .curated, curation: cur([.designer])), "CURATED の通知は職種が合わなければ出さない")
@@ -136,9 +161,10 @@ ModePreferences.curation = cur([.engineer, .student], tools: ["OpenAI", "Notion"
 check(ModePreferences.mode == .curated, "モードを保存して読み戻せる")
 check(ModePreferences.curation == cur([.engineer, .student], tools: ["OpenAI", "Notion"], min: 75, always: false),
       "条件を保存して読み戻せる(新しい保存が旧版の職種より優先)")
-let futureJSON = #"{"professions":["engineer","futureJob"],"myTools":["X"],"newKey":1}"#
+let futureJSON = #"{"professions":["engineer","futureJob"],"myTools":["X"],"categories":["pluginSkill","futureKind"],"newKey":1}"#
 let future = try? JSONDecoder().decode(CurationPreferences.self, from: Data(futureJSON.utf8))
-check(future == cur([.engineer], tools: ["X"]), "将来の版の保存(知らない職種・項目)も読める")
+check(future == CurationPreferences(professions: [.engineer], myTools: ["X"], categories: [.pluginSkill]),
+      "将来の版の保存(知らない職種・種類・項目)も読める")
 SharedStore.defaults.removeObject(forKey: "feedMode")
 SharedStore.defaults.removeObject(forKey: "profession")
 SharedStore.defaults.removeObject(forKey: "curationPreferences")

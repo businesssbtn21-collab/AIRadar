@@ -1,5 +1,89 @@
 [
   {
+    "id": "github-rea-video",
+    "name": "rea-video",
+    "provider": "JuneYaooo",
+    "category": "repository",
+    "summary": "動画を1カットずつ分解し、実写かAI生成か、どう作り直せるかを報告書にまとめる公開ツール。Claude Code や Codex に「このリポジトリを入れてこの動画を分解して」と頼むだけで動く。ffmpeg と Python が必要。",
+    "changeNote": "動画の作り方をカット単位で分析",
+    "kind": "new",
+    "expectationScore": 80,
+    "attentionScore": 80,
+    "date": "2026-10-29T16:15:01Z",
+    "url": "https://github.com/JuneYaooo/rea-video",
+    "professions": [
+      "videoCreator",
+      "marketer"
+    ],
+    "tools": [
+      "Claude Code",
+      "Codex"
+    ]
+  },
+  {
+    "id": "github-floorplan",
+    "name": "Floorplan",
+    "provider": "haydenschmitty",
+    "category": "repository",
+    "summary": "Claude Code や Codex が自分のアプリのコードを読み、部品やつながりを分かりやすい言葉の地図にして見せるプラグイン。AIに手伝ってもらって作ったアプリの全体像や、変更でどこが動いたかを確かめやすい。無料で公開。",
+    "changeNote": "アプリの全体像を地図にするプラグイン",
+    "kind": "new",
+    "expectationScore": 78,
+    "attentionScore": 70,
+    "date": "2026-10-27T12:03:01Z",
+    "url": "https://github.com/haydenschmitty/floorplan",
+    "professions": [
+      "engineer",
+      "founder"
+    ],
+    "tools": [
+      "Claude Code",
+      "Codex"
+    ]
+  },
+  {
+    "id": "github-pinky",
+    "name": "Pinky",
+    "provider": "DIYgod",
+    "category": "repository",
+    "summary": "Claude Code・Codex・Cursor などのAIに、本物のiPhoneやAndroidを操作させるツール。送信や削除などは人が許可するまで止まり、途中で操作を代わることもできる。Mac・Windows・Linux対応、無料。まだ試作段階。",
+    "changeNote": "AIにスマホを操作させる(許可制)",
+    "kind": "new",
+    "expectationScore": 76,
+    "attentionScore": 60,
+    "date": "2026-11-06T16:53:14Z",
+    "url": "https://github.com/DIYgod/pinky",
+    "professions": [
+      "engineer"
+    ],
+    "tools": [
+      "Claude Code",
+      "Codex",
+      "Cursor",
+      "MCP"
+    ]
+  },
+  {
+    "id": "github-bama",
+    "name": "BAMA(Build Any Mac App)",
+    "provider": "daveebbelaar",
+    "category": "repository",
+    "summary": "作りたいアプリの案から、Swift で動く Mac アプリを作り上げるまでを手伝う21個のスキル集。Claude Code や Codex に入れて使い、画面の書き出し・設計・作成・テストまで順に進められる。無料で公開。",
+    "changeNote": "Macアプリづくりのスキル21個",
+    "kind": "new",
+    "expectationScore": 72,
+    "attentionScore": 55,
+    "date": "2026-10-24T08:44:36Z",
+    "url": "https://github.com/daveebbelaar/bama",
+    "professions": [
+      "engineer"
+    ],
+    "tools": [
+      "Claude Code",
+      "Codex"
+    ]
+  },
+  {
     "id": "gemini-4-hydrogen",
     "name": "Gemini 4 Hydrogen",
     "provider": "Google",
@@ -14,6 +98,10 @@
     "professions": [
       "engineer",
       "all"
+    ],
+    "tools": [
+      "Gemini",
+      "Google AI Studio"
     ]
   },
   {
@@ -32,6 +120,10 @@
       "backOffice",
       "writer",
       "sales"
+    ],
+    "tools": [
+      "ElevenLabs",
+      "Scribe"
     ]
   },
   {
@@ -50,6 +142,9 @@
       "backOffice",
       "sales",
       "founder"
+    ],
+    "tools": [
+      "Garoon"
     ]
   },
   {
@@ -67,6 +162,10 @@
     "professions": [
       "sales",
       "all"
+    ],
+    "tools": [
+      "Gemini",
+      "CarPlay"
     ]
   },
   {
@@ -83,6 +182,9 @@
     "url": "https://blog.google/innovation-and-ai/technology/developers-tools/gemini-decisions-api/",
     "professions": [
       "engineer"
+    ],
+    "tools": [
+      "Gemini API"
     ]
   },
   {
@@ -99,6 +201,10 @@
     "url": "https://cognition.com/blog/swe-2-flash",
     "professions": [
       "engineer"
+    ],
+    "tools": [
+      "Devin",
+      "SWE-2"
     ]
   },
   {
@@ -117,6 +223,9 @@
       "engineer",
       "student",
       "all"
+    ],
+    "tools": [
+      "Gemini"
     ]
   },
   {
@@ -133,6 +242,10 @@
     "url": "https://blog.google/products-and-platforms/devices/pixel/november-2026-pixel-drop/",
     "professions": [
       "all"
+    ],
+    "tools": [
+      "Gemini",
+      "Pixel"
     ]
   },
   {
@@ -149,6 +262,10 @@
     "url": "https://research.meta.ai/blog/muse-ember",
     "professions": [
       "engineer"
+    ],
+    "tools": [
+      "Meta AI",
+      "Muse"
     ]
   },
   {
@@ -167,6 +284,9 @@
       "designer",
       "marketer",
       "videoCreator"
+    ],
+    "tools": [
+      "Seedream"
     ]
   },
   {
@@ -185,6 +305,10 @@
       "engineer",
       "student",
       "all"
+    ],
+    "tools": [
+      "Claude",
+      "Claude Code"
     ]
   },
   {
@@ -202,6 +326,10 @@
     "professions": [
       "engineer",
       "founder"
+    ],
+    "tools": [
+      "Google AI Studio",
+      "Google マップ"
     ]
   },
   {
@@ -219,6 +347,9 @@
     "professions": [
       "backOffice",
       "founder"
+    ],
+    "tools": [
+      "invox"
     ]
   },
   {
@@ -237,6 +368,9 @@
       "marketer",
       "founder",
       "designer"
+    ],
+    "tools": [
+      "Puente AI Anime Factory"
     ]
   },
   {
@@ -255,6 +389,9 @@
       "videoCreator",
       "designer",
       "writer"
+    ],
+    "tools": [
+      "MaiStory"
     ]
   },
   {
@@ -272,6 +409,9 @@
     "professions": [
       "engineer",
       "student"
+    ],
+    "tools": [
+      "Tencent Hy"
     ]
   },
   {
@@ -289,6 +429,10 @@
     "professions": [
       "backOffice",
       "founder"
+    ],
+    "tools": [
+      "Microsoft Copilot",
+      "Excel"
     ]
   },
   {
@@ -307,6 +451,9 @@
       "sales",
       "founder",
       "designer"
+    ],
+    "tools": [
+      "Room AI Fitting"
     ]
   },
   {
@@ -325,6 +472,10 @@
       "engineer",
       "founder",
       "backOffice"
+    ],
+    "tools": [
+      "Mistral Studio",
+      "Le Chat"
     ]
   },
   {
@@ -344,6 +495,9 @@
       "marketer",
       "videoCreator",
       "writer"
+    ],
+    "tools": [
+      "ChatGPT"
     ]
   },
   {
@@ -363,6 +517,10 @@
       "marketer",
       "designer",
       "engineer"
+    ],
+    "tools": [
+      "Gemini",
+      "Gemini Omni"
     ]
   },
   {
@@ -382,6 +540,10 @@
       "sales",
       "founder",
       "videoCreator"
+    ],
+    "tools": [
+      "Google Vids",
+      "Gemini Omni"
     ]
   },
   {
@@ -401,6 +563,10 @@
       "designer",
       "student",
       "engineer"
+    ],
+    "tools": [
+      "Gemini",
+      "Gemini Canvas"
     ]
   },
   {
@@ -419,6 +585,9 @@
       "sales",
       "backOffice",
       "founder"
+    ],
+    "tools": [
+      "shiftel"
     ]
   },
   {
@@ -436,6 +605,10 @@
     "professions": [
       "engineer",
       "videoCreator"
+    ],
+    "tools": [
+      "Gemini API",
+      "Gemini TTS"
     ]
   },
   {
@@ -452,6 +625,9 @@
     "url": "https://aistudio.google.com/docs/changelog",
     "professions": [
       "engineer"
+    ],
+    "tools": [
+      "Gemini API"
     ]
   },
   {
@@ -469,6 +645,9 @@
     "professions": [
       "engineer",
       "founder"
+    ],
+    "tools": [
+      "Kimi"
     ]
   },
   {
@@ -485,6 +664,9 @@
     "url": "https://aistudio.google.com/docs/changelog",
     "professions": [
       "engineer"
+    ],
+    "tools": [
+      "Gemini API"
     ]
   },
   {
@@ -502,6 +684,9 @@
     "professions": [
       "videoCreator",
       "marketer"
+    ],
+    "tools": [
+      "ElevenLabs"
     ]
   },
   {
@@ -519,6 +704,10 @@
     "professions": [
       "engineer",
       "founder"
+    ],
+    "tools": [
+      "Mistral Large",
+      "Le Chat"
     ]
   },
   {
@@ -537,6 +726,12 @@
       "backOffice",
       "sales",
       "founder"
+    ],
+    "tools": [
+      "Microsoft Copilot",
+      "Word",
+      "Excel",
+      "PowerPoint"
     ]
   },
   {
@@ -555,6 +750,9 @@
       "sales",
       "backOffice",
       "writer"
+    ],
+    "tools": [
+      "ProVoice"
     ]
   },
   {
@@ -572,6 +770,9 @@
     "professions": [
       "engineer",
       "student"
+    ],
+    "tools": [
+      "Gemini"
     ]
   },
   {
@@ -589,6 +790,10 @@
     "professions": [
       "founder",
       "backOffice"
+    ],
+    "tools": [
+      "采配(SAIHAI)",
+      "LINE"
     ]
   },
   {
@@ -606,6 +811,10 @@
     "professions": [
       "backOffice",
       "founder"
+    ],
+    "tools": [
+      "UPSIDER",
+      "MCP"
     ]
   },
   {
@@ -622,6 +831,10 @@
     "url": "https://9to5mac.com/2026/10/26/openai-upgrades-chatgpt-and-codex-with-new-gpt-6-1-terra-model/",
     "professions": [
       "all"
+    ],
+    "tools": [
+      "ChatGPT",
+      "GPT"
     ]
   },
   {
@@ -638,6 +851,13 @@
     "url": "https://www.anthropic.com/news/donating-agent-skills-to-the-agentic-ai-foundation",
     "professions": [
       "engineer"
+    ],
+    "tools": [
+      "Claude Code",
+      "Claude",
+      "ChatGPT",
+      "Cursor",
+      "GitHub Copilot"
     ]
   },
   {
@@ -654,6 +874,13 @@
     "url": "https://magicmoment.jp/playbook/mcp",
     "professions": [
       "sales"
+    ],
+    "tools": [
+      "Magic Moment Playbook",
+      "MCP",
+      "Claude",
+      "ChatGPT",
+      "Microsoft Copilot"
     ]
   },
   {
@@ -671,6 +898,10 @@
     "professions": [
       "engineer",
       "videoCreator"
+    ],
+    "tools": [
+      "Voxtral",
+      "Le Chat"
     ]
   },
   {
@@ -688,6 +919,9 @@
     "professions": [
       "videoCreator",
       "marketer"
+    ],
+    "tools": [
+      "VideoGen"
     ]
   },
   {
@@ -706,6 +940,10 @@
       "engineer",
       "student",
       "founder"
+    ],
+    "tools": [
+      "Meta AI",
+      "Muse"
     ]
   },
   {
@@ -724,6 +962,9 @@
       "videoCreator",
       "marketer",
       "designer"
+    ],
+    "tools": [
+      "Kling"
     ]
   },
   {
@@ -740,6 +981,9 @@
     "url": "https://ai.google.dev/gemini-api/docs/changelog",
     "professions": [
       "all"
+    ],
+    "tools": [
+      "Gemini"
     ]
   },
   {
@@ -759,6 +1003,10 @@
       "marketer",
       "videoCreator",
       "writer"
+    ],
+    "tools": [
+      "Nano Banana",
+      "Gemini"
     ]
   },
   {
@@ -775,6 +1023,9 @@
     "url": "https://code.claude.com/docs/en/changelog",
     "professions": [
       "engineer"
+    ],
+    "tools": [
+      "Claude Code"
     ]
   },
   {
@@ -791,6 +1042,9 @@
     "url": "https://code.claude.com/docs/en/changelog",
     "professions": [
       "engineer"
+    ],
+    "tools": [
+      "Claude Code"
     ]
   },
   {
@@ -809,6 +1063,9 @@
       "engineer",
       "student",
       "writer"
+    ],
+    "tools": [
+      "DeepSeek"
     ]
   },
   {
@@ -825,6 +1082,10 @@
     "url": "https://www.bytedance.com",
     "professions": [
       "engineer"
+    ],
+    "tools": [
+      "Seed",
+      "Doubao"
     ]
   },
   {
@@ -842,6 +1103,9 @@
     "professions": [
       "designer",
       "marketer"
+    ],
+    "tools": [
+      "Grok"
     ]
   },
   {
@@ -859,6 +1123,9 @@
     "professions": [
       "videoCreator",
       "marketer"
+    ],
+    "tools": [
+      "Seedance"
     ]
   },
   {
@@ -875,6 +1142,10 @@
     "url": "https://openai.com/chatgpt",
     "professions": [
       "all"
+    ],
+    "tools": [
+      "ChatGPT",
+      "GPT"
     ]
   },
   {
@@ -892,6 +1163,9 @@
     "professions": [
       "engineer",
       "founder"
+    ],
+    "tools": [
+      "Argus"
     ]
   },
   {
@@ -910,6 +1184,9 @@
       "designer",
       "videoCreator",
       "marketer"
+    ],
+    "tools": [
+      "Midjourney"
     ]
   },
   {
@@ -926,6 +1203,11 @@
     "url": "https://ai.google",
     "professions": [
       "engineer"
+    ],
+    "tools": [
+      "Antigravity",
+      "Gemini CLI",
+      "Gemini Code Assist"
     ]
   },
   {
@@ -942,6 +1224,10 @@
     "url": "https://aws.amazon.com",
     "professions": [
       "engineer"
+    ],
+    "tools": [
+      "Kiro",
+      "Amazon Q Developer"
     ]
   },
   {
@@ -958,6 +1244,9 @@
     "url": "https://cursor.com",
     "professions": [
       "engineer"
+    ],
+    "tools": [
+      "Cursor"
     ]
   }
 ]
