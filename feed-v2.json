@@ -1,5 +1,91 @@
 [
   {
+    "id": "gemini-wallet-personal-finance",
+    "name": "Gemini × Google ウォレット",
+    "provider": "Google",
+    "category": "chat",
+    "summary": "Gemini が Google ウォレットの支出情報を読み、使ったお金の推移や忘れていた定期購入、値上げを教えてくれる。年末の予算案も作れる。読むだけでお金は動かせない。まずは米国の Gemini アプリ利用者に順次提供。",
+    "changeNote": "Geminiが支出を読んで家計の相談に乗る",
+    "kind": "update",
+    "expectationScore": 62,
+    "attentionScore": 55,
+    "date": "2026-11-13T17:00:00Z",
+    "url": "https://blog.google/innovation-and-ai/products/gemini-app/google-wallet-gemini-app/",
+    "professions": [
+      "all",
+      "founder"
+    ],
+    "tools": [
+      "Gemini",
+      "Google ウォレット"
+    ]
+  },
+  {
+    "id": "gemini-in-chrome-site-answers",
+    "name": "Chrome の Gemini(サイトの質問)",
+    "provider": "Google",
+    "category": "chat",
+    "summary": "Chrome で開いているページのまま、横のパネルで Gemini にそのサイトについて質問できる。別のタブに移らずに答えを得られる。提供地域や対象は公式ページに明記がない。",
+    "changeNote": "見ているサイトをその場でGeminiに質問",
+    "kind": "update",
+    "expectationScore": 58,
+    "attentionScore": 50,
+    "date": "2026-11-12T17:00:00Z",
+    "url": "https://blog.google/innovation-and-ai/products/gemini-app/research-with-gemini-in-chrome/",
+    "professions": [
+      "all",
+      "writer",
+      "student"
+    ],
+    "tools": [
+      "Gemini",
+      "Chrome"
+    ]
+  },
+  {
+    "id": "github-agent-autoloop",
+    "name": "Agent Autoloop",
+    "provider": "KKKKhazix",
+    "category": "repository",
+    "summary": "Claude Code や Codex などの命令入力式のAIを、パソコンの裏で動かし続けて仕事を最後まで進めさせるツール。迷ったときだけ通知で確認が届く。Mac・Windows・Linux対応、MIT ライセンス。Node と Git が必要。",
+    "changeNote": "AIを裏で動かし続け、迷ったときだけ確認",
+    "kind": "new",
+    "expectationScore": 74,
+    "attentionScore": 72,
+    "date": "2026-11-03T08:02:11Z",
+    "url": "https://github.com/KKKKhazix/agent-autoloop",
+    "professions": [
+      "engineer",
+      "founder"
+    ],
+    "tools": [
+      "Claude Code",
+      "Codex"
+    ]
+  },
+  {
+    "id": "github-stack-diagram",
+    "name": "stack-diagram",
+    "provider": "caru-ini",
+    "category": "repository",
+    "summary": "使っている技術を一文で伝えるだけで、公式ロゴ入りの構成図を作ってくれるスキル。Claude Code・Codex・Cursor などに入れて使う。無料で公開(MIT ライセンス)。",
+    "changeNote": "一文で公式ロゴ入りの構成図を作る",
+    "kind": "new",
+    "expectationScore": 70,
+    "attentionScore": 58,
+    "date": "2026-11-01T05:35:12Z",
+    "url": "https://github.com/caru-ini/stack-diagram",
+    "professions": [
+      "engineer",
+      "designer"
+    ],
+    "tools": [
+      "Claude Code",
+      "Codex",
+      "Cursor"
+    ]
+  },
+  {
     "id": "github-rea-video",
     "name": "rea-video",
     "provider": "JuneYaooo",
