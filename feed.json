@@ -1,5 +1,69 @@
 [
   {
+    "id": "claude-personal-finance",
+    "name": "Claude の家計分析(Personal Finance)",
+    "provider": "Anthropic",
+    "category": "chat",
+    "summary": "銀行やカードの口座をつなぐと、Claude に支出の合計や近く引き落とされる支払い、いつもと違う請求を聞ける。読むだけでお金は動かせない。米国の有料プラン(Pro・Max・Ultra)向けのベータ版。",
+    "changeNote": "Claudeが口座を読んで家計の相談に乗る",
+    "kind": "new",
+    "expectationScore": 64,
+    "attentionScore": 60,
+    "date": "2026-11-05T17:00:00Z",
+    "url": "https://claude.com/blog/introducing-personal-finance-in-claude",
+    "professions": [
+      "all",
+      "founder"
+    ],
+    "tools": [
+      "Claude"
+    ]
+  },
+  {
+    "id": "meta-muse-voice-avatar",
+    "name": "Muse の音声通話とアバター",
+    "provider": "Meta",
+    "category": "chat",
+    "summary": "Meta のAI「Muse」と、声で話したり、動くアバターを相手にビデオ通話のように会話できる。途中で話をさえぎれる。アバターは人や動物などに変えられる。米国で提供開始(スマホ・ウェブ・Mac)。",
+    "changeNote": "Museとアバターでビデオ通話のように会話",
+    "kind": "update",
+    "expectationScore": 58,
+    "attentionScore": 55,
+    "date": "2026-11-05T17:00:00Z",
+    "url": "https://techcrunch.com/2026/11/05/meta-says-us-users-can-now-video-chat-with-their-muse-ai-avatar/",
+    "professions": [
+      "all"
+    ],
+    "tools": [
+      "Meta AI",
+      "Muse"
+    ]
+  },
+  {
+    "id": "github-yogurt",
+    "name": "Yogurt",
+    "provider": "FrigadeHQ",
+    "category": "other",
+    "summary": "オンライン会議を録音して、文字起こしと要約を作る無料のアプリ。音声も処理も自分のパソコンの中だけで行い、会議にボットは入らない。Mac・Windows・Linux対応、MIT ライセンス。初回に約5GBのデータが必要。",
+    "changeNote": "会議の議事録を自分のPC内だけで作る",
+    "kind": "new",
+    "expectationScore": 70,
+    "attentionScore": 52,
+    "date": "2026-11-10T20:01:01Z",
+    "url": "https://github.com/FrigadeHQ/yogurt",
+    "professions": [
+      "backOffice",
+      "sales",
+      "founder"
+    ],
+    "tools": [
+      "Zoom",
+      "Microsoft Teams",
+      "Google Meet",
+      "MCP"
+    ]
+  },
+  {
     "id": "gemini-wallet-personal-finance",
     "name": "Gemini × Google ウォレット",
     "provider": "Google",
