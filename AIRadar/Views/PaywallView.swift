@@ -35,7 +35,7 @@ struct PaywallView: View {
 struct FeatureList: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            featureRow("新着・更新フィード(全13カテゴリ)")
+            featureRow("新着・更新フィード(全\(ServiceCategory.allCases.count)カテゴリ)")
             featureRow("DISCOVERED / CURATED の2モード(職種・使っているツールで厳選)")
             featureRow("AIに聞いて探せる「AIに聞く」")
             featureRow("期待度・注目度スコアとツール比較")
