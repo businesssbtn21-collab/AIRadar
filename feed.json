@@ -1,5 +1,70 @@
 [
   {
+    "id": "gemini-intelligence-nov-2026",
+    "name": "Gemini Intelligence の新機能と対応機種拡大",
+    "provider": "Google",
+    "category": "agent",
+    "summary": "Android の Gemini Intelligence に、話した内容を整った文章にする「Rambler」や、文章で説明するだけでウィジェットを作る機能が加わった。アプリをまたぐ注文や予約の自動化は日本でも使えるようになる。機種・国・言語で提供時期は異なる。",
+    "changeNote": "Androidで音声入力整理・予約自動化が拡大",
+    "kind": "update",
+    "expectationScore": 66,
+    "attentionScore": 58,
+    "date": "2026-11-10T16:00:00Z",
+    "url": "https://blog.google/products-and-platforms/platforms/android/gemini-intelligence-november-features-devices/",
+    "professions": [
+      "all"
+    ],
+    "tools": [
+      "Gemini",
+      "Pixel",
+      "Android"
+    ]
+  },
+  {
+    "id": "github-mika",
+    "name": "Mika",
+    "provider": "wangzan101",
+    "category": "other",
+    "summary": "Android のスマホ上で動く AI アシスタント。やりたいことを文章で頼むと、画面に出さずにアプリやサイトを操作してくれる。自分で選んだ AI サービスをつなぐ方式。支払いやパスワードの画面では操作を返してくる。Android 12以上、Apache-2.0。",
+    "changeNote": "頼むだけでスマホのアプリを代わりに操作",
+    "kind": "new",
+    "expectationScore": 72,
+    "attentionScore": 80,
+    "date": "2026-10-29T00:00:00Z",
+    "url": "https://github.com/wangzan101/Mika",
+    "professions": [
+      "all",
+      "founder"
+    ],
+    "tools": [
+      "Android",
+      "MCP",
+      "ChatGPT"
+    ]
+  },
+  {
+    "id": "github-pixelfx",
+    "name": "pixelfx",
+    "provider": "patch-gg",
+    "category": "other",
+    "summary": "炎や爆発、魔法、天気など244種類のドット絵エフェクトを集めた無料の素材集。ブラウザのゲームにそのまま使え、GodotやUnity向けの画像も書き出せる。自分用のエフェクトを作る Claude Code のスキルも付く。MIT ライセンス。",
+    "changeNote": "ドット絵エフェクト244種と作成スキル",
+    "kind": "new",
+    "expectationScore": 66,
+    "attentionScore": 78,
+    "date": "2026-10-30T00:00:00Z",
+    "url": "https://github.com/patch-gg/pixelfx",
+    "professions": [
+      "engineer",
+      "designer"
+    ],
+    "tools": [
+      "Claude Code",
+      "Godot",
+      "Unity"
+    ]
+  },
+  {
     "id": "claude-personal-finance",
     "name": "Claude の家計分析(Personal Finance)",
     "provider": "Anthropic",
