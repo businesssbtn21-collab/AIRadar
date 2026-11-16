@@ -1,5 +1,51 @@
 [
   {
+    "id": "gemini-notebook-interactive-sites",
+    "name": "Gemini Notebook のサイト作成",
+    "provider": "Google",
+    "category": "agent",
+    "summary": "Gemini Notebook に入れた資料やメモをもとに、チャットで「サイトを作って」と頼むと、操作できるページが出来上がる。売上のダッシュボードや進捗表なども作れ、別のタブで開いたり共有したりできる。18歳以上、Workspace も対象。まずウェブから、スマホは後日。",
+    "changeNote": "資料から操作できるサイトを自動作成",
+    "kind": "new",
+    "expectationScore": 68,
+    "attentionScore": 55,
+    "date": "2026-11-16T16:00:00Z",
+    "url": "https://blog.google/innovation-and-ai/products/gemini-notebook/interactive-sites/",
+    "professions": [
+      "founder",
+      "backOffice",
+      "marketer",
+      "student"
+    ],
+    "tools": [
+      "Gemini",
+      "Gemini Notebook"
+    ]
+  },
+  {
+    "id": "github-blender-ai-mcp-addon",
+    "name": "blender-ai-mcp-addon",
+    "provider": "hitkeeen",
+    "category": "repository",
+    "summary": "3D ソフト Blender の中で使える AI アシスタント。文章で頼むと、物の配置や材質の設定などを代わりにやってくれる。自分で選んだ AI サービスの接続情報が必要。Blender 4.2以上、配布版は Windows 向け。MIT ライセンス。",
+    "changeNote": "文章で頼むだけで Blender を操作",
+    "kind": "new",
+    "expectationScore": 66,
+    "attentionScore": 58,
+    "date": "2026-11-12T00:00:00Z",
+    "url": "https://github.com/hitkeeen/blender-ai-mcp-addon",
+    "professions": [
+      "designer",
+      "videoCreator"
+    ],
+    "tools": [
+      "Blender",
+      "MCP",
+      "Claude",
+      "Gemini"
+    ]
+  },
+  {
     "id": "gemini-intelligence-nov-2026",
     "name": "Gemini Intelligence の新機能と対応機種拡大",
     "provider": "Google",
