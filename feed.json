@@ -1,5 +1,48 @@
 [
   {
+    "id": "github-exact",
+    "name": "Exact",
+    "provider": "expo",
+    "category": "other",
+    "summary": "ウェブ・Mac・iPhone・Linux で動くアプリを1つの書き方で作れる開発の枠組み。AI のコーディング助手がアプリを動かして確かめながら作ることも想定している。正式版の前の段階で、ソースを取り込んで使う。無料で公開(MIT ライセンス)。",
+    "changeNote": "1つの書き方で複数機種のアプリを作る",
+    "kind": "new",
+    "expectationScore": 68,
+    "attentionScore": 70,
+    "date": "2026-11-02T01:29:01Z",
+    "url": "https://github.com/expo/exact",
+    "professions": [
+      "engineer"
+    ],
+    "tools": [
+      "Exact",
+      "Claude Code",
+      "Codex"
+    ]
+  },
+  {
+    "id": "github-reanimate",
+    "name": "reanimate",
+    "provider": "NiazMorshed2007",
+    "category": "other",
+    "summary": "気に入ったサイトや動画の動きを見本に、同じ動きを自分のサイトで再現してくれるスキル。作って見比べてを数回くり返して近づける。Claude Code に入れて使う。Mac・Linux 向け、無料で公開(MIT ライセンス)。",
+    "changeNote": "見本のアニメーションを自動で再現",
+    "kind": "new",
+    "expectationScore": 66,
+    "attentionScore": 55,
+    "date": "2026-10-29T06:20:59Z",
+    "url": "https://github.com/NiazMorshed2007/reanimate",
+    "professions": [
+      "engineer",
+      "designer"
+    ],
+    "tools": [
+      "Claude Code",
+      "GSAP",
+      "Framer Motion"
+    ]
+  },
+  {
     "id": "gemini-notebook-interactive-sites",
     "name": "Gemini Notebook のサイト作成",
     "provider": "Google",
