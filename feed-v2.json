@@ -1,5 +1,97 @@
 [
   {
+    "id": "gemini-4-neon",
+    "name": "Gemini 4 Neon",
+    "provider": "Google",
+    "category": "coding",
+    "summary": "Google の新しい AI モデル Gemini 4 Neon が正式に使えるようになった。大きなソフト開発の作業を最後まで速く進めるのが得意。考える深さを4段階から選べ、一度に長い資料を読める。開発者向けの Gemini API から利用できる。",
+    "changeNote": "複雑な開発作業を速く終える新モデル",
+    "kind": "new",
+    "expectationScore": 72,
+    "attentionScore": 60,
+    "date": "2026-11-18T09:00:00Z",
+    "url": "https://aistudio.google.com/docs/changelog",
+    "professions": [
+      "engineer",
+      "student"
+    ],
+    "tools": [
+      "Gemini",
+      "Gemini API",
+      "Google AI Studio",
+      "Antigravity"
+    ]
+  },
+  {
+    "id": "qwen4-max",
+    "name": "Qwen4-Max",
+    "provider": "Alibaba",
+    "category": "chat",
+    "summary": "アリババの最新の大型 AI モデル。文章・画像・動画を読め、とても長い資料も一度に扱える。仕事のさまざまな作業で前のモデルより少ない処理量で済むとされる。QwenCloud の API や Qwen Studio から使える。モデルの中身は公開されない。",
+    "changeNote": "アリババの新しい主力モデルが登場",
+    "kind": "new",
+    "expectationScore": 70,
+    "attentionScore": 62,
+    "date": "2026-11-16T02:00:00Z",
+    "url": "https://www.alibabacloud.com/press-room/alibaba-unveils-qwen4-max",
+    "professions": [
+      "engineer",
+      "founder",
+      "student"
+    ],
+    "tools": [
+      "Qwen",
+      "Qwen Studio",
+      "QwenCloud"
+    ]
+  },
+  {
+    "id": "gemini-3-5-transcribe-voice-edit",
+    "name": "Gemini 3.5 Transcribe の音声編集",
+    "provider": "Google",
+    "category": "audioMusic",
+    "summary": "音声を文字にする Gemini 3.5 Transcribe とそのリアルタイム版が、声で文章を直せるようになった。話した内容や元の文章を、声の指示で書き換えたり整えたりできる。開発者向けの Gemini API から使える。",
+    "changeNote": "声の指示で文章を直せる文字起こし",
+    "kind": "update",
+    "expectationScore": 62,
+    "attentionScore": 45,
+    "date": "2026-11-17T09:00:00Z",
+    "url": "https://aistudio.google.com/docs/changelog",
+    "professions": [
+      "engineer",
+      "writer",
+      "backOffice"
+    ],
+    "tools": [
+      "Gemini",
+      "Gemini API",
+      "Google AI Studio"
+    ]
+  },
+  {
+    "id": "github-rust-anything",
+    "name": "rust-anything",
+    "provider": "erkamyaman",
+    "category": "repository",
+    "summary": "今あるアプリを、動きを記録して見比べながら少しずつ Rust に書き換える道具。Node.js・Python・Go・Java などに対応する。AI のコーディング助手に頼んで進めることもできる。Rust の環境が必要。無料で公開(MIT ライセンス)。",
+    "changeNote": "アプリを少しずつ Rust に書き換える",
+    "kind": "new",
+    "expectationScore": 68,
+    "attentionScore": 70,
+    "date": "2026-11-16T12:10:36Z",
+    "url": "https://github.com/erkamyaman/rust-anything",
+    "professions": [
+      "engineer"
+    ],
+    "tools": [
+      "rust-anything",
+      "Claude Code",
+      "Codex",
+      "Cursor",
+      "MCP"
+    ]
+  },
+  {
     "id": "github-exact",
     "name": "Exact",
     "provider": "expo",
