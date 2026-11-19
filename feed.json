@@ -1,5 +1,70 @@
 [
   {
+    "id": "gpt-6-2-astra-sol",
+    "name": "GPT-6.2 Astra / Sol",
+    "provider": "OpenAI",
+    "category": "chat",
+    "summary": "OpenAI の新しい AI モデル2種。Astra は難しい仕事を長く任せたいとき向けで、Sol は普段使いに向く手頃なモデル。ChatGPT の有料プランと Codex で使え、開発者向けの API からも使える。Astra は前より少ない文字数で答える。",
+    "changeNote": "仕事向けの新モデル2種が登場",
+    "kind": "new",
+    "expectationScore": 78,
+    "attentionScore": 75,
+    "date": "2026-11-17T17:00:00Z",
+    "url": "https://www.testingcatalog.com/openai-launches-gpt-6-2-astra-and-sol-on-chatgpt-and-apis/",
+    "professions": [
+      "all"
+    ],
+    "tools": [
+      "ChatGPT",
+      "GPT",
+      "Codex"
+    ]
+  },
+  {
+    "id": "mai-code-2",
+    "name": "MAI Code 2",
+    "provider": "Microsoft",
+    "category": "coding",
+    "summary": "Microsoft が発表したプログラミング向けの AI モデル。複数のファイルにまたがる大きな作業が得意な MAI Code 2 と、数をこなす作業向けの軽い Flash 版がある。GitHub Copilot の有料プランで使える。",
+    "changeNote": "Microsoft のコード用モデルの新版",
+    "kind": "new",
+    "expectationScore": 66,
+    "attentionScore": 55,
+    "date": "2026-11-17T16:00:00Z",
+    "url": "https://www.testingcatalog.com/microsoft-launches-seven-mai-models-at-ignite-2026.md",
+    "professions": [
+      "engineer"
+    ],
+    "tools": [
+      "MAI Code",
+      "GitHub Copilot"
+    ]
+  },
+  {
+    "id": "github-agentes-chat",
+    "name": "agentes.chat",
+    "provider": "agentes-chat",
+    "category": "other",
+    "summary": "人と AI が同じチャットで一緒に仕事を進める、自分のサーバーで動かすチームチャット。Claude や Gemini など好きなモデルを選べ、大事な操作の前に人の承認を待たせられる。Linux のサーバーと各社の API キーが必要。AGPL-3.0 で公開。",
+    "changeNote": "人と AI が一緒に使うチームチャット",
+    "kind": "new",
+    "expectationScore": 66,
+    "attentionScore": 58,
+    "date": "2026-11-09T00:50:28Z",
+    "url": "https://github.com/agentes-chat/agentes-chat",
+    "professions": [
+      "engineer",
+      "founder"
+    ],
+    "tools": [
+      "agentes.chat",
+      "Claude",
+      "Codex",
+      "Gemini",
+      "MCP"
+    ]
+  },
+  {
     "id": "gemini-4-neon",
     "name": "Gemini 4 Neon",
     "provider": "Google",
