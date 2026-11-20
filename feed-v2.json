@@ -1,5 +1,45 @@
 [
   {
+    "id": "gemini-api-tool-retrieval",
+    "name": "Tool Retrieval(Gemini API)",
+    "provider": "Google",
+    "category": "agent",
+    "summary": "Gemini API に加わった試験版の機能。AI エージェントに何百ものツールを持たせても、必要なものだけを選んで使うので、読み込む文字数を減らせる。開発者向けで、Gemini API から試せる。",
+    "changeNote": "大量のツールを使い分ける機能が登場",
+    "kind": "new",
+    "expectationScore": 58,
+    "attentionScore": 45,
+    "date": "2026-11-19T18:00:00Z",
+    "url": "https://blog.google/innovation-and-ai/technology/developers-tools/gemini-api-tool-retrieval/",
+    "professions": [
+      "engineer"
+    ],
+    "tools": [
+      "Gemini API",
+      "Gemini"
+    ]
+  },
+  {
+    "id": "github-lot-map",
+    "name": "Lot Map",
+    "provider": "alexeyw",
+    "category": "repository",
+    "summary": "Claude Code の横に地図を出し、AI がいま何をしているかを見せるプラグイン。ファイル操作やコマンド実行などが光り、エラーや会話の長さの限界も分かる。自分のパソコンだけで動く。Claude Code が必要。MIT ライセンスで公開。",
+    "changeNote": "Claude Code の作業を地図で見せる",
+    "kind": "new",
+    "expectationScore": 64,
+    "attentionScore": 55,
+    "date": "2026-11-09T19:13:52Z",
+    "url": "https://github.com/alexeyw/lot-map",
+    "professions": [
+      "engineer"
+    ],
+    "tools": [
+      "Lot Map",
+      "Claude Code"
+    ]
+  },
+  {
     "id": "gpt-6-2-astra-sol",
     "name": "GPT-6.2 Astra / Sol",
     "provider": "OpenAI",
