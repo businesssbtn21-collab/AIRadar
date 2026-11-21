@@ -1,5 +1,113 @@
 [
   {
+    "id": "gemini-mac-computer-use",
+    "name": "Gemini の Mac 向けコンピューター操作",
+    "provider": "Google",
+    "category": "agent",
+    "summary": "Gemini アプリが Mac の中のファイルやアプリ、ウェブをまたぐ作業を代わりに進める機能。別の小窓で動くので普段の作業を止めず、各手順を見ながら途中で止めたり承認したりできる。米国で英語、有料プラン向けから提供。",
+    "changeNote": "Mac の作業を Gemini が代行する",
+    "kind": "new",
+    "expectationScore": 70,
+    "attentionScore": 62,
+    "date": "2026-11-19T17:00:00Z",
+    "url": "https://blog.google/innovation-and-ai/products/gemini-app/computer-use-mac/",
+    "professions": [
+      "backOffice",
+      "founder",
+      "marketer",
+      "all"
+    ],
+    "tools": [
+      "Gemini",
+      "Mac"
+    ]
+  },
+  {
+    "id": "genie-4-project-genie",
+    "name": "Genie 4(Project Genie)",
+    "provider": "Google",
+    "category": "videoGeneration",
+    "summary": "文章や画像から、動かして遊べる仮想の世界を作る Google の AI。新しい Genie 4 は映像がより本物らしく、音も同時に出て、途中で文章で環境を変えられる。まずは Google AI Ultra の契約者から提供。",
+    "changeNote": "遊べる仮想世界を作る新モデル",
+    "kind": "new",
+    "expectationScore": 66,
+    "attentionScore": 72,
+    "date": "2026-11-18T17:00:00Z",
+    "url": "https://blog.google/innovation-and-ai/models-and-research/google-deepmind/genie-4-now-available-project-genie/",
+    "professions": [
+      "designer",
+      "videoCreator",
+      "engineer"
+    ],
+    "tools": [
+      "Genie",
+      "Gemini"
+    ]
+  },
+  {
+    "id": "google-search-connected-apps-errands",
+    "name": "Google 検索の Connected Apps(年末の用事)",
+    "provider": "Google",
+    "category": "agent",
+    "summary": "Google 検索と Gemini アプリから、食料品の注文や信用情報の確認、税金の計算などを各社のサービスとつないで進められる機能。米国向けで、Albertsons・Target・Experian・H&R Block などに対応。",
+    "changeNote": "検索から買い物や税金計算ができる",
+    "kind": "update",
+    "expectationScore": 55,
+    "attentionScore": 48,
+    "date": "2026-11-20T17:00:00Z",
+    "url": "https://blog.google/products-and-platforms/products/search/connected-apps-holiday-errands/",
+    "professions": [
+      "all"
+    ],
+    "tools": [
+      "Gemini",
+      "Google 検索"
+    ]
+  },
+  {
+    "id": "github-inference-optimisation-skill",
+    "name": "inference-optimisation-skill",
+    "provider": "sybil-solutions",
+    "category": "repository",
+    "summary": "自分のパソコンで動かす AI の回答速度を測って、速くする手順をまとめたスキル。Claude Code などに入れると、設定を一つずつ変えて速さを比べる作業を AI が進める。動いている AI サーバーが必要。MIT ライセンスで公開。",
+    "changeNote": "手元の AI を速くする手順スキル",
+    "kind": "new",
+    "expectationScore": 66,
+    "attentionScore": 55,
+    "date": "2026-11-16T18:40:04Z",
+    "url": "https://github.com/sybil-solutions/inference-optimisation-skill",
+    "professions": [
+      "engineer"
+    ],
+    "tools": [
+      "inference-optimisation-skill",
+      "Claude Code"
+    ]
+  },
+  {
+    "id": "github-mroffice",
+    "name": "MR Office",
+    "provider": "XinaTian",
+    "category": "repository",
+    "summary": "文書・表計算・スライド・PDF・手書きメモのエディタを、ブラウザで動かせる公開ツール。独自の形式で保存し、CSV や Markdown も開ける。Word や Excel の読み書きは別の無料アプリが必要。AGPL-3.0 ライセンス。",
+    "changeNote": "ブラウザで動く文書・表のエディタ群",
+    "kind": "new",
+    "expectationScore": 64,
+    "attentionScore": 55,
+    "date": "2026-11-10T17:54:07Z",
+    "url": "https://github.com/XinaTian/MROffice",
+    "professions": [
+      "engineer",
+      "backOffice",
+      "founder"
+    ],
+    "tools": [
+      "MR Office",
+      "Excel",
+      "Word"
+    ]
+  },
+  {
     "id": "gemini-api-tool-retrieval",
     "name": "Tool Retrieval(Gemini API)",
     "provider": "Google",
