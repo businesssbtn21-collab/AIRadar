@@ -1,5 +1,50 @@
 [
   {
+    "id": "github-fast-anything",
+    "name": "fast-anything",
+    "provider": "EL4CTEO",
+    "category": "other",
+    "summary": "遅いアプリのうち、時間がかかる部分だけを Rust に書き換えて速くする道具。実際の呼び出しを記録して、書き換え後も結果が同じか確かめてから採用する。Python・Node・Java などに対応。Rust の環境が必要で、AI のコーディング助手と組み合わせて使える。無料(MIT)。",
+    "changeNote": "アプリの遅い所だけ Rust で高速化",
+    "kind": "new",
+    "expectationScore": 68,
+    "attentionScore": 55,
+    "date": "2026-11-21T14:40:27Z",
+    "url": "https://github.com/EL4CTEO/fast-anything",
+    "professions": [
+      "engineer"
+    ],
+    "tools": [
+      "fast-anything",
+      "Claude Code",
+      "Codex",
+      "Rust"
+    ]
+  },
+  {
+    "id": "github-poki",
+    "name": "Poki",
+    "provider": "JosssphZhou",
+    "category": "other",
+    "summary": "iPhone の画面を読み取り、AIが実際のアプリをタップ・入力して操作する、オープンソースのアプリ。支払いや削除などは必ず本人が確認する。入れるには Mac か Windows のパソコンと自分のAIのアカウントやキーが必要。まだ試験版(β)。無料(AGPL)。",
+    "changeNote": "AIがiPhoneのアプリを操作する(β版)",
+    "kind": "new",
+    "expectationScore": 66,
+    "attentionScore": 55,
+    "date": "2026-11-05T15:04:31Z",
+    "url": "https://github.com/JosssphZhou/poki",
+    "professions": [
+      "engineer"
+    ],
+    "tools": [
+      "Poki",
+      "iPhone",
+      "ChatGPT",
+      "Claude",
+      "Gemini"
+    ]
+  },
+  {
     "id": "gemini-mac-computer-use",
     "name": "Gemini の Mac 向けコンピューター操作",
     "provider": "Google",
