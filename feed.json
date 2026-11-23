@@ -1,5 +1,48 @@
 [
   {
+    "id": "assemblyai-stt-3-7",
+    "name": "AssemblyAI-STT-3.7",
+    "provider": "AssemblyAI",
+    "category": "audioMusic",
+    "summary": "音声を文字にする AssemblyAI の新しいモデル。録音用、会議や通話のリアルタイム用、音声アシスタント用の3種類があり、32言語を自動で聞き分ける。話者の区別も付く。料金は1時間あたり約0.21〜0.45ドル。",
+    "changeNote": "文字起こしの新モデル3種(32言語)",
+    "kind": "new",
+    "expectationScore": 62,
+    "attentionScore": 45,
+    "date": "2026-11-18T09:00:00Z",
+    "url": "https://assemblyai.com/changelog",
+    "professions": [
+      "backOffice",
+      "sales",
+      "engineer"
+    ],
+    "tools": [
+      "AssemblyAI"
+    ]
+  },
+  {
+    "id": "github-mobile-agent-testers",
+    "name": "mobile-agent-testers",
+    "provider": "pierridotite",
+    "category": "other",
+    "summary": "スマホアプリの試験をAIにやらせる道具。Claude Code のAIが、設定の違う仮想のiPhoneやAndroidで最大20台ぶん同時にアプリを触り、画面写真つきの不具合報告を作る。GitHub のアカウントと Claude の契約かキーが必要。無料(MIT)。",
+    "changeNote": "AIが20台の仮想スマホでアプリを試験",
+    "kind": "new",
+    "expectationScore": 68,
+    "attentionScore": 55,
+    "date": "2026-11-16T19:11:44Z",
+    "url": "https://github.com/pierridotite/mobile-agent-testers",
+    "professions": [
+      "engineer"
+    ],
+    "tools": [
+      "mobile-agent-testers",
+      "Claude Code",
+      "GitHub Actions",
+      "iOS"
+    ]
+  },
+  {
     "id": "github-fast-anything",
     "name": "fast-anything",
     "provider": "EL4CTEO",
