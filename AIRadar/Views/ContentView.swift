@@ -234,6 +234,8 @@ struct ContentView: View {
                 NavigationLink(value: item) {
                     ServiceRow(item: item)
                 }
+                // 更新(UPDATE)のツールは、行の背景(文字以外の余白)を薄いオレンジにして目立たせる
+                .listRowBackground(item.kind == .update ? ServiceRow.updateBackground : nil)
             }
         }
         .listStyle(.plain)
@@ -253,6 +255,9 @@ struct ContentView: View {
 
 struct ServiceRow: View {
     let item: AIServiceItem
+
+    /// 更新されたツールの行の背景。UPD バッジのオレンジを薄くしたもの(ダークモードでも文字が読める濃さ)
+    static let updateBackground = Color.orange.opacity(0.12)
 
     var body: some View {
         HStack(alignment: .top, spacing: 12) {

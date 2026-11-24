@@ -53,14 +53,14 @@ final class FeedStore: ObservableObject {
         }
     }
 
-    /// 期待度スコアがしきい値以上の未通知イベントだけローカル通知する。
+    /// 未通知のイベントをローカル通知する。新登場は期待度がしきい値以上のものだけ、更新(UPDATE)は期待度に関係なく通知する。
     private func notifyIfNeeded(for events: [AIServiceItem]) async {
         guard settings.notificationsEnabled else { return }
 
         let notified = SharedStore.notifiedKeys()
         let targets = events.filter {
             matchesNotifyFilter($0)
-                && $0.expectationScore >= settings.notifyThreshold
+                && ($0.kind == .update || $0.expectationScore >= settings.notifyThreshold)
                 && !notified.contains($0.eventKey)
         }
         guard !targets.isEmpty else { return }
@@ -72,7 +72,7 @@ final class FeedStore: ObservableObject {
 
         for item in targets.prefix(5) {
             let content = UNMutableNotificationContent()
-            content.title = "\(item.kind.label): \(item.name)"
+            content.title = item.kind == .update ? "更新されました: \(item.name)" : "\(item.kind.label): \(item.name)"
             content.body = "\(item.changeNote) — 期待度\(item.rank)ランク(\(item.expectationScore))"
             content.sound = .default
             let request = UNNotificationRequest(

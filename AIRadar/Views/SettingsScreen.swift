@@ -59,11 +59,11 @@ struct SettingsScreen: View {
                             Text("UPDATE(更新)").tag(UpdateKind?.some(.update))
                         }
                         .pickerStyle(.segmented)
-                        Stepper("期待度 \(settings.notifyThreshold) 以上のみ",
+                        Stepper("新登場は期待度 \(settings.notifyThreshold) 以上のみ",
                                 value: $settings.notifyThreshold, in: 0...100, step: 5)
                         Stepper("注目度が +\(settings.spikeThreshold) 以上急上昇したら通知",
                                 value: $settings.spikeThreshold, in: 5...50, step: 5)
-                        Text("バックグラウンド更新(目安4時間ごと・OS任せ)で新着・変更・注目度の急上昇を検知するとローカル通知します。ウィジェットも自動で最新に更新されます。")
+                        Text("ツールの更新(UPDATE)は期待度に関係なく通知します。バックグラウンド更新(目安4時間ごと・OS任せ)で新着・変更・注目度の急上昇を検知するとローカル通知します。ウィジェットも自動で最新に更新されます。")
                             .font(.caption)
                             .foregroundStyle(.secondary)
                     }
