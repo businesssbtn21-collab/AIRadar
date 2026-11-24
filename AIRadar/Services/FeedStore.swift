@@ -55,7 +55,8 @@ final class FeedStore: ObservableObject {
 
     /// 未通知のイベントをローカル通知する。新登場は期待度がしきい値以上のものだけ、更新(UPDATE)は期待度に関係なく通知する。
     private func notifyIfNeeded(for events: [AIServiceItem]) async {
-        guard settings.notificationsEnabled else { return }
+        // 通知は購入者向けの機能
+        guard settings.notificationsEnabled, FeedSync.isUnlocked else { return }
 
         let notified = SharedStore.notifiedKeys()
         let targets = events.filter {
@@ -87,7 +88,7 @@ final class FeedStore: ObservableObject {
 
     /// 注目度スコアが急上昇したサービスを通知する。同じ数値では再通知しないようスコア込みのキーで管理する。
     private func notifySpikes(_ spikes: [AIServiceItem]) async {
-        guard settings.notificationsEnabled, !spikes.isEmpty else { return }
+        guard settings.notificationsEnabled, FeedSync.isUnlocked, !spikes.isEmpty else { return }
 
         let notified = SharedStore.notifiedKeys()
         let targets = spikes.filter {

@@ -5,6 +5,8 @@ import UserNotifications
 struct ContentView: View {
     @EnvironmentObject private var store: FeedStore
     @EnvironmentObject private var settings: AppSettings
+    @EnvironmentObject private var storeManager: StoreManager
+    @State private var showPaywall = false
     @State private var showCurationSettings = false
     @State private var selectedCategory: ServiceCategory?
     @State private var showSettings = false
@@ -16,15 +18,20 @@ struct ContentView: View {
     @State private var showNotificationPrimer = false
     @Environment(\.requestReview) private var requestReview
 
+    private var isFree: Bool { !storeManager.isUnlocked }
+
+    /// 無料版は CURATED を使えないので DISCOVERED として扱う
+    private var effectiveMode: FeedMode { isFree ? .discovered : settings.mode }
+
     private var filteredItems: [AIServiceItem] {
         store.items
-            .applying(mode: settings.mode, curation: settings.curation)
+            .applying(mode: effectiveMode, curation: settings.curation)
             .applying(filter, searchText: searchText, category: selectedCategory)
     }
 
     /// CURATED で、検索やフィルタではなく厳選の条件そのもので0件になっている状態
     private var isCuratedEmpty: Bool {
-        settings.mode == .curated && filteredItems.isEmpty && !store.items.isEmpty
+        effectiveMode == .curated && filteredItems.isEmpty && !store.items.isEmpty
             && selectedCategory == nil && !filter.isActive
             && searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
@@ -32,8 +39,13 @@ struct ContentView: View {
     /// CURATED に初めて切り替えたとき、条件(職種・使っているツール)を選んでもらう
     private var modeSelection: Binding<FeedMode> {
         Binding {
-            settings.mode
+            effectiveMode
         } set: { newMode in
+            // CURATED は購入者向け
+            if isFree && newMode == .curated {
+                showPaywall = true
+                return
+            }
             settings.mode = newMode
             if newMode == .curated && !ModePreferences.hasChosenCuration {
                 // 何も変えずに閉じても、次からは出さない
@@ -55,7 +67,7 @@ struct ContentView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button {
-                        showAISearch = true
+                        if isFree { showPaywall = true } else { showAISearch = true }
                     } label: {
                         Label("AIに聞く", systemImage: "sparkles")
                             .labelStyle(.titleAndIcon)
@@ -63,7 +75,7 @@ struct ContentView: View {
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        showSettings = true
+                        if isFree { showPaywall = true } else { showSettings = true }
                     } label: {
                         Image(systemName: "gearshape")
                     }
@@ -88,15 +100,18 @@ struct ContentView: View {
             .sheet(isPresented: $showCurationSettings) {
                 CurationSettingsSheet()
             }
+            .sheet(isPresented: $showPaywall) {
+                PaywallSheet()
+            }
             .task {
                 // 一覧が表示されてから、理由を説明した上で通知許可を尋ねる(HIG推奨: 起動直後の唐突な許可要求を避ける)
-                if !hasRespondedToNotificationPrimer && !store.items.isEmpty {
+                if !isFree && !hasRespondedToNotificationPrimer && !store.items.isEmpty {
                     showNotificationPrimer = true
                 }
                 await requestReviewIfAppropriate()
             }
             .onChange(of: store.items.isEmpty) { _, isEmpty in
-                if !isEmpty && !hasRespondedToNotificationPrimer {
+                if !isFree && !isEmpty && !hasRespondedToNotificationPrimer {
                     showNotificationPrimer = true
                 }
             }
@@ -139,7 +154,7 @@ struct ContentView: View {
             }
             .pickerStyle(.segmented)
 
-            if settings.mode == .curated {
+            if effectiveMode == .curated {
                 Button {
                     showCurationSettings = true
                 } label: {
@@ -230,12 +245,17 @@ struct ContentView: View {
                 )
                 .listRowSeparator(.hidden)
             }
-            ForEach(filteredItems) { item in
+            ForEach(FreeTier.visible(filteredItems, isUnlocked: !isFree)) { item in
                 NavigationLink(value: item) {
                     ServiceRow(item: item)
                 }
                 // 更新(UPDATE)のツールは、行の背景(文字以外の余白)を薄いオレンジにして目立たせる
                 .listRowBackground(item.kind == .update ? ServiceRow.updateBackground : nil)
+            }
+            let hidden = FreeTier.hiddenCount(total: filteredItems.count, isUnlocked: !isFree)
+            if hidden > 0 {
+                LockedMoreRow(hiddenCount: hidden) { showPaywall = true }
+                    .listRowSeparator(.hidden)
             }
         }
         .listStyle(.plain)
@@ -291,6 +311,35 @@ struct ServiceRow: View {
     }
 }
 
+/// 無料版の一覧の最後に出す案内。残りの件数と、購入画面へのボタン
+struct LockedMoreRow: View {
+    let hiddenCount: Int
+    let action: () -> Void
+
+    var body: some View {
+        VStack(spacing: 10) {
+            Image(systemName: "lock.fill")
+                .font(.title2)
+                .foregroundStyle(Color.accentColor)
+            Text("ほか \(hiddenCount) 件の新着・更新があります")
+                .font(.headline)
+            Text("フルアクセスで、すべての情報・ウィジェット・通知・厳選・AIに聞くが使えます。")
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
+            Button(action: action) {
+                Text("フルアクセスで見る")
+                    .font(.headline)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 12)
+            }
+            .buttonStyle(.borderedProminent)
+        }
+        .padding(.vertical, 16)
+        .frame(maxWidth: .infinity)
+    }
+}
+
 struct KindBadge: View {
     let kind: UpdateKind
 
@@ -330,4 +379,5 @@ struct RankBadge: View {
     ContentView()
         .environmentObject(FeedStore())
         .environmentObject(AppSettings.shared)
+        .environmentObject(StoreManager.shared)
 }

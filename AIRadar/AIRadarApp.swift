@@ -39,15 +39,14 @@ struct AIRadarApp: App {
             Group {
                 if !storeManager.hasCheckedEntitlements {
                     ProgressView()
-                } else if storeManager.isUnlocked {
+                } else if showOnboarding && !storeManager.isUnlocked {
+                    OnboardingView(onStartFree: { showOnboarding = false })
+                } else {
+                    // 未購入でも一覧は開ける(最新の数件だけ無料。残りと各機能は購入で解放)
                     ContentView()
                         .task {
                             await store.refresh()
                         }
-                } else if showOnboarding {
-                    OnboardingView()
-                } else {
-                    PaywallView()
                 }
             }
             .environmentObject(store)

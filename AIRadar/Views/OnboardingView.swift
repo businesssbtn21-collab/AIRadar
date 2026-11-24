@@ -3,6 +3,8 @@ import SwiftUI
 /// 初めて起動した未購入の人に、できることを実際の画面の画像で見せてから購入を案内する。
 /// 横にめくるページは指に追従し、途中で止めたり戻したりできる(標準のページ送りを使う)。
 struct OnboardingView: View {
+    /// 購入せずに無料版の一覧へ進む
+    var onStartFree: () -> Void = {}
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var page: Int? = 0
     @State private var hasAppeared = false
@@ -78,7 +80,7 @@ struct OnboardingView: View {
         .background(background.ignoresSafeArea())
         .sensoryFeedback(.selection, trigger: currentPage)
         .onChange(of: currentPage) { _, newPage in
-            // 購入ページまで見たら、次からは課金画面だけを出す
+            // 購入ページまで見たら、次からは無料版の一覧から始める
             if newPage == purchasePageIndex {
                 UserDefaults.standard.set(true, forKey: OnboardingPolicy.seenKey)
             }
@@ -163,6 +165,12 @@ struct OnboardingView: View {
 
                 PurchaseSection()
                     .padding(.top, 8)
+
+                Button("まずは無料で見てみる(最新\(FreeTier.visibleCount)件)") {
+                    onStartFree()
+                }
+                .font(.subheadline.weight(.semibold))
+                .padding(.bottom, 24)
             }
         }
         .scrollIndicators(.hidden)

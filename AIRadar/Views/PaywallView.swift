@@ -15,7 +15,7 @@ struct PaywallView: View {
                 .font(.title2.bold())
                 .multilineTextAlignment(.center)
 
-            Text("最新AIサービスの新着・更新フィードや期待度・注目度スコア、ウィジェット、通知など、すべての機能を使うにはアンロックが必要です。")
+            Text("最新\(FreeTier.visibleCount)件は無料で見られます。すべての新着・更新や、ウィジェット・通知・厳選・AIに聞くを使うにはフルアクセスが必要です。")
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
