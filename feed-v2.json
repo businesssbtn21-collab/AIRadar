@@ -1,5 +1,26 @@
 [
   {
+    "id": "gemini-api-file-slicing",
+    "name": "ファイルの部分読み込み(Gemini API)",
+    "provider": "Google",
+    "category": "agent",
+    "summary": "Gemini API で、PDF のページ範囲、表計算の特定のシートやセル、動画・音声の指定した時間だけをAIに読ませられるようになった。Word・Excel などのファイルもそのまま送れる。読んだ分だけの料金で済む。開発者向け。",
+    "changeNote": "ファイルの必要な部分だけAIに読ませる",
+    "kind": "new",
+    "expectationScore": 58,
+    "attentionScore": 45,
+    "date": "2026-11-23T18:00:00Z",
+    "url": "https://blog.google/innovation-and-ai/technology/developers-tools/file-slicing-controls/",
+    "professions": [
+      "engineer"
+    ],
+    "tools": [
+      "Gemini API",
+      "Gemini",
+      "Excel"
+    ]
+  },
+  {
     "id": "assemblyai-stt-3-7",
     "name": "AssemblyAI-STT-3.7",
     "provider": "AssemblyAI",
