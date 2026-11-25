@@ -1,5 +1,46 @@
 [
   {
+    "id": "cognition-swe-2-1",
+    "name": "SWE-2.1(Cognition)",
+    "provider": "Cognition",
+    "category": "coding",
+    "summary": "AIの開発者ツール Devin を作る Cognition の新しいコーディング用AI。前のSWE-2より、プログラムを書く試験の点数が大きく上がった。長時間の作業ほど成績が伸びる。12月8日まで Devin のデスクトップ版とCLIで無料、1月30日まで割引で使える。",
+    "changeNote": "Devinの新コーディングAI、12/8まで無料",
+    "kind": "new",
+    "expectationScore": 64,
+    "attentionScore": 50,
+    "date": "2026-11-24T09:00:00Z",
+    "url": "https://cognition.com/blog/swe-2-1",
+    "professions": [
+      "engineer"
+    ],
+    "tools": [
+      "Devin",
+      "SWE-2.1"
+    ]
+  },
+  {
+    "id": "google-search-personal-intelligence-wallet",
+    "name": "Google 検索の Personal Intelligence(ウォレット連携)",
+    "provider": "Google",
+    "category": "search",
+    "summary": "Google 検索のAIモードに、Google ウォレットをつなげられるようになった。支出やカードの特典についての質問に答えられる。読むだけで、お金の移動や管理はできない。オン・オフは自分で選べる。Drive やGeminiアプリとの連携は数週間後の予定。",
+    "changeNote": "AIモードがウォレットの情報を参照できる",
+    "kind": "update",
+    "expectationScore": 55,
+    "attentionScore": 45,
+    "date": "2026-11-23T17:00:00Z",
+    "url": "https://blog.google/products-and-platforms/products/search/google-search-personal-intelligence-apps/",
+    "professions": [
+      "all"
+    ],
+    "tools": [
+      "Gemini",
+      "Google 検索",
+      "Google ウォレット"
+    ]
+  },
+  {
     "id": "gemini-api-file-slicing",
     "name": "ファイルの部分読み込み(Gemini API)",
     "provider": "Google",
