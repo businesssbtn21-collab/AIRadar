@@ -1,5 +1,66 @@
 [
   {
+    "id": "gemini-import-history",
+    "name": "Gemini への履歴の引っ越し",
+    "provider": "Google",
+    "category": "chat",
+    "summary": "ほかのAIアシスタントで使ってきた好みや会話の履歴を、Gemini に移せるようになった。Gemini の設定で出る文を元のAIに貼って好みの要約をもらい、Gemini に貼り付ける。会話は元のサービスから書き出したZIPを設定で読み込む。",
+    "changeNote": "他のAIの好みと会話履歴をGeminiへ移せる",
+    "kind": "new",
+    "expectationScore": 58,
+    "attentionScore": 48,
+    "date": "2026-11-19T17:00:00Z",
+    "url": "https://blog.google/innovation-and-ai/products/gemini-app/switch-ai-assistants-transfer-history/",
+    "professions": [
+      "all"
+    ],
+    "tools": [
+      "Gemini",
+      "ChatGPT",
+      "Claude"
+    ]
+  },
+  {
+    "id": "github-agy-fast",
+    "name": "agy-fast",
+    "provider": "INK-Q",
+    "category": "other",
+    "summary": "Google の開発ツール Antigravity に足す無料の拡張。検索や複数ファイルの編集、ビルドの確認をまとめて手元で行い、AIの待ち時間と使用量を減らす。Node.js 20以上が必要で、MIT ライセンス。",
+    "changeNote": "Antigravityを速く・省量にする拡張",
+    "kind": "new",
+    "expectationScore": 68,
+    "attentionScore": 55,
+    "date": "2026-11-19T00:00:00Z",
+    "url": "https://github.com/INK-Q/agy-fast",
+    "professions": [
+      "engineer"
+    ],
+    "tools": [
+      "Antigravity",
+      "MCP"
+    ]
+  },
+  {
+    "id": "github-openset-llm",
+    "name": "openset-llm",
+    "provider": "opensetlabs",
+    "category": "other",
+    "summary": "高性能なパソコン用グラフィックボードなしで、大きめのAIを自分のパソコンで動かす無料のソフト。メモリ8GBのCPUだけの機械で、270億パラメータのモデルが毎秒17〜20語ほど出る。Linux(WSL2可)向けで、初回に約7GBのダウンロードが必要。MIT ライセンス。",
+    "changeNote": "GPUなしの普通のCPUで大きなAIを動かす",
+    "kind": "new",
+    "expectationScore": 66,
+    "attentionScore": 55,
+    "date": "2026-11-13T00:00:00Z",
+    "url": "https://github.com/opensetlabs/openset-llm",
+    "professions": [
+      "engineer",
+      "student"
+    ],
+    "tools": [
+      "LLM"
+    ]
+  },
+  {
     "id": "cognition-swe-2-1",
     "name": "SWE-2.1(Cognition)",
     "provider": "Cognition",
