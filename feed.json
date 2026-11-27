@@ -1,5 +1,29 @@
 [
   {
+    "id": "github-opengame",
+    "name": "OpenGame",
+    "provider": "nexu-io",
+    "category": "other",
+    "summary": "Claude Code や Codex などお手元のAIに頼んで、ゲームを作れる無料の道具。25種類のひな形から絵や世界を差し替えて遊べるゲームに仕立てられる。Node.js 22.18以上が必要で、Apache 2.0 ライセンス。",
+    "changeNote": "AIでゲームを作って公開する道具",
+    "kind": "new",
+    "expectationScore": 70,
+    "attentionScore": 55,
+    "date": "2026-11-25T10:35:45Z",
+    "url": "https://github.com/nexu-io/opengame",
+    "professions": [
+      "engineer",
+      "designer",
+      "videoCreator"
+    ],
+    "tools": [
+      "OpenGame",
+      "Claude Code",
+      "Codex",
+      "Gemini"
+    ]
+  },
+  {
     "id": "gemini-import-history",
     "name": "Gemini への履歴の引っ越し",
     "provider": "Google",
